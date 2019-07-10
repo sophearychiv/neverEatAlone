@@ -21,12 +21,13 @@ const Restaurant = props => {
 const styles = StyleSheet.create({
     container: {
         flexDirection: "row",
-        marginTop: 10
+        marginTop: 10,
     },
     image: {
         width: 50,
         height: 50,
-        marginRight: 10
+        marginRight: 10,
+        marginLeft: 10
     }
 })
 

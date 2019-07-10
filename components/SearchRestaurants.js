@@ -1,8 +1,10 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import axios from 'axios';
 import Restaurant from './Restaurant';
 import { Card, ListItem, Button, Icon } from 'react-native-elements';
+import SearchBar from './SearchBar';
+import { Header } from 'native-base';
 
 
 
@@ -21,7 +23,7 @@ class SearchRestaurants extends React.Component {
         await this.fetchData();
       }
 
-    fetchData() {
+    fetchData(location, category) {
         const CONFIG = require('../secrets.json');
 
         const config = {
@@ -30,11 +32,11 @@ class SearchRestaurants extends React.Component {
             },
             params: {
                 term: 'restaurants',
-                raduis: 5,
-                location: "210 169th st se, bothell was 98012",
+                location: location,
                 // eslint-disable-next-line camelcase
                 sort_by: 'distance',
-                limit: 5
+                categories: category,
+                limit: 7
             }
         };
         return axios.get('https://api.yelp.com/v3/businesses/search', config)
@@ -50,26 +52,41 @@ class SearchRestaurants extends React.Component {
                         })
                     });
     }
+
+    search = (location, category) => {
+        this.fetchData(location, category);
+    }
     render() {
 
         let restCards;
 
-        if (this.state.rests) {
+        if (this.state.rests.length !== 0) {
             restCards = this.state.rests.map((rest, i) => {
                 return [<Restaurant
                             key={i}
                             name={rest.name}
                             imageUrl={rest.image_url}
                             />]
-            })
-        }
-
-        return (
-            <Card title="Restaurants">
+            });
+            return (
+                <View>
+                    <Header>
+                        <Text style={styles.header}> Restaurants Found </Text>
+                    </Header>
                     {restCards}
-            </Card>
-        );
+                </View>
+                );
+        } else {
+            return (<SearchBar updateSearch={this.search}/>);
+        }
     }
 }
+
+const styles = StyleSheet.create({
+    header: {
+        color: "white",
+        textAlignVertical: "center"
+    }
+})
 
 export default SearchRestaurants;
