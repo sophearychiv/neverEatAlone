@@ -1,8 +1,7 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import axios from 'axios';
 import Restaurant from './Restaurant';
-import { Card, ListItem, Button, Icon } from 'react-native-elements';
 import SearchBar from './SearchBar';
 import { Header } from 'native-base';
 
@@ -36,7 +35,7 @@ class SearchRestaurants extends React.Component {
                 // eslint-disable-next-line camelcase
                 sort_by: 'distance',
                 categories: category,
-                limit: 7
+                limit: 8
             }
         };
         return axios.get('https://api.yelp.com/v3/businesses/search', config)
@@ -56,24 +55,37 @@ class SearchRestaurants extends React.Component {
     search = (location, category) => {
         this.fetchData(location, category);
     }
+
+    onItemSelected = (id) => {
+
+    }
     render() {
 
         let restCards;
 
         if (this.state.rests.length !== 0) {
             restCards = this.state.rests.map((rest, i) => {
-                return [<Restaurant
+                return (
+                        <Restaurant
                             key={i}
+                            id={rest.id}
                             name={rest.name}
                             imageUrl={rest.image_url}
-                            />]
+                            categories={rest.categories}
+                            distance={rest.distance}
+                            onItemPressed={this.onItemSelected(rest.id)}
+                        />
+                );
             });
             return (
                 <View>
-                    <Header>
-                        <Text style={styles.header}> Restaurants Found </Text>
-                    </Header>
-                    {restCards}
+                    <ScrollView>
+
+                        <Header>
+                            <Text style={styles.header}> Restaurants Found </Text>
+                        </Header>
+                        {restCards}
+                    </ScrollView>
                 </View>
                 );
         } else {
@@ -86,6 +98,9 @@ const styles = StyleSheet.create({
     header: {
         color: "white",
         textAlignVertical: "center"
+    },
+    listContainer: {
+        width: "100%"
     }
 })
 
