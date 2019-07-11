@@ -1,6 +1,5 @@
 import React from 'react';
 import {StyleSheet, Text, View, Button} from 'react-native';
-// import SearchRestaurants from './SearchRestaurants';
 
 class Home extends React.Component {
     render() {
@@ -29,8 +28,6 @@ class Home extends React.Component {
                         onPress={()=> navigate("Availability")}
                     />
                 </View>
-
-               
             </View>
         );
     }
