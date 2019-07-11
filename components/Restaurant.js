@@ -1,6 +1,5 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet} from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 
 const Restaurant = props => {
     let categories = props.categories.map((cat) => {
@@ -15,8 +14,9 @@ const Restaurant = props => {
     if (!props.imageUrl) {
         finalImageUrl = "https://anrp.tamu.edu/wp-content/uploads/sites/29/2014/12/Image-Not-Available.jpg"
     }
-    return (
-        <TouchableOpacity onPress={props.onItemPressed}>
+
+        return(
+            <TouchableOpacity onPress={props.onItemPressed}>
             <View style={styles.container} >
                 <Image 
                     style={styles.image}
@@ -30,7 +30,10 @@ const Restaurant = props => {
                 </View>
             </View>
         </TouchableOpacity>
-    );
+        );
+    // }
+        
+        
 }
 
 const styles = StyleSheet.create({

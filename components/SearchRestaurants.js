@@ -4,6 +4,7 @@ import axios from 'axios';
 import Restaurant from './Restaurant';
 import SearchBar from './SearchBar';
 import { Header } from 'native-base';
+import RestDetails from './RestDetails';
 
 
 
@@ -14,6 +15,7 @@ class SearchRestaurants extends React.Component {
 
         this.state = {
             rests : [],
+            selectedRest: null,
             message: 'something'
         };
     }
@@ -57,13 +59,20 @@ class SearchRestaurants extends React.Component {
     }
 
     onItemSelected = (id) => {
-
+        const selectedRest = this.state.rests.find(rest => rest.id === id);
+        this.setState({
+            selectedRest
+        });
     }
     render() {
-
         let restCards;
 
-        if (this.state.rests.length !== 0) {
+
+        if (this.state.selectedRest) {
+            return (
+                <RestDetails rest={this.state.selectedRest}/>
+            );
+        } else if (this.state.rests.length !== 0) {
             restCards = this.state.rests.map((rest, i) => {
                 return (
                         <Restaurant
@@ -73,7 +82,8 @@ class SearchRestaurants extends React.Component {
                             imageUrl={rest.image_url}
                             categories={rest.categories}
                             distance={rest.distance}
-                            onItemPressed={this.onItemSelected(rest.id)}
+                            onItemPressed={() => this.onItemSelected(rest.id)}
+                            selectedRest={this.state.selectedRest}
                         />
                 );
             });
