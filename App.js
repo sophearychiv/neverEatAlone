@@ -7,7 +7,7 @@ import Availability from './components/Availability';
 import {createStackNavigator, createAppContainer} from 'react-navigation';
 
 const MainNavigator = createStackNavigator({
-  //Login: {screen: Login},
+  // Login: {screen: Login},
   Home: {screen: Home},
   SearchRestaurants: {screen: SearchRestaurants},
   SearchPeople: {screen: SearchPeople},

@@ -29,7 +29,7 @@ class SearchRestaurants extends React.Component {
 
         const config = {
             headers: {
-                Authorization: `Bearer ${CONFIG.API_KEY}`,
+                Authorization: `Bearer ${CONFIG.YELP_API_KEY}`,
             },
             params: {
                 term: 'restaurants',
