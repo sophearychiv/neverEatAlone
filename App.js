@@ -4,16 +4,21 @@ import Login from './components/Login';
 import Home from './components/Home';
 import SearchRestaurants from './components/SearchRestaurants';
 import SearchPeople from './components/SearchPeople';
-import Availability from './components/Availability';
+import Profile from './components/Profile';
 
 import {createStackNavigator, createAppContainer} from 'react-navigation';
 
 const MainNavigator = createStackNavigator({
   Home: {screen: Home},
   Login: {screen: Login},
-  SearchRestaurants: {screen: SearchRestaurants},
+  SearchRestaurants: {
+    screen: SearchRestaurants,
+    navigationOptions: {
+      title: "Search Restaurants"
+    }
+  },
   SearchPeople: {screen: SearchPeople},
-  Availability: {screen: Availability}
+  Profile: {screen: Profile}
 });
 
 let Navigation = createAppContainer(MainNavigator);

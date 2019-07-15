@@ -41,8 +41,8 @@ class Home extends React.Component {
                 
                 <View style={styles.nav}>
                     <Button 
-                        title="Check Your Availability"
-                        onPress={()=> navigate("Availability")}
+                        title="Go to Your Profile"
+                        onPress={()=> navigate("Profile")}
                     />
                 </View>
             </View>
