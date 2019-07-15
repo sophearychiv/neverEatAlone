@@ -32,7 +32,6 @@ class SearchBar extends React.Component {
                             <Item fixedLabel>
                                 <Label>Location</Label>
                                 <Input 
-                                    // placeholder="Seattle, WA 98161"
                                     value={this.state.location}
                                     onChangeText={val => this.updateLocationState(val)}
                                 />
@@ -40,7 +39,6 @@ class SearchBar extends React.Component {
                             <Item fixedLabel>
                                 <Label>Categories</Label>
                                 <Input 
-                                    // placeholder="thai, italian"
                                     value={this.state.category}
                                     onChangeText={val => this.updateCategoryState(val)}
                                 />
@@ -69,16 +67,13 @@ const styles = StyleSheet.create({
     submitText: {
         color: "white",
         fontSize: 20,
-        // textAlignVertical: "center"
     },
 
     submitButton: {
         justifyContent: "center",
-        // flex: 0,
         marginTop: "5%",
         width: "60%",
         alignSelf: "center",
-        // alignSelf: "stretch",
         borderRadius: 5,
         textAlignVertical: "center"
     }
