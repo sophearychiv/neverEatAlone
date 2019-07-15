@@ -13,8 +13,6 @@ class Login extends React.Component {
 
     cacheLocalLogin = async(obj) => {
         try {
-            debugger;
-            console.log(obj);
             await AsyncStorage.setItem('access_token', JSON.stringify(obj));
             this.props.navigation.navigate('Home');
         } catch (error) {
@@ -24,13 +22,15 @@ class Login extends React.Component {
 
     async logIn() {
         try {
+            const CONFIG = require('../secrets.json');
+            
             const {
             type,
             token,
             expires,
             permissions,
             declinedPermissions,
-            } = await Facebook.logInWithReadPermissionsAsync('<app_id>', { permissions: ['public_profile','email']});
+            } = await Facebook.logInWithReadPermissionsAsync(`${CONFIG.FB_API_KEY}`, { permissions: ['public_profile','email']});
             
             if (type === 'success') {
                 fetch(`https://graph.facebook.com/me?access_token=${token}&fields=id,name,email,picture.type(large)`)
