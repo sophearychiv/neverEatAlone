@@ -1,8 +1,26 @@
 import React from 'react';
-import {StyleSheet, Text, View, Button} from 'react-native';
+import {StyleSheet, AsyncStorage, Text, View, Button} from 'react-native';
 
 class Home extends React.Component {
+    async getToken() {
+        try {
+            await AsyncStorage.removeItem("access_token");
+            let token = await AsyncStorage.getItem('access_token');
+            console.log(token);
+            if (token && token !== '') {
+              this.props.navigation.goBack();
+            } else {
+                this.props.navigation.dismiss();
+                this.props.navigation.navigate('Login');
+            }
+        }catch(error){
+            console.log(error);
+        }
+    }
+
     render() {
+        this.getToken();
+
         const {navigate} = this.props.navigation;
 
         return (

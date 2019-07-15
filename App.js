@@ -1,3 +1,5 @@
+import React from 'react';
+import { AsyncStorage, View } from 'react-native';
 import Login from './components/Login';
 import Home from './components/Home';
 import SearchRestaurants from './components/SearchRestaurants';
@@ -7,14 +9,26 @@ import Availability from './components/Availability';
 import {createStackNavigator, createAppContainer} from 'react-navigation';
 
 const MainNavigator = createStackNavigator({
-  //Login: {screen: Login},
   Home: {screen: Home},
+  Login: {screen: Login},
   SearchRestaurants: {screen: SearchRestaurants},
   SearchPeople: {screen: SearchPeople},
   Availability: {screen: Availability}
 });
 
-const App = createAppContainer(MainNavigator);
+let Navigation = createAppContainer(MainNavigator);
 
-export default App;
+export default Navigation;
+// export default class App extends React.Component{
 
+
+//   render(){
+//     this.getToken();
+//     if(this.state.status === 'Navigation') {
+//       return(<Navigation></Navigation>);
+//     }
+//     return(
+//         <View></View>
+//     );
+//   }
+// };
