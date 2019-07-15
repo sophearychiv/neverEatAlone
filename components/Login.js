@@ -30,7 +30,7 @@ class Login extends React.Component {
             expires,
             permissions,
             declinedPermissions,
-            } = await Facebook.logInWithReadPermissionsAsync('458524521370882', { permissions: ['public_profile','email']});
+            } = await Facebook.logInWithReadPermissionsAsync('<app_id>', { permissions: ['public_profile','email']});
             
             if (type === 'success') {
                 fetch(`https://graph.facebook.com/me?access_token=${token}&fields=id,name,email,picture.type(large)`)
