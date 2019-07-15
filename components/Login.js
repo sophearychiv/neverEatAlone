@@ -1,21 +1,59 @@
 import React from 'react';
-import {StyleSheet,TouchableHighlight, Text, View} from 'react-native';
+import {StyleSheet, AsyncStorage, Text, View} from 'react-native';
 import { SocialIcon } from 'react-native-elements';
 import * as Facebook from 'expo-facebook';
 
-class Home extends React.Component {
+class Login extends React.Component {
+  
+    mapStateToProps = (state) => {
+        return {
+            email: state.todos
+        };
+    }
 
-    loginFacebook = () => {
-        Facebook.logInWithReadPermissionsAsync('458524521370882', { permissions: ['public_profile']});
+    cacheLocalLogin = async(obj) => {
+        try {
+            debugger;
+            console.log(obj);
+            await AsyncStorage.setItem('access_token', JSON.stringify(obj));
+            this.props.navigation.navigate('Home');
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async logIn() {
+        try {
+            const {
+            type,
+            token,
+            expires,
+            permissions,
+            declinedPermissions,
+            } = await Facebook.logInWithReadPermissionsAsync('<app_id>', { permissions: ['public_profile','email']});
+            
+            if (type === 'success') {
+                fetch(`https://graph.facebook.com/me?access_token=${token}&fields=id,name,email,picture.type(large)`)
+                .then(res => res.json())
+                .then(obj => this.cacheLocalLogin(obj));
+            } else {
+            // type === 'cancel'
+            }
+        } catch ({ message }) {
+            alert(`Facebook Login Error: ${message}`);
+        }
+    }
+
+    loginFacebook = async() => {
+        this.logIn();
     }
 
     loginLinkedIn = () => {
-
+        alert(`Not yet!`);
     }
 
     render() {
         const {navigate} = this.props.navigation;
-
         return (
             <View style={styles.container}>
                 <Text>Welcome to Never Eat Alone</Text>
@@ -53,4 +91,4 @@ const styles = StyleSheet.create({
     }
   });
 
-export default Home;
+export default Login;
