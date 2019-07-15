@@ -7,7 +7,7 @@ class SearchBar extends React.Component {
         super(props);
         this.state = {
             location: "Seattle, WA 98161",
-            category: null,
+            category: "italian, thai",
         };
     }
 
@@ -35,7 +35,7 @@ class SearchBar extends React.Component {
                             <Item fixedLabel>
                                 <Label>Location</Label>
                                 <Input 
-                                    placeholder="Seattle, WA 98161"
+                                    // placeholder="Seattle, WA 98161"
                                     value={this.state.location}
                                     onChangeText={val => this.updateLocationState(val)}
                                 />
@@ -43,7 +43,7 @@ class SearchBar extends React.Component {
                             <Item fixedLabel>
                                 <Label>Categories</Label>
                                 <Input 
-                                    placeholder="thai, italian"
+                                    // placeholder="thai, italian"
                                     value={this.state.category}
                                     onChangeText={val => this.updateCategoryState(val)}
                                 />

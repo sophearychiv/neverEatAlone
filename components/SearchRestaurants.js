@@ -55,6 +55,7 @@ class SearchRestaurants extends React.Component {
     }
 
     search = (location, category) => {
+        category = category.toLowerCase();
         this.fetchData(location, category);
     }
 

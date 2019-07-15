@@ -17,19 +17,19 @@ const Restaurant = props => {
 
         return(
             <TouchableOpacity onPress={props.onItemPressed}>
-            <View style={styles.container} >
-                <Image 
-                    style={styles.image}
-                    resizeMode="cover"
-                    source={{uri:finalImageUrl}}
-                />
-                <View>
-                    <Text style={styles.restName}>{props.name}</Text>
-                    <Text>{categories}</Text>
-                    <Text style={styles.distance}>{distance} miles</Text>
+                <View style={styles.container} >
+                    <Image 
+                        style={styles.image}
+                        resizeMode="cover"
+                        source={{uri:finalImageUrl}}
+                    />
+                    <View>
+                        <Text style={styles.restName}>{props.name}</Text>
+                        <Text>{categories}</Text>
+                        <Text style={styles.distance}>{distance} miles</Text>
+                    </View>
                 </View>
-            </View>
-        </TouchableOpacity>
+            </TouchableOpacity>
         );
     // }
         

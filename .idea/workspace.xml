@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bbe9e8d9-6496-4253-8d0c-e5b8d4d2c556" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/RestDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/RestDetails.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/Restaurant.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/Restaurant.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/SearchBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/SearchBar.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/SearchRestaurants.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/SearchRestaurants.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -15,8 +18,8 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="840" />
-    <option name="y" value="23" />
+    <option name="x" value="781" />
+    <option name="y" value="28" />
     <option name="width" value="840" />
     <option name="height" value="947" />
   </component>
@@ -25,7 +28,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -37,6 +40,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="AndroidView">
         <subPane>
           <expand>
@@ -48,7 +52,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -82,7 +85,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="840" y="23" width="840" height="947" extended-state="0" />
+    <frame x="781" y="28" width="840" height="947" extended-state="0" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
       <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.49749374" />
