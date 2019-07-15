@@ -11,6 +11,7 @@ import {createStackNavigator, createAppContainer} from 'react-navigation';
 const MainNavigator = createStackNavigator({
   Home: {screen: Home},
   Login: {screen: Login},
+  Login: {screen: Login},
   SearchRestaurants: {screen: SearchRestaurants},
   SearchPeople: {screen: SearchPeople},
   Availability: {screen: Availability}

@@ -1,10 +1,10 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import axios from 'axios';
 import Restaurant from './Restaurant';
-import { Card, ListItem, Button, Icon } from 'react-native-elements';
 import SearchBar from './SearchBar';
 import { Header } from 'native-base';
+import RestDetails from './RestDetails';
 
 
 
@@ -15,6 +15,7 @@ class SearchRestaurants extends React.Component {
 
         this.state = {
             rests : [],
+            selectedRest: null,
             message: 'something'
         };
     }
@@ -28,7 +29,7 @@ class SearchRestaurants extends React.Component {
 
         const config = {
             headers: {
-                Authorization: `Bearer ${CONFIG.API_KEY}`,
+                Authorization: `Bearer ${CONFIG.YELP_API_KEY}`,
             },
             params: {
                 term: 'restaurants',
@@ -36,7 +37,7 @@ class SearchRestaurants extends React.Component {
                 // eslint-disable-next-line camelcase
                 sort_by: 'distance',
                 categories: category,
-                limit: 7
+                limit: 8
             }
         };
         return axios.get('https://api.yelp.com/v3/businesses/search', config)
@@ -56,24 +57,45 @@ class SearchRestaurants extends React.Component {
     search = (location, category) => {
         this.fetchData(location, category);
     }
-    render() {
 
+    onItemSelected = (id) => {
+        const selectedRest = this.state.rests.find(rest => rest.id === id);
+        this.setState({
+            selectedRest
+        });
+    }
+    render() {
         let restCards;
 
-        if (this.state.rests.length !== 0) {
+
+        if (this.state.selectedRest) {
+            return (
+                <RestDetails rest={this.state.selectedRest}/>
+            );
+        } else if (this.state.rests.length !== 0) {
             restCards = this.state.rests.map((rest, i) => {
-                return [<Restaurant
+                return (
+                        <Restaurant
                             key={i}
+                            id={rest.id}
                             name={rest.name}
                             imageUrl={rest.image_url}
-                            />]
+                            categories={rest.categories}
+                            distance={rest.distance}
+                            onItemPressed={() => this.onItemSelected(rest.id)}
+                            selectedRest={this.state.selectedRest}
+                        />
+                );
             });
             return (
                 <View>
-                    <Header>
-                        <Text style={styles.header}> Restaurants Found </Text>
-                    </Header>
-                    {restCards}
+                    <ScrollView>
+
+                        <Header>
+                            <Text style={styles.header}> Restaurants Found </Text>
+                        </Header>
+                        {restCards}
+                    </ScrollView>
                 </View>
                 );
         } else {
@@ -86,6 +108,9 @@ const styles = StyleSheet.create({
     header: {
         color: "white",
         textAlignVertical: "center"
+    },
+    listContainer: {
+        width: "100%"
     }
 })
 
