@@ -21,16 +21,16 @@ class RestDetails extends React.Component {
     }
   }
 
-  async componentDidMount() {
-    await this.markInterested();
-  }
+  // async componentDidMount() {
+  //   await this.markInterested();
+  // }
 
   markInterested = () => {
     const config = {
       userId: "1",
       restId: this.props.rest.id
     }
-    return axios.post("http://192.168.1.194:4567/interests", config)
+    return axios.post("http://172.24.26.244:4567/interests", config)
                 .then(response => {
                   console.log(response);
                   // if (response.data.status === 200){
@@ -100,17 +100,16 @@ class RestDetails extends React.Component {
                 </View>
               </Body>
             </CardItem>
-            <CardItem>
-              <Left>
-              <Button 
-                danger
-                onPress={this.markInterested}
-              >
-                {interestButton}
-              </Button>
-              </Left>
-            </CardItem>
           </Card>
+          <View>
+            <Button 
+                  danger
+                  onPress={() => this.markInterested()}
+            >
+                  {interestButton}
+            </Button>
+          </View>
+          
         </Content>
       </Container>
     );
