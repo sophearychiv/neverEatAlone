@@ -30,7 +30,7 @@ class RestDetails extends React.Component {
       userId: "1",
       restId: this.props.rest.id
     }
-    return axios.post("http://localhost:4567/interests", config)
+    return axios.post("http://192.168.1.194:4567/interests", config)
                 .then(response => {
                   console.log(response);
                   // if (response.data.status === 200){
@@ -44,6 +44,18 @@ class RestDetails extends React.Component {
                     message: error
                   })
                 });
+
+    // fetch('http://192.168.1.194:4567/interests', {
+    //   method: 'POST',
+    //   headers: {
+    //     Accept: 'application/json',
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify({
+    //     userId: "1",
+    //     restId: this.props.rest.id,
+    //   }),
+    // });
   }
 
   render() {
@@ -61,6 +73,7 @@ class RestDetails extends React.Component {
     }
 
     console.log(this.state.interested);
+    console.log(this.state.message);
     
   
     return (
