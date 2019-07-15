@@ -4,7 +4,6 @@ import {StyleSheet, AsyncStorage, Text, View, Button} from 'react-native';
 class Home extends React.Component {
     async getToken() {
         try {
-            await AsyncStorage.removeItem("access_token");
             let token = await AsyncStorage.getItem('access_token');
             console.log(token);
             if (token && token !== '') {
