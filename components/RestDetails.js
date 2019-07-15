@@ -21,9 +21,9 @@ class RestDetails extends React.Component {
     }
   }
 
-  // async componentDidMount() {
-  //   await this.markInterested();
-  // }
+  async componentDidMount() {
+    await this.markInterested();
+  }
 
   markInterested = () => {
     const config = {
