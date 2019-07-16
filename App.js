@@ -1,5 +1,5 @@
 import React from 'react';
-import { AsyncStorage, View } from 'react-native';
+import { AsyncStorage, View, Text } from 'react-native';
 import Login from './components/Login';
 import Home from './components/Home';
 import SearchRestaurants from './components/SearchRestaurants';
@@ -8,9 +8,15 @@ import Profile from './components/Profile';
 
 import {createStackNavigator, createAppContainer} from 'react-navigation';
 
+
 const MainNavigator = createStackNavigator({
   Home: {screen: Home},
-  Login: {screen: Login},
+  Login: {
+    screen: Login,
+    navigationOptions: {
+      headerLeft: null
+    }
+  },
   SearchRestaurants: {
     screen: SearchRestaurants,
     navigationOptions: {
@@ -18,22 +24,15 @@ const MainNavigator = createStackNavigator({
     }
   },
   SearchPeople: {screen: SearchPeople},
-  Profile: {screen: Profile}
+  Profile: {
+    screen: Profile,
+    navigationOptions: {
+      title: "Profile"
+    }
+  }
 });
 
 let Navigation = createAppContainer(MainNavigator);
 
 export default Navigation;
-// export default class App extends React.Component{
 
-
-//   render(){
-//     this.getToken();
-//     if(this.state.status === 'Navigation') {
-//       return(<Navigation></Navigation>);
-//     }
-//     return(
-//         <View></View>
-//     );
-//   }
-// };

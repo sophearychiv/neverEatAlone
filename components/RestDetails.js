@@ -30,7 +30,7 @@ class RestDetails extends React.Component {
       userId: "1",
       restId: this.props.rest.id
     }
-    return axios.post("http://172.24.26.244:4567/interests", config)
+    return axios.post("http://192.168.1.194:4567/interests", config)
                 .then(response => {
                   console.log(response);
                   // if (response.data.status === 200){

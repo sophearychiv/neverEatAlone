@@ -1,15 +1,24 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, Image} from 'react-native';
+import {Container, Content, Thumbnail} from 'native-base';
 
 
-class Profile extends React.Component {
-    render() {
+const Profile = (props) => {
+    // constructor(props) {
+    //     super(props);
+    // }
+    // render() {
+        const { navigation } = props;
+        const name = navigation.getParam('name', 'name');
+        const photoUrl = navigation.getParam('photoUrl', 'photo');
         return (
-            <View>
-                <Text> Profile </Text>
-            </View>
+            <Container>
+                <Content>
+                    <Thumbnail size={80} source={{uri: photoUrl}} />
+                </Content>
+            </Container>
         );
-    }
+    // }
 }
 
 export default Profile;

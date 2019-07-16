@@ -1,12 +1,53 @@
 import React from 'react';
-import {StyleSheet, AsyncStorage, Text, View, Button} from 'react-native';
+import {StyleSheet, AsyncStorage, View, StatusBar} from 'react-native';
+import Profile from './Profile';
+import { Font, AppLoading } from "expo";
+import {
+    Thumbnail,
+    Button,
+    Text,
+    Container,
+    Card,
+    CardItem,
+    Body,
+    Content,
+    Header,
+    Title,
+    Left,
+    Icon,
+    Right
+} from 'native-base';
 
 class Home extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            name: null,
+            photoUrl: null,
+            loading: true
+        }
+        this.getToken();
+    }
+
+
     async getToken() {
         try {
-            let token = await AsyncStorage.getItem('access_token');
-            console.log(token);
+            let token;
+            // token = await AsyncStorage.removeItem('access_token');
+            token = await AsyncStorage.getItem('access_token');
+            // console.log(token);
+            
+            
             if (token && token !== '') {
+                const userInfo = JSON.parse(token);
+                this.setState({
+                    isLoggedIn: true,
+                    name: userInfo.name,
+                    photoUrl: userInfo.picture.data.url
+                });
+                this.setState({});
+                
               this.props.navigation.goBack();
             } else {
                 this.props.navigation.dismiss();
@@ -17,36 +58,118 @@ class Home extends React.Component {
         }
     }
 
+    async componentWillMount() {
+        await Font.loadAsync({
+          Roboto: require("../node_modules/native-base/Fonts/Roboto.ttf"),
+          Roboto_medium: require("../node_modules/native-base/Fonts/Roboto_medium.ttf")
+        });
+        this.setState({ loading: false });
+      }
+
     render() {
-        this.getToken();
-
+        // console.log(this.state);
+        
         const {navigate} = this.props.navigation;
+            if (this.state.loading) {
+                return (
+                <View><AppLoading/></View>
+                );
+            }
 
-        return (
-            <View style={styles.container}>
-                <Text>What would you like to do?</Text>
-                <View style={styles.nav}>
-                    <Button
-                        title="Search Restaurants"
-                        onPress={()=> navigate("SearchRestaurants")}
-                    />
-                </View>
-                
-                <View style={styles.nav}>
-                    <Button 
-                        title="Search People"
-                        onPress={()=> navigate("SearchPeople")}
-                    />
-                </View>
-                
-                <View style={styles.nav}>
-                    <Button 
-                        title="Go to Your Profile"
-                        onPress={()=> navigate("Profile")}
-                    />
-                </View>
-            </View>
-        );
+            return (
+
+                <Container>
+                    <Header>
+                        <Left>
+                            <Button
+                            transparent
+                            onPress={() => navigate("DrawerOpen")}
+                            >
+                            <Icon name="menu" />
+                            </Button>
+                        </Left>
+                        <Body>
+                            <Title>Home</Title>
+                        </Body>
+                        <Right />
+                    </Header>
+                    <Content padder>
+                        <Thumbnail size={80} source={{uri: this.state.photoUrl}} />
+                        <Card>
+                            <CardItem>
+                            <Body>
+                                <Text style={{alignSelf: "center"}}>Never Eat Alone!</Text>
+                            </Body>
+                            </CardItem>
+                        </Card>
+                        <Button
+                            full
+                            rounded
+                            dark
+                            style={{ marginTop: 10 }}
+                            onPress={() => navigate("SearchRestaurants")}
+                        >
+                            <Text>Search Restaurants</Text>
+                        </Button>
+                        <Button
+                            full
+                            rounded
+                            success
+                            style={{ marginTop: 10 }}
+                            onPress={() => navigate("SearchPeople")}
+                        >
+                            <Text>Search People</Text>
+                        </Button>
+                        <Button
+                            full
+                            rounded
+                            primary
+                            style={{ marginTop: 10 }}
+                            onPress={() => {
+                                /* 1. Navigate to the Profile route with params */
+                                navigate('Profile', {
+                                  name: this.state.name,
+                                  photoUrl: this.state.photoUrl,
+                                });
+                              }}
+                        >
+                            <Text>Go to Profile</Text>
+                        </Button>
+                    </Content>
+                </Container>
+
+                // <View style={styles.container}>
+                //     {/* <Thumbnail size={80} source={{uri: this.state.photoUrl}} /> */}
+                //     <View style={styles.nav}>
+                //         <Button
+                //             title="Search Restaurants"
+                //             onPress={()=> navigate("SearchRestaurants")}
+                //         />
+                //     </View>
+                    
+                //     <View style={styles.nav}>
+                //         <Button 
+                //             title="Search People"
+                //             onPress={()=> navigate("SearchPeople")}
+                //         />
+                //     </View>
+                    
+                //     <View style={styles.nav}>
+                //         <Button 
+                //             title="Go to Your Profile"
+                //             onPress={() => {
+                //                 /* 1. Navigate to the Profile route with params */
+                //                 this.props.navigation.navigate('Profile', {
+                //                   name: this.state.name,
+                //                   photoUrl: this.state.photoUrl,
+                //                 });
+                //               }}
+                            
+                //         />
+                //     </View>
+                // </View>
+            );
+        // }
     }
 }
 
