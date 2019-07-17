@@ -34,6 +34,7 @@ class Home extends React.Component {
 
 
     async getToken() {
+
         try {
             let token;
             // token = await AsyncStorage.removeItem('access_token');
@@ -48,7 +49,6 @@ class Home extends React.Component {
                     name: userInfo.name,
                     photoUrl: userInfo.picture.data.url
                 });
-                this.setState({});
                 
               this.props.navigation.goBack();
             } else {
@@ -78,10 +78,12 @@ class Home extends React.Component {
 
 
     async logout() {
-        await AsyncStorage.removeItem('access_token');
-        this.setState({
-            isLoggedIn: false
-        })
+        await AsyncStorage.clear();
+        this.props.navigation.navigate('Auth');
+        // await AsyncStorage.removeItem('access_token');
+        // this.setState({
+        //     isLoggedIn: false
+        // })
     }
 
     render() {
@@ -96,7 +98,6 @@ class Home extends React.Component {
         }
 
         if (!this.state.isLoggedIn){
-            this.closeDrawer();
             this.getToken();
         }
 

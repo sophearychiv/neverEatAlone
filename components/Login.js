@@ -4,6 +4,10 @@ import { SocialIcon } from 'react-native-elements';
 import * as Facebook from 'expo-facebook';
 
 class Login extends React.Component {
+
+    static navigationOptions = {
+        title: 'Please log in'
+    };
   
     mapStateToProps = (state) => {
         return {
@@ -14,7 +18,7 @@ class Login extends React.Component {
     cacheLocalLogin = async(obj) => {
         try {
             await AsyncStorage.setItem('access_token', JSON.stringify(obj));
-            this.props.navigation.navigate('Home');
+            this.props.navigation.navigate('App');
         } catch (error) {
             console.log(error);
         }
