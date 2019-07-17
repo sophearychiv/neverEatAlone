@@ -95,6 +95,11 @@ class Home extends React.Component {
             );
         }
 
+        if (!this.state.isLoggedIn){
+            this.closeDrawer();
+            this.getToken();
+        }
+
         return (
 
             <Drawer 
