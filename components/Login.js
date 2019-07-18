@@ -10,7 +10,7 @@ class Login extends React.Component {
         super();
         this.state = {
             loggedInUser: null,
-            userToBeAdded: null,
+            isLoggedIn: false,
             error: null
         }
     }
@@ -35,7 +35,8 @@ class Login extends React.Component {
                     lastName: user.name,
                     email: user.email,
                     photoUrl: "string too long"
-                }
+                },
+                isLoggedIn: true
             });
             
             this.props.navigation.navigate('App');
@@ -49,9 +50,10 @@ class Login extends React.Component {
       }
 
     getUserFromDatabase(user){
-        // console.log(user.id);
+        console.log("user is" + user);
         return axios.get("http://192.168.1.194:4567/users/" + user.fbId)
                 .then(response => {
+                    console.log('response is', JSON.stringify(response));
                     if(response.data.fbId){
                         console.log("fbId is true");
                         // this.setState({
@@ -60,7 +62,7 @@ class Login extends React.Component {
                     } else {
                         console.log("fbId is supposed to be false");
                         console.log(response.data.fbId);
-                        this.saveUserToDatabase(userId);
+                        this.saveUserToDatabase(user.fbId);
 
                     }
                 })
@@ -129,9 +131,9 @@ class Login extends React.Component {
 
     render() {
 
-        if (this.state.loggedInUser){
+        if (this.state.loggedInUser && this.state.loggedInUser.fbId){
             this.getUserFromDatabase(this.state.loggedInUser);
-            console.log("loggin user is" + this.state.loggedInUser);
+            console.log("loggin user is" + JSON.stringify(this.state.loggedInUser));
             
         }
         const {navigate} = this.props.navigation;
