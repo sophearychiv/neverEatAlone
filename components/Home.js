@@ -2,7 +2,8 @@ import React from 'react';
 import {StyleSheet, AsyncStorage, View} from 'react-native';
 import { Drawer } from 'native-base';
 import SideBar from './SideBar';
-import { Font, AppLoading } from "expo";
+import { AppLoading } from "expo";
+import * as Font from 'expo-font'
 import {
     Thumbnail,
     Button,
@@ -37,9 +38,7 @@ class Home extends React.Component {
 
         try {
             let token;
-            // token = await AsyncStorage.removeItem('access_token');
             token = await AsyncStorage.getItem('access_token');
-            // console.log(token);
             
             
             if (token && token !== '') {
@@ -50,7 +49,7 @@ class Home extends React.Component {
                     photoUrl: userInfo.picture.data.url
                 });
                 
-              this.props.navigation.goBack();
+            //   this.props.navigation.goBack();
             } else {
                 this.props.navigation.dismiss();
                 this.props.navigation.navigate('Login');
@@ -60,7 +59,7 @@ class Home extends React.Component {
         }
     }
 
-    async componentWillMount() {
+    async UNSAFE_componentWillMount() {
         await Font.loadAsync({
           Roboto: require("../node_modules/native-base/Fonts/Roboto.ttf"),
           Roboto_medium: require("../node_modules/native-base/Fonts/Roboto_medium.ttf")
@@ -80,14 +79,10 @@ class Home extends React.Component {
     async logout() {
         await AsyncStorage.clear();
         this.props.navigation.navigate('Auth');
-        // await AsyncStorage.removeItem('access_token');
-        // this.setState({
-        //     isLoggedIn: false
-        // })
     }
 
     render() {
-        console.log(this.state);
+        // console.log(this.state);
         
         const {navigate} = this.props.navigation;
 
@@ -97,9 +92,9 @@ class Home extends React.Component {
             );
         }
 
-        if (!this.state.isLoggedIn){
-            this.getToken();
-        }
+        // if (!this.state.isLoggedIn){
+        //     this.getToken();
+        // }
 
         return (
 

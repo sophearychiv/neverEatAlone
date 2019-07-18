@@ -2,26 +2,73 @@ import React from 'react';
 import {StyleSheet, AsyncStorage, Text, View} from 'react-native';
 import { SocialIcon } from 'react-native-elements';
 import * as Facebook from 'expo-facebook';
+import axios from 'axios';
 
 class Login extends React.Component {
 
-    static navigationOptions = {
-        title: 'Please log in'
-    };
-  
+    constructor () {
+        super();
+        this.state = {
+            loggedInUser: null,
+            userToBeAdded: null,
+            error: null
+        }
+    }
+
     mapStateToProps = (state) => {
         return {
             email: state.todos
         };
     }
 
+
     cacheLocalLogin = async(obj) => {
         try {
             await AsyncStorage.setItem('access_token', JSON.stringify(obj));
+            const user = await AsyncStorage.getItem('access_token');
+            console.log("loggedInUser in cacheLocalLogin " + user);
+
+            this.setState({
+                loggedInUser: {
+                    fbId: user.id,
+                    firstName: user.name,
+                    lastName: user.name,
+                    email: user.email,
+                    photoUrl: "string too long"
+                }
+            });
+            
             this.props.navigation.navigate('App');
         } catch (error) {
             console.log(error);
         }
+    }
+
+    async componentDidMount() {
+       await this.getUserFromDatabase();
+      }
+
+    getUserFromDatabase(user){
+        // console.log(user.id);
+        return axios.get("http://192.168.1.194:4567/users/" + user.fbId)
+                .then(response => {
+                    if(response.data.fbId){
+                        console.log("fbId is true");
+                        // this.setState({
+                        //     loggedInUser: user
+                        // });
+                    } else {
+                        console.log("fbId is supposed to be false");
+                        console.log(response.data.fbId);
+                        this.saveUserToDatabase(userId);
+
+                    }
+                })
+                .catch(error => {
+                    this.setState({
+                        error
+                    });
+                })
     }
 
     async logIn() {
@@ -39,7 +86,7 @@ class Login extends React.Component {
             if (type === 'success') {
                 fetch(`https://graph.facebook.com/me?access_token=${token}&fields=id,name,email,picture.type(large)`)
                 .then(res => res.json())
-                .then(obj => this.cacheLocalLogin(obj));
+                .then(obj => this.cacheLocalLogin(obj))
             } else {
             // type === 'cancel'
             }
@@ -56,7 +103,37 @@ class Login extends React.Component {
         alert(`Not yet!`);
     }
 
+    saveUserToDatabase = async(user) => {
+        const newUser = {
+            fbId: user.id,
+            firstName: user.name,
+            lastName: user.name,
+            email: user.email,
+            photoUrl: "string too long"
+        }
+        return axios.post("http://192.168.1.194:4567/users", newUser)
+                .then(response => {
+                    if(response === "SUCCESS"){
+                        this.setState({
+                            userToBeAdded: null,
+                            loggedInUser: user
+                        });
+                    }
+                })
+                .catch(error => {
+                    this.setState({
+                        error
+                    })
+                })
+    }
+
     render() {
+
+        if (this.state.loggedInUser){
+            this.getUserFromDatabase(this.state.loggedInUser);
+            console.log("loggin user is" + this.state.loggedInUser);
+            
+        }
         const {navigate} = this.props.navigation;
         return (
             <View style={styles.container}>
