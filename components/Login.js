@@ -28,51 +28,34 @@ class Login extends React.Component {
             const user = await AsyncStorage.getItem('access_token');
             console.log("loggedInUser in cacheLocalLogin " + user);
 
-            this.getUserFromDatabase(user);
-
-            // this.setState({
-            //     loggedInUser: {
-            //         fbId: user.id,
-            //         firstName: user.name,
-            //         lastName: user.name,
-            //         email: user.email,
-            //         photoUrl: "string too long"
-            //     },
-            //     isLoggedIn: true
-            // });
+            this.getUserFromDatabase(JSON.parse(user));
             
-            // this.props.navigation.navigate('App');
+            this.props.navigation.navigate('App');
         } catch (error) {
             console.log(error);
         }
     }
 
-    // async componentDidMount() {
-    //    await this.getUserFromDatabase();
-    //   }
-
     getUserFromDatabase(user){
-        console.log("user is " + user);
-        return axios.get("http://192.168.1.194:4567/users/" + user.id)
-        // return axios.get("http://192.168.1.194:4567/users/" + user.fbId)
+        console.log("user is " + JSON.stringify(user));
+        console.log("user.id is " + user.id);
+        console.log("type of user is " + typeof user);
+        return axios.get("http://172.24.26.244:4567/users/" + user.id)
+        // return axios.get("http://192.168.1.194:4567/users/" + user.id)
                 .then(response => {
                     console.log('response is', JSON.stringify(response));
-                    if(response.data.fbId){
+                    console.log(typeof user);
+                    if(response.data.data.fbId){
                         console.log("fbId is true");
-                        // this.setState({
-                        //     loggedInUser: user
-                        // });
-                    } else {
-                        console.log("fbId is supposed to be false");
-                        console.log(response.data.fbId);
-                        this.saveUserToDatabase(user.fbId);
-
-                    }
+                    } 
                 })
                 .catch(error => {
-                    this.setState({
-                        error
-                    });
+                    console.log(error);
+                    console.log("data type of error: " + typeof error);
+                    console.log(error.response.status);
+                    if (error.response.status === 404){
+                        this.saveUserToDatabase(user);
+                    }
                 })
     }
 
@@ -116,29 +99,19 @@ class Login extends React.Component {
             email: user.email,
             photoUrl: "string too long"
         }
-        return axios.post("http://192.168.1.194:4567/users", newUser)
+        return axios.post("http://172.24.26.244:4567/users", newUser)
+        // return axios.post("http://192.168.1.194:4567/users", newUser)
                 .then(response => {
                     if(response === "SUCCESS"){
-                        this.setState({
-                            userToBeAdded: null,
-                            loggedInUser: user
-                        });
+                        console.log("new user added");
                     }
                 })
                 .catch(error => {
-                    this.setState({
-                        error
-                    })
+                    console.log("error with post request");
                 })
     }
 
     render() {
-
-        if (this.state.loggedInUser && this.state.loggedInUser.fbId){
-            this.getUserFromDatabase(this.state.loggedInUser);
-            console.log("loggin user is" + JSON.stringify(this.state.loggedInUser));
-            
-        }
         const {navigate} = this.props.navigation;
         return (
             <View style={styles.container}>
