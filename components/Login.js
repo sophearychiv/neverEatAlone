@@ -28,30 +28,33 @@ class Login extends React.Component {
             const user = await AsyncStorage.getItem('access_token');
             console.log("loggedInUser in cacheLocalLogin " + user);
 
-            this.setState({
-                loggedInUser: {
-                    fbId: user.id,
-                    firstName: user.name,
-                    lastName: user.name,
-                    email: user.email,
-                    photoUrl: "string too long"
-                },
-                isLoggedIn: true
-            });
+            this.getUserFromDatabase(user);
+
+            // this.setState({
+            //     loggedInUser: {
+            //         fbId: user.id,
+            //         firstName: user.name,
+            //         lastName: user.name,
+            //         email: user.email,
+            //         photoUrl: "string too long"
+            //     },
+            //     isLoggedIn: true
+            // });
             
-            this.props.navigation.navigate('App');
+            // this.props.navigation.navigate('App');
         } catch (error) {
             console.log(error);
         }
     }
 
-    async componentDidMount() {
-       await this.getUserFromDatabase();
-      }
+    // async componentDidMount() {
+    //    await this.getUserFromDatabase();
+    //   }
 
     getUserFromDatabase(user){
-        console.log("user is" + user);
-        return axios.get("http://192.168.1.194:4567/users/" + user.fbId)
+        console.log("user is " + user);
+        return axios.get("http://192.168.1.194:4567/users/" + user.id)
+        // return axios.get("http://192.168.1.194:4567/users/" + user.fbId)
                 .then(response => {
                     console.log('response is', JSON.stringify(response));
                     if(response.data.fbId){
