@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Text, View, StyleSheet } from 'react-native';
+import { Image, Text, View, StyleSheet, AsyncStorage } from 'react-native';
 import { 
     Container, 
     Content, 
@@ -17,22 +17,41 @@ class RestDetails extends React.Component {
     super(props);
     this.state = {
       interested: false,
+      interestedUserFbId: null,
       message: null
     }
+
   }
 
   // async componentDidMount() {
   //   await this.markInterested();
   // }
 
+  async componentDidMount() {
+    await this.getUserId();
+  }
+
+  async getUserId() {
+    const userString = await AsyncStorage.getItem('access_token');
+    const userFbId = JSON.parse(userString).id;
+    // console.log("userId in getUserID(): " + userId);
+    this.setState({
+      interestedUserFbId: userFbId
+    })
+  }
+
   markInterested = () => {
+    
+    // const userId = this.getUserId();
+    // const userId = this.state.interestedUserId;
+    // console.log("userId in markInterested(): " + userId);
     const config = {
-      userId: "1",
-      restId: this.props.rest.id
+      userFbId: this.state.interestedUserFbId,
+      restYelpId: this.props.rest.id
     }
     return axios.post("http://172.24.26.244:4567/interests", config)
                 .then(response => {
-                  console.log(response);
+                  // console.log(response);
                   // if (response.data.status === 200){
                     this.setState({
                       interested: true
@@ -44,18 +63,6 @@ class RestDetails extends React.Component {
                     message: error
                   })
                 });
-
-    // fetch('http://192.168.1.194:4567/interests', {
-    //   method: 'POST',
-    //   headers: {
-    //     Accept: 'application/json',
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({
-    //     userId: "1",
-    //     restId: this.props.rest.id,
-    //   }),
-    // });
   }
 
   render() {
@@ -72,8 +79,8 @@ class RestDetails extends React.Component {
       interestButton = <Text>Mark Interested</Text>
     }
 
-    console.log(this.state.interested);
-    console.log(this.state.message);
+    // console.log(this.state.interested);
+    // console.log(this.state.message);
     
   
     return (
