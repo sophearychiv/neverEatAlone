@@ -15,6 +15,7 @@ class SearchRestaurants extends React.Component {
 
         this.state = {
             rests : [],
+            restInterestedIn: null,
             selectedRest: null,
             message: 'something'
         };
@@ -65,13 +66,24 @@ class SearchRestaurants extends React.Component {
             selectedRest
         });
     }
+
+    isInterestedCallBack = (restId) => {
+        const rest = this.state.rests.find(rest => rest.id === restId)
+        this.setState({
+            restInterestedIn: rest
+        });
+    }
     render() {
         let restCards;
 
 
         if (this.state.selectedRest) {
             return (
-                <RestDetails rest={this.state.selectedRest}/>
+                <RestDetails 
+                    rest={this.state.selectedRest}
+                    isInterestedCallBack={this.isInterestedCallBack}
+                    restInterestedIn={this.state.restInterestedIn}
+                />
             );
         } else if (this.state.rests.length !== 0) {
             restCards = this.state.rests.map((rest, i) => {

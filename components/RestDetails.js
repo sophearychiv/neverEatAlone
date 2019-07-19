@@ -17,46 +17,72 @@ class RestDetails extends React.Component {
     super(props);
     this.state = {
       interested: false,
-      interestedUserFbId: null,
-      message: null
+      userFbId: null
     }
 
   }
 
-  // async componentDidMount() {
-  //   await this.markInterested();
+  // componentDidMount() {
+  //   console.log("componentWillMount");
+  //   const userFbId = '10156595066018931';
+  //   axios.get("http://192.168.1.194:4567/users/" + userFbId + "/interests/" + this.props.rest.id) // home
+  //           .then(response => {
+  //             console.log("setState in isInterested");
+  //             // this.setState({
+  //             //   interested: true
+  //             // })
+  //             this.handleIsInterested();
+
+  //           })
+  //           .catch(error => {
+  //             // return false;
+  //           })
   // }
 
-  async componentDidMount() {
-    await this.getUserId();
+  // handleIsInterested = () => {
+  //   this.props.isInterestedCallBack(this.props.rest.id);
+  // }
+
+  async componentDidMount(){
+    const userFbId = await this.getUserId();
+    await this.isInterested(userFbId);
+  }
+
+  isInterested = async(userFbId) => {
+    return axios.get("http://localhost:4567/users/" + userFbId + "/interests/" + this.props.rest.id)
+    // return axios.get("http://172.24.26.244:4567/users/" + this.state.userFbId + "/interests/" + this.props.rest.id) // Ada
+    //  await axios.get("http://192.168.1.194:4567/users/" + userFbId + "/interests/" + this.props.rest.id) // home
+            .then(response => {
+              console.log("setState in isInterested");
+              // this.handleIsInterested();
+              this.setState({
+                interested: true
+              })
+            })
+            .catch(error => {
+              // return false;
+            })
+
   }
 
   async getUserId() {
     const userString = await AsyncStorage.getItem('access_token');
     const userFbId = JSON.parse(userString).id;
-    // console.log("userId in getUserID(): " + userId);
-    this.setState({
-      interestedUserFbId: userFbId
-    })
+    return userFbId
   }
 
   markInterested = () => {
-    
-    // const userId = this.getUserId();
-    // const userId = this.state.interestedUserId;
-    // console.log("userId in markInterested(): " + userId);
     const config = {
-      userFbId: this.state.interestedUserFbId,
+      userFbId: this.state.userFbId,
       restYelpId: this.props.rest.id
     }
-    return axios.post("http://172.24.26.244:4567/interests", config)
+    return axios.post("http://localhost:4567/interests", config)
+    // return axios.post("http://172.24.26.244:4567/interests", config)
+    // return axios.post("http://192.168.1.194:4567/interests", config) //home
                 .then(response => {
-                  // console.log(response);
-                  // if (response.data.status === 200){
                     this.setState({
                       interested: true
                     })
-                  // }
                 })
                 .catch(error => {
                   this.setState({
@@ -66,6 +92,8 @@ class RestDetails extends React.Component {
   }
 
   render() {
+    console.log("render");
+
     let categories = this.props.rest.categories.map((cat) => {
         return cat.title
     });
@@ -75,12 +103,19 @@ class RestDetails extends React.Component {
     let interestButton;
     if (this.state.interested) {
       interestButton = <Text>Interested</Text>
-    }else {
+    }else{
       interestButton = <Text>Mark Interested</Text>
     }
 
-    // console.log(this.state.interested);
-    // console.log(this.state.message);
+    console.log("this.props.restInterestedIn: " + this.props.restInterestedIn);
+    console.log("this.props.rest: " + this.props.rest);
+
+    // if (this.props.restInterestedIn === this.props.rest) {
+      
+    //   interestButton = <Text>Interested</Text>
+    // }else{
+    //   interestButton = <Text>Mark Interested</Text>
+    // }
     
   
     return (
