@@ -6,6 +6,7 @@ import Home from './components/Home';
 import SearchRestaurants from './components/SearchRestaurants';
 import SearchPeople from './components/SearchPeople';
 import Profile from './components/Profile';
+import RestList from './components/RestList';
 
 class AuthLoadingScreen extends React.Component {
   constructor() {
@@ -27,17 +28,38 @@ class AuthLoadingScreen extends React.Component {
   }
 }
 
+const RestStack = createStackNavigator({
+  SearchRestaurants: {
+    screen: SearchRestaurants,
+    navigationOptions: {
+      title: "Search Restaurants",
+      header: {
+        left: null
+      }
+    }
+  },
+  RestList: {
+    screen: RestList,
+    navigationOptions: {
+      title: "Restaurants Found"
+    }
+  }
+})
+
 const AppStack = createStackNavigator({
   Home: {
     screen: Home
   },
   
-  SearchRestaurants: {
-    screen: SearchRestaurants,
-    navigationOptions: {
-      title: "Search Restaurants"
-    }
-  },
+  // SearchRestaurants: {
+  //   screen: SearchRestaurants,
+  //   navigationOptions: {
+  //     title: "Search Restaurants"
+  //   }
+  // },
+
+  SearchRestaurants: RestStack,
+
   SearchPeople: {
     screen: SearchPeople
   },
