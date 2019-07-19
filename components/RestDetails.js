@@ -20,32 +20,13 @@ class RestDetails extends React.Component {
       userFbId: null
     }
 
+    this.getUserId();
+
   }
 
-  // componentDidMount() {
-  //   console.log("componentWillMount");
-  //   const userFbId = '10156595066018931';
-  //   axios.get("http://192.168.1.194:4567/users/" + userFbId + "/interests/" + this.props.rest.id) // home
-  //           .then(response => {
-  //             console.log("setState in isInterested");
-  //             // this.setState({
-  //             //   interested: true
-  //             // })
-  //             this.handleIsInterested();
-
-  //           })
-  //           .catch(error => {
-  //             // return false;
-  //           })
-  // }
-
-  // handleIsInterested = () => {
-  //   this.props.isInterestedCallBack(this.props.rest.id);
-  // }
-
   async componentDidMount(){
-    const userFbId = await this.getUserId();
-    await this.isInterested(userFbId);
+    await this.getUserId();
+    await this.isInterested(this.state.userFbId);
   }
 
   isInterested = async(userFbId) => {
@@ -68,16 +49,19 @@ class RestDetails extends React.Component {
   async getUserId() {
     const userString = await AsyncStorage.getItem('access_token');
     const userFbId = JSON.parse(userString).id;
-    return userFbId
+    // return userFbId
+    this.setState({
+      userFbId
+    })
   }
 
-  markInterested = () => {
+  markInterested = async() => {
     const config = {
       userFbId: this.state.userFbId,
       restYelpId: this.props.rest.id
     }
     return axios.post("http://localhost:4567/interests", config)
-    // return axios.post("http://172.24.26.244:4567/interests", config)
+    // return axios.post("http://172.24.26.244:4567/interests", config) // Ada
     // return axios.post("http://192.168.1.194:4567/interests", config) //home
                 .then(response => {
                     this.setState({
@@ -106,17 +90,6 @@ class RestDetails extends React.Component {
     }else{
       interestButton = <Text>Mark Interested</Text>
     }
-
-    console.log("this.props.restInterestedIn: " + this.props.restInterestedIn);
-    console.log("this.props.rest: " + this.props.rest);
-
-    // if (this.props.restInterestedIn === this.props.rest) {
-      
-    //   interestButton = <Text>Interested</Text>
-    // }else{
-    //   interestButton = <Text>Mark Interested</Text>
-    // }
-    
   
     return (
       <Container>
