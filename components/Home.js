@@ -19,16 +19,19 @@ import {
     Icon,
     Right
 } from 'native-base';
+import axios from 'axios';
 
 class Home extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            fbId: null,
             name: null,
             photoUrl: null,
             loading: true,
-            isLoggedIn: false
+            isLoggedIn: false,
+            restsOfInterest: []
         }
         this.getToken();
     }
@@ -36,27 +39,69 @@ class Home extends React.Component {
 
     async getToken() {
 
-        try {
-            let token;
-            token = await AsyncStorage.getItem('access_token');
-            
-            
-            if (token && token !== '') {
-                const userInfo = JSON.parse(token);
+        await AsyncStorage.getItem('access_token')
+            .then(response => {
+                const userInfo = JSON.parse(response);
                 this.setState({
+                    fbId: userInfo.id,
                     isLoggedIn: true,
                     name: userInfo.name,
                     photoUrl: userInfo.picture.data.url
                 });
+                return userInfo;
+            }).then(userInfo => {
+                console.log("userid is " +userInfo.id);
+                return axios.get("http://localhost:4567/users/" + userInfo.id + "/interests")
+            }).then(interestResponse => {
+                console.log("interest response " + JSON.stringify(interestResponse.data.data));
+                // return interestResponse;
+                this.setState({
+                    restsOfInterest: interestResponse.data.data
+                });
+            })
+            .catch(error => {
+                console.log(error);
+            });
+            
+            
+            // if (token && token !== '') {
+            //     const userInfo = JSON.parse(token);
+            //     this.setState({
+            //         fbId: userInfo.id,
+            //         isLoggedIn: true,
+            //         name: userInfo.name,
+            //         photoUrl: userInfo.picture.data.url
+            //     });
                 
             //   this.props.navigation.goBack();
-            } else {
-                this.props.navigation.dismiss();
-                this.props.navigation.navigate('Login');
-            }
-        }catch(error){
-            console.log(error);
-        }
+            // } else {
+            //     this.props.navigation.dismiss();
+            //     this.props.navigation.navigate('Login');
+            // }
+    
+
+        // try {
+        //     let token;
+        //     token = await AsyncStorage.getItem('access_token');
+            
+            
+        //     if (token && token !== '') {
+        //         const userInfo = JSON.parse(token);
+        //         this.setState({
+        //             fbId: userInfo.id,
+        //             isLoggedIn: true,
+        //             name: userInfo.name,
+        //             photoUrl: userInfo.picture.data.url
+        //         });
+                
+        //     //   this.props.navigation.goBack();
+        //     } else {
+        //         this.props.navigation.dismiss();
+        //         this.props.navigation.navigate('Login');
+        //     }
+        // }catch(error){
+        //     console.log(error);
+        // }
     }
 
     async UNSAFE_componentWillMount() {
@@ -82,7 +127,10 @@ class Home extends React.Component {
     }
 
     render() {
-        // console.log(this.state);
+        // console.log("fbId " + this.state.fbId);
+        console.log(this.state);
+        // console.log("loggedInUser param: " + this.props.navigation.getParam("loggedInUser"));
+
         
         const {navigate} = this.props.navigation;
 
@@ -105,7 +153,8 @@ class Home extends React.Component {
                 logout={() => this.logout()}
                 isLoggedIn={this.state.isLoggedIn}
                 />} 
-            onClose={() => this.closeDrawer()} > 
+            onClose={() => this.closeDrawer()} 
+            > 
 
             <Container>
                 <Header>
@@ -136,7 +185,10 @@ class Home extends React.Component {
                         rounded
                         dark
                         style={{ marginTop: 10 }}
-                        onPress={() => navigate("SearchRestaurants")}
+                        onPress={() => navigate("SearchRestaurants", {
+                            loggedInUserId: this.state.fbId,
+                            restsOfInterest: this.state.restsOfInterest
+                        })}
                     >
                         <Text>Search Restaurants</Text>
                     </Button>

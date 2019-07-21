@@ -14,11 +14,12 @@ class SearchRestaurants extends React.Component {
 
         this.state = {
             rests : [],
-            restInterestedIn: null,
-            selectedRest: null,
+            // restInterestedIn: null,
+            // selectedRest: null,
             message: 'something',
             location: "Seattle, WA 98161",
             category: "italian, thai",
+            restsOfInterest: this.props.navigation.getParam("restsOfInterest")
         };
     }
 
@@ -39,17 +40,21 @@ class SearchRestaurants extends React.Component {
                 // eslint-disable-next-line camelcase
                 sort_by: 'distance',
                 categories: category,
-                limit: 8
+                limit: 15
             }
         };
         return axios.get('https://api.yelp.com/v3/businesses/search', config)
                     .then(response => {
+                        const restList = response.data.businesses.map(rest => rest);
                         this.setState({
-                            rests: response.data.businesses.map(rest => rest),
+                            rests: restList,
                             message: 'success'
                         });
+                        console.log("loggedInUser in SearchRestaurants is " + this.props.navigation.getParam("loggedInUser", "default user"));
                         this.props.navigation.navigate("RestList", {
-                            rests: this.state.rests,
+                            rests: restList,
+                            loggedInUserId: this.props.navigation.getParam("loggedInUserId"),
+                            restsOfInterest: this.props.navigation.getParam("restsOfInterest")
                         });
                     })
                     .catch(error => {
@@ -68,19 +73,19 @@ class SearchRestaurants extends React.Component {
         console.log("rests in SearchRestaurants: " + this.state.rests);
     }
 
-    onItemSelected = (id) => {
-        const selectedRest = this.state.rests.find(rest => rest.id === id);
-        this.setState({
-            selectedRest
-        });
-    }
+    // onItemSelected = (id) => {
+    //     const selectedRest = this.state.rests.find(rest => rest.id === id);
+    //     this.setState({
+    //         selectedRest
+    //     });
+    // }
 
-    isInterestedCallBack = (restId) => {
-        const rest = this.state.rests.find(rest => rest.id === restId)
-        this.setState({
-            restInterestedIn: rest
-        });
-    }
+    // isInterestedCallBack = (restId) => {
+    //     const rest = this.state.rests.find(rest => rest.id === restId)
+    //     this.setState({
+    //         restInterestedIn: rest
+    //     });
+    // }
 
     updateLocationState = (val) => {
         this.setState({
@@ -95,6 +100,8 @@ class SearchRestaurants extends React.Component {
     }
 
     render() {
+        console.log("loggedInUser in SearchRestaurants is " + this.props.navigation.getParam("loggedInUserId"));
+        console.log("restsOfInterest in SearchRestaurants is " + this.props.navigation.getParam("restsOfInterest"));
         const {navigate} = this.props.navigation;
         return(
             <Container>

@@ -30,7 +30,10 @@ class Login extends React.Component {
 
             this.getUserFromDatabase(JSON.parse(user));
             
-            this.props.navigation.navigate('App');
+            this.props.navigation.navigate('App', {
+                loggedInUser: JSON.parse(user)
+            });
+            // this.props.navigation.navigate('App');
         } catch (error) {
             console.log(error);
         }
@@ -40,8 +43,8 @@ class Login extends React.Component {
         console.log("user is " + JSON.stringify(user));
         console.log("user.id is " + user.id);
         console.log("type of user is " + typeof user);
-        return axios.get("http://172.24.26.244:4567/users/" + user.id)
-        // return axios.get("http://192.168.1.194:4567/users/" + user.id)
+        // return axios.get("http://172.24.26.244:4567/users/" + user.id)
+        return axios.get("http://192.168.1.194:4567/users/" + user.id) // home
                 .then(response => {
                     console.log('response is', JSON.stringify(response));
                     console.log(typeof user);
@@ -97,7 +100,7 @@ class Login extends React.Component {
             firstName: user.name,
             lastName: user.name,
             email: user.email,
-            photoUrl: "string too long"
+            // photoUrl: "string too long"
         }
         return axios.post("http://172.24.26.244:4567/users", newUser)
         // return axios.post("http://192.168.1.194:4567/users", newUser)
