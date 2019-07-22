@@ -31,7 +31,7 @@ class Home extends React.Component {
             photoUrl: null,
             loading: true,
             isLoggedIn: false,
-            restsOfInterest: []
+            // restsOfInterest: []
         }
         this.getToken();
     }
@@ -49,59 +49,21 @@ class Home extends React.Component {
                     photoUrl: userInfo.picture.data.url
                 });
                 return userInfo;
-            }).then(userInfo => {
-                console.log("userid is " +userInfo.id);
-                return axios.get("http://localhost:4567/users/" + userInfo.id + "/interests")
-            }).then(interestResponse => {
-                console.log("interest response " + JSON.stringify(interestResponse.data.data));
-                // return interestResponse;
-                this.setState({
-                    restsOfInterest: interestResponse.data.data
-                });
             })
+            // .then(userInfo => {
+            //     console.log("userid is " +userInfo.id);
+            //     return axios.get("http://localhost:4567/users/" + userInfo.id + "/interests")
+            // })
+            // .then(interestResponse => {
+            //     console.log("interest response " + JSON.stringify(interestResponse.data.data));
+            //     // return interestResponse;
+            //     this.setState({
+            //         restsOfInterest: interestResponse.data.data
+            //     });
+            // })
             .catch(error => {
                 console.log(error);
             });
-            
-            
-            // if (token && token !== '') {
-            //     const userInfo = JSON.parse(token);
-            //     this.setState({
-            //         fbId: userInfo.id,
-            //         isLoggedIn: true,
-            //         name: userInfo.name,
-            //         photoUrl: userInfo.picture.data.url
-            //     });
-                
-            //   this.props.navigation.goBack();
-            // } else {
-            //     this.props.navigation.dismiss();
-            //     this.props.navigation.navigate('Login');
-            // }
-    
-
-        // try {
-        //     let token;
-        //     token = await AsyncStorage.getItem('access_token');
-            
-            
-        //     if (token && token !== '') {
-        //         const userInfo = JSON.parse(token);
-        //         this.setState({
-        //             fbId: userInfo.id,
-        //             isLoggedIn: true,
-        //             name: userInfo.name,
-        //             photoUrl: userInfo.picture.data.url
-        //         });
-                
-        //     //   this.props.navigation.goBack();
-        //     } else {
-        //         this.props.navigation.dismiss();
-        //         this.props.navigation.navigate('Login');
-        //     }
-        // }catch(error){
-        //     console.log(error);
-        // }
     }
 
     async UNSAFE_componentWillMount() {
@@ -127,11 +89,7 @@ class Home extends React.Component {
     }
 
     render() {
-        // console.log("fbId " + this.state.fbId);
         console.log(this.state);
-        // console.log("loggedInUser param: " + this.props.navigation.getParam("loggedInUser"));
-
-        
         const {navigate} = this.props.navigation;
 
         if (this.state.loading) {
@@ -139,11 +97,6 @@ class Home extends React.Component {
             <View><AppLoading/></View>
             );
         }
-
-        // if (!this.state.isLoggedIn){
-        //     this.getToken();
-        // }
-
         return (
 
             <Drawer 

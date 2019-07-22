@@ -52,7 +52,7 @@ class SearchRestaurants extends React.Component {
                         this.props.navigation.navigate("RestList", {
                             rests: restList,
                             loggedInUserId: this.props.navigation.getParam("loggedInUserId"),
-                            restsOfInterest: this.props.navigation.getParam("restsOfInterest")
+                            // restsOfInterest: this.props.navigation.getParam("restsOfInterest")
                         });
                     })
                     .catch(error => {
@@ -65,6 +65,11 @@ class SearchRestaurants extends React.Component {
     search = (location, category) => {
         category = category.toLowerCase();
         this.fetchData(location, category);
+        // this.props.navigation.navigate("RestList", {
+        //     rests: this.state.rests,
+        //     loggedInUserId: this.props.navigation.getParam("loggedInUserId"),
+        //     // restsOfInterest: this.props.navigation.getParam("restsOfInterest")
+        // });
         console.log("rests in SearchRestaurants: " + this.state.rests);
     }
 

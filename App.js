@@ -41,23 +41,6 @@ class AuthLoadingScreen extends React.Component {
   }
 }
 
-// const RestStack = createStackNavigator({
-//   // const RestStack = createStackNavigator({
-//   SearchRestaurants: {
-//     screen: SearchRestaurants,
-//     navigationOptions: {
-//       title: "Search Restaurants",
-//       headerLeft: null
-//     }
-//   },
-//   RestList: {
-//     screen: RestList,
-//     navigationOptions: {
-//       title: "Restaurants Found",
-//     }
-//   }
-// })
-
 const AppStack = createStackNavigator({
   Home: {
     screen: Home

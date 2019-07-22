@@ -71,11 +71,11 @@ class RestDetails extends React.Component {
     let interestButton;
     if (this.state.interested) {
       interestButton = <TouchableOpacity onPress={() => this.removeInterest(this.props.navigation.getParam("loggedInUserFbId"), this.props.navigation.getParam("rest").id)}>
-                            <Icon name='heart' style={{fontSize: 40, color: 'red'}} />
+                            <Icon name='heart' style={styles.heartIcon} />
                         </TouchableOpacity>
     }else{
       interestButton = <TouchableOpacity onPress={() => this.markInterested()}>
-                          <Icon name='heart-empty' style={{fontSize: 40, color: 'red'}} />
+                          <Icon name='heart-empty' style={styles.heartIcon} />
                       </TouchableOpacity>
     }
     
@@ -85,36 +85,44 @@ class RestDetails extends React.Component {
         <Content>
           <Card style={styles.card}>
             <CardItem>
+              <Text style={styles.name}>{this.props.navigation.getParam("rest").name}</Text>
+
               <Left>
-                <Body>
-                  <Text style={styles.name}>{this.props.navigation.getParam("rest").name}</Text>
-                  <Text note>Rating: {this.props.navigation.getParam("rest").rating}</Text>
-                  <Text note>{this.props.navigation.getParam("rest").review_count} Reviews</Text>
-                  <Text note>{this.props.navigation.getParam("rest").id} Reviews</Text>
-                </Body>
+                {/* <Body> */}
+                  {/* <Text note> <Text style={styles.bold}>Rating from Yelp:</Text> {this.props.navigation.getParam("rest").rating}</Text> */}
+                  {/* <Text note><Text style={styles.bold}>Reviews from Yelp: </Text>{this.props.navigation.getParam("rest").review_count}</Text> */}
+                  {/* <Text note>{this.props.navigation.getParam("rest").id} Reviews from Yelp</Text> */}
+                {/* </Body> */}
               </Left>
             </CardItem>
             <CardItem>
-              <Body>
+              <Body style={styles.content}>
                 <Image source={{uri: this.props.navigation.getParam("rest").image_url}} style={styles.image}/>
                 <View>
-                    <Text>Location: {this.props.navigation.getParam("rest").location.display_address.join(", ")}</Text>
-                    <Text>Phone: {this.props.navigation.getParam("rest").display_phone}</Text>
-                    <Text>{this.props.navigation.getParam("rest").is_close ? "Closed" : "Open"}</Text>
-                    <Text>Categories: {categories}</Text>
+                  <Text><Text style={styles.bold}>Rating from Yelp:</Text> {this.props.navigation.getParam("rest").rating}</Text>
+                  <Text><Text style={styles.bold}>Reviews from Yelp: </Text>{this.props.navigation.getParam("rest").review_count}</Text>
+                  <Text><Text style={styles.bold}>Location: </Text>{this.props.navigation.getParam("rest").location.display_address.join(", ")}</Text>
+                  <Text><Text style={styles.bold}>Phone: </Text>{this.props.navigation.getParam("rest").display_phone}</Text>
+                  <Text>{this.props.navigation.getParam("rest").is_close ? "Closed" : "Open"}</Text>
+                  <Text><Text style={styles.bold}>Categories: </Text>{categories}</Text>
                 </View>
               </Body>
+
             </CardItem>
+            <CardItem>
+            {interestButton}
+            </CardItem>
+            
+
           </Card>
-          <View>
-                  {interestButton}
+          {/* <View> */}
             {/* <Button 
                   danger
                   onPress={() => this.markInterested()}
             >
                   {interestButton}
             </Button> */}
-          </View>
+          {/* </View> */}
           
         </Content>
       </Container>
@@ -124,17 +132,30 @@ class RestDetails extends React.Component {
 
 const styles = StyleSheet.create({
     card: {
-        flex: 0
+        flex: 1,
+        // flexDirection: "row"
     },
     image: {
-        height: 200, 
-        width: 200, 
-        flex: 1
+        width: 200,
+        height: 100,
+        flex: 1,
+        marginRight: 10,
+        marginBottom: 10
     },
     name: {
         fontWeight: "bold",
-        fontSize: 30,
+        fontSize: 20,
         textAlign: "center"
+    },
+    content: {
+      flexDirection: "column"
+    },
+    bold: {
+      fontWeight: "bold"
+    },
+    heartIcon: {
+      fontSize: 30,
+      color: "red"
     }
 })
 
