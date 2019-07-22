@@ -7,8 +7,10 @@ import {
     CardItem, 
     Button, 
     Left, 
-    Body } from 'native-base';
+    Body,
+    Icon } from 'native-base';
 import axios from 'axios';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
 class RestDetails extends React.Component {
@@ -45,6 +47,18 @@ class RestDetails extends React.Component {
                 });
   }
 
+  removeInterest = async(userFbId, restYelpId) => {
+    return axios.delete("http://localhost:4567/users/" + userFbId + "/interests/" + restYelpId)
+                .then(response => {
+                  this.setState({
+                    interested: false
+                  })
+                })
+                .catch(error => {
+                  console.log(error)
+                })
+  }
+
   render() {
     console.log("rendering RestDetails");
 
@@ -55,11 +69,14 @@ class RestDetails extends React.Component {
     categories = categories.join(", ");
 
     let interestButton;
-
     if (this.state.interested) {
-      interestButton = <Text>Interested</Text>
+      interestButton = <TouchableOpacity onPress={() => this.removeInterest(this.props.navigation.getParam("loggedInUserFbId"), this.props.navigation.getParam("rest").id)}>
+                            <Icon name='heart' style={{fontSize: 40, color: 'red'}} />
+                        </TouchableOpacity>
     }else{
-      interestButton = <Text>Mark Interested</Text>
+      interestButton = <TouchableOpacity onPress={() => this.markInterested()}>
+                          <Icon name='heart-empty' style={{fontSize: 40, color: 'red'}} />
+                      </TouchableOpacity>
     }
     
   
@@ -90,12 +107,13 @@ class RestDetails extends React.Component {
             </CardItem>
           </Card>
           <View>
-            <Button 
+                  {interestButton}
+            {/* <Button 
                   danger
                   onPress={() => this.markInterested()}
             >
                   {interestButton}
-            </Button>
+            </Button> */}
           </View>
           
         </Content>
