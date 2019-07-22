@@ -4,50 +4,6 @@ import axios from 'axios';
 
 class Restaurant extends React.Component {
 
-    // constructor (props){
-    //         super(props);
-    //         this.state = {
-    //             interested: false
-    //         }
-    //     }
-    
-    //     async componentDidMount(){
-    //         await this.checkIsInterested();
-    //     }
-    
-    //     checkIsInterested = async (userFbId, restId) => {
-    //          return axios.get("http://192.168.1.194:4567/users/" + userFbId + "/interests/" + restId)
-    //                 .then(response => {
-    //                     this.setState({
-    //                         interested: true
-    //                     })
-    //                     console.log(response);
-    //                     // return restId;
-    //                 })
-    //                 .catch(error => {
-    //                     // this.setState({
-    //                     //     beenInterested: false
-    //                     // })
-    //                     // console.log("type of error :" + typeof error);
-    //                     // console.log("checking isInterested in RestList: " + error.status);
-    //                     // return null;
-    //                     // return false;
-    //                 })
-    //     }
-    
-    //     onItemSelected = (selectedRest) => {
-    //         const userFbId = this.props.loggedInUserFbId;
-    //         // const isInterested = this.checkIsInterested(userFbId, selectedRest.id);
-    //         this.checkIsInterested(userFbId, selectedRest.id);
-    //         // console.log("result of checkIsInterested: " + JSON.stringify(isInterested));
-    //         this.props.navigation.navigate("RestDetails", {
-    //             // beenInterested: this.state.beenInterested,
-    //             // interestedRestId: this.state.interestedRestId,
-    //             beenMarkedInterested: this.state.interested,
-    //             loggedInUserFbId: userFbId,
-    //             rest: selectedRest
-    //         });
-    //     }
 
     onItemSelected = (selectedItem) => {
         this.props.onItemPressed(selectedItem);
@@ -84,11 +40,6 @@ class Restaurant extends React.Component {
             </TouchableOpacity>
         );
     }
-    
-        
-    // }
-        
-        
 }
 
 const styles = StyleSheet.create({

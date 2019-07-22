@@ -15,53 +15,15 @@ class RestDetails extends React.Component {
 
   constructor(props) {
     super(props);
-      // const restIDsOfInterest = this.props.navigation.getParam("restsOfInterest");
-      // const matchedRest = restIDsOfInterest.includes(this.props.navigation.getParam("rest").id);
-      
-      // const isInterested = matchedRest ? true : false;
     this.state = {
-      // interested: isInterested,
       interested: this.props.navigation.getParam("beenMarkedInterested"),
       userFbId: this.props.navigation.getParam("loggedInUserFbId"),
-      // restsOfInterest: this.props.navigation.getParam("restsOfInterest")
     }
 
-    // console.log("rests of interests: " + restIDsOfInterest);
     console.log("rest param: " + JSON.stringify(this.props.navigation.getParam("rest").id));
     console.log("intersted state :" + this.state.interested);
 
   }
-
-  // async componentDidMount(){
-  //   // await this.getUserId();
-  //   await this.isInterested(this.state.userFbId);
-  // }
-
-  // isInterested = async(userFbId) => {
-  //   return axios.get("http://localhost:4567/users/" + userFbId + "/interests/" + this.props.rest.id)
-  //   // return axios.get("http://172.24.26.244:4567/users/" + this.state.userFbId + "/interests/" + this.props.rest.id) // Ada
-  //   //  await axios.get("http://192.168.1.194:4567/users/" + userFbId + "/interests/" + this.props.rest.id) // home
-  //           .then(response => {
-  //             console.log("setState in isInterested");
-  //             // this.handleIsInterested();
-  //             this.setState({
-  //               interested: true
-  //             })
-  //           })
-  //           .catch(error => {
-  //             // return false;
-  //           })
-
-  // }
-
-  // async getUserId() {
-  //   const userString = await AsyncStorage.getItem('access_token');
-  //   const userFbId = JSON.parse(userString).id;
-  //   // return userFbId
-  //   this.setState({
-  //     userFbId
-  //   })
-  // }
 
   markInterested = async() => {
     const config = {
@@ -93,11 +55,6 @@ class RestDetails extends React.Component {
     categories = categories.join(", ");
 
     let interestButton;
-    // if (this.state.interested) {
-    //   interestButton = <Text>Interested</Text>
-    // }else{
-    //   interestButton = <Text>Mark Interested</Text>
-    // }
 
     if (this.state.interested) {
       interestButton = <Text>Interested</Text>

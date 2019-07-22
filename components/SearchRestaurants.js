@@ -14,8 +14,6 @@ class SearchRestaurants extends React.Component {
 
         this.state = {
             rests : [],
-            // restInterestedIn: null,
-            // selectedRest: null,
             message: 'something',
             location: "Seattle, WA 98161",
             category: "italian, thai",
@@ -67,25 +65,8 @@ class SearchRestaurants extends React.Component {
     search = (location, category) => {
         category = category.toLowerCase();
         this.fetchData(location, category);
-        // this.props.navigation.navigate("RestList", {
-        //     rests: this.state.rests,
-        // });
         console.log("rests in SearchRestaurants: " + this.state.rests);
     }
-
-    // onItemSelected = (id) => {
-    //     const selectedRest = this.state.rests.find(rest => rest.id === id);
-    //     this.setState({
-    //         selectedRest
-    //     });
-    // }
-
-    // isInterestedCallBack = (restId) => {
-    //     const rest = this.state.rests.find(rest => rest.id === restId)
-    //     this.setState({
-    //         restInterestedIn: rest
-    //     });
-    // }
 
     updateLocationState = (val) => {
         this.setState({
@@ -136,114 +117,6 @@ class SearchRestaurants extends React.Component {
     }
 }
 
-// class SearchRestaurants extends React.Component {
-
-//     constructor(props) {
-//         super(props);
-
-//         this.state = {
-//             rests : [],
-//             restInterestedIn: null,
-//             selectedRest: null,
-//             message: 'something'
-//         };
-//     }
-
-//     async componentDidMount() {
-//         await this.fetchData();
-//       }
-
-//     fetchData(location, category) {
-//         const CONFIG = require('../secrets.json');
-
-//         const config = {
-//             headers: {
-//                 Authorization: `Bearer ${CONFIG.YELP_API_KEY}`,
-//             },
-//             params: {
-//                 term: 'restaurants',
-//                 location: location,
-//                 // eslint-disable-next-line camelcase
-//                 sort_by: 'distance',
-//                 categories: category,
-//                 limit: 8
-//             }
-//         };
-//         return axios.get('https://api.yelp.com/v3/businesses/search', config)
-//                     .then(response => {
-//                         this.setState({
-//                             rests: response.data.businesses.map(rest => rest),
-//                             message: 'success'
-//                         });
-//                     })
-//                     .catch(error => {
-//                         this.setState({
-//                             message: error
-//                         })
-//                     });
-//     }
-
-//     search = (location, category) => {
-//         category = category.toLowerCase();
-//         this.fetchData(location, category);
-//     }
-
-//     onItemSelected = (id) => {
-//         const selectedRest = this.state.rests.find(rest => rest.id === id);
-//         this.setState({
-//             selectedRest
-//         });
-//     }
-
-//     isInterestedCallBack = (restId) => {
-//         const rest = this.state.rests.find(rest => rest.id === restId)
-//         this.setState({
-//             restInterestedIn: rest
-//         });
-//     }
-//     render() {
-//         let restCards;
-
-
-//         if (this.state.selectedRest) {
-//             return (
-//                 <RestDetails 
-//                     rest={this.state.selectedRest}
-//                     isInterestedCallBack={this.isInterestedCallBack}
-//                     restInterestedIn={this.state.restInterestedIn}
-//                 />
-//             );
-//         } else if (this.state.rests.length !== 0) {
-//             restCards = this.state.rests.map((rest, i) => {
-//                 return (
-//                         <Restaurant
-//                             key={i}
-//                             id={rest.id}
-//                             name={rest.name}
-//                             imageUrl={rest.image_url}
-//                             categories={rest.categories}
-//                             distance={rest.distance}
-//                             onItemPressed={() => this.onItemSelected(rest.id)}
-//                             selectedRest={this.state.selectedRest}
-//                         />
-//                 );
-//             });
-//             return (
-//                 <View>
-//                     <ScrollView>
-
-//                         <Header>
-//                             <Text style={styles.header}> Restaurants Found </Text>
-//                         </Header>
-//                         {restCards}
-//                     </ScrollView>
-//                 </View>
-//                 );
-//         } else {
-//             return (<SearchBar updateSearch={this.search}/>);
-//         }
-//     }
-// }
 
 const styles = StyleSheet.create({
     header: {

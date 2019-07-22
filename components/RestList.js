@@ -8,15 +8,10 @@ class RestList extends React.Component {
     constructor (props){
         super(props);
         this.state = {
-            // interestedRestId: null,
             beenMarkedInterested: false,
             restsOfInterest: this.props.navigation.getParam("restsOfInterest")
         }
     }
-
-    // async componentDidMount(){
-    //     await this.checkIsInterested();
-    // }
 
     checkIsInterested = async (userFbId, selectedRest) => {
          axios.get("http://192.168.1.194:4567/users/" + userFbId + "/interests/" + selectedRest.id)
@@ -27,37 +22,20 @@ class RestList extends React.Component {
                         beenMarkedInterested: true,
                         loggedInUserFbId: userFbId,
                         rest: selectedRest,
-                        // interestedRestId: response.data.restId
-                        // restsOfInterest: this.props.navigation.getParam("restsOfInterest")
                     });
-                    // this.setState({
-                    //     beenMarkedInterested: true
-                    // })
-                    // console.log("running .then in checkIsInterested, beenMarkedInterested for " + restId + " is " + this.state.beenMarkedInterested);
                 })
                 .catch(error => {
                     this.props.navigation.navigate("RestDetails", {
                         beenMarkedInterested: false,
                         loggedInUserFbId: userFbId,
                         rest: selectedRest,
-                        // interestedRestId: response.data.restId
-                        // restsOfInterest: this.props.navigation.getParam("restsOfInterest")
                     });
-                    // this.setState({
-                    //     beenMarkedInterested: false
-                    // })
                 })
     }
 
     onItemSelected = (selectedRest) => {
         const userFbId = this.props.navigation.getParam("loggedInUserId", "default user");
         this.checkIsInterested(userFbId,selectedRest);
-        // this.props.navigation.navigate("RestDetails", {
-        //     beenMarkedInterested: this.state.beenMarkedInterested,
-        //     loggedInUserFbId: userFbId,
-        //     rest: selectedRest,
-        //     restsOfInterest: this.props.navigation.getParam("restsOfInterest")
-        // });
     }
 
     render() {
