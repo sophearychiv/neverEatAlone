@@ -18,46 +18,50 @@ class RestList extends React.Component {
     //     await this.checkIsInterested();
     // }
 
-    checkIsInterested = async (userFbId, restId) => {
-         axios.get("http://192.168.1.194:4567/users/" + userFbId + "/interests/" + restId)
+    checkIsInterested = async (userFbId, selectedRest) => {
+         axios.get("http://192.168.1.194:4567/users/" + userFbId + "/interests/" + selectedRest.id)
                 .then(response => {
-                    this.setState({
-                        // interestedRestId: restId,
-                        beenMarkedInterested: true
-                    })
-                    console.log("running .then in checkIsInterested, beenMarkedInterested for " + restId + " is " + this.state.beenMarkedInterested);
-                    // return restId;
+                    console.log("rest id in checkIsInterested in RestList: " + JSON.stringify(response.data));
+                    console.log("rest id in checkIsInterested in RestList: " + response.data.data.restId);
+                    this.props.navigation.navigate("RestDetails", {
+                        beenMarkedInterested: true,
+                        loggedInUserFbId: userFbId,
+                        rest: selectedRest,
+                        // interestedRestId: response.data.restId
+                        // restsOfInterest: this.props.navigation.getParam("restsOfInterest")
+                    });
+                    // this.setState({
+                    //     beenMarkedInterested: true
+                    // })
+                    // console.log("running .then in checkIsInterested, beenMarkedInterested for " + restId + " is " + this.state.beenMarkedInterested);
                 })
                 .catch(error => {
-                    this.setState({
-                        beenMarkedInterested: false
-                    })
-                    // console.log("type of error :" + typeof error);
-                    // console.log("checking isInterested in RestList: " + error.status);
-                    // return null;
-                    // return false;
+                    this.props.navigation.navigate("RestDetails", {
+                        beenMarkedInterested: false,
+                        loggedInUserFbId: userFbId,
+                        rest: selectedRest,
+                        // interestedRestId: response.data.restId
+                        // restsOfInterest: this.props.navigation.getParam("restsOfInterest")
+                    });
+                    // this.setState({
+                    //     beenMarkedInterested: false
+                    // })
                 })
     }
 
     onItemSelected = (selectedRest) => {
         const userFbId = this.props.navigation.getParam("loggedInUserId", "default user");
-        // this.checkIsInterested(userFbId, selectedRest.id);
-        // const interestedRestId = this.checkIsInterested(userFbId, selectedRest.id);
-        // console.log("result of checkIsInterested: " + JSON.stringify(isInterested));
-        // console.log("running in onItemSelected in RestList, beenMarkedInterested is: " + this.state.beenMarkedInterested)
-        this.props.navigation.navigate("RestDetails", {
-            beenMarkedInterested: this.state.beenMarkedInterested,
-            // interestedRestId: this.state.interestedRestId,
-            loggedInUserFbId: userFbId,
-            rest: selectedRest,
-            restsOfInterest: this.props.navigation.getParam("restsOfInterest")
-        });
+        this.checkIsInterested(userFbId,selectedRest);
+        // this.props.navigation.navigate("RestDetails", {
+        //     beenMarkedInterested: this.state.beenMarkedInterested,
+        //     loggedInUserFbId: userFbId,
+        //     rest: selectedRest,
+        //     restsOfInterest: this.props.navigation.getParam("restsOfInterest")
+        // });
     }
 
     render() {
         console.log("rendering RestList");
-        // console.log("interested restId is: " + this.state.interestedRestId);
-        // console.log("loggedInUserId in RestList is " + this.props.navigation.getParam("loggedInUserId"));
         const restList = this.props.navigation.getParam('rests', 'defaultValue');
         const restCards = restList.map((rest, i) => {
             return (
@@ -65,13 +69,7 @@ class RestList extends React.Component {
                             key={i}
                             rest={rest}
                             loggedInUserFbId={this.props.navigation.getParam("loggedInUserId")}
-                            // id={rest.id}
-                            // name={rest.name}
-                            // imageUrl={rest.image_url}
-                            // categories={rest.categories}
-                            // distance={rest.distance}
                             onItemPressed={() => this.onItemSelected(rest)}
-                            // selectedRest={this.state.selectedRest}
                         />
                     )
             });
@@ -81,11 +79,6 @@ class RestList extends React.Component {
             </ScrollView>
         );
     }
-    // console.log("rests in restList " + restList);
-
-   
-   
-    
 }
 
 const styles = StyleSheet.create({

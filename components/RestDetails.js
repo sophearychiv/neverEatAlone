@@ -15,23 +15,18 @@ class RestDetails extends React.Component {
 
   constructor(props) {
     super(props);
-      const restIDsOfInterest = this.props.navigation.getParam("restsOfInterest");
-      const matchedRest = restIDsOfInterest.includes(this.props.navigation.getParam("rest").id);
-      // const matchedRest = restIDsOfInterest.map(restId => {
-      //   if (restId === this.props.navigation.getParam("rest").id){
-      //     return restId;
-      //   }
-      // });
-      const isInterested = matchedRest ? true : false;
+      // const restIDsOfInterest = this.props.navigation.getParam("restsOfInterest");
+      // const matchedRest = restIDsOfInterest.includes(this.props.navigation.getParam("rest").id);
+      
+      // const isInterested = matchedRest ? true : false;
     this.state = {
-      // interestedRestId: this.props.navigation.getParam("interestedRestId"),
-      interested: isInterested,
-      // interested: this.props.navigation.getParam("beenMarkedInterested"),
+      // interested: isInterested,
+      interested: this.props.navigation.getParam("beenMarkedInterested"),
       userFbId: this.props.navigation.getParam("loggedInUserFbId"),
       // restsOfInterest: this.props.navigation.getParam("restsOfInterest")
     }
 
-    console.log("rests of interests: " + restIDsOfInterest);
+    // console.log("rests of interests: " + restIDsOfInterest);
     console.log("rest param: " + JSON.stringify(this.props.navigation.getParam("rest").id));
     console.log("intersted state :" + this.state.interested);
 
