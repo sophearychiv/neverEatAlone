@@ -102,7 +102,8 @@ class Login extends React.Component {
             email: user.email,
             // photoUrl: "string too long"
         }
-        return axios.post("http://172.24.26.244:4567/users", newUser)
+        return axios.post("http://localhost:4567/users", newUser)
+        // return axios.post("http://172.24.26.244:4567/users", newUser)
         // return axios.post("http://192.168.1.194:4567/users", newUser)
                 .then(response => {
                     if(response === "SUCCESS"){
