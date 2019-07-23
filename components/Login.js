@@ -43,8 +43,8 @@ class Login extends React.Component {
         console.log("user is " + JSON.stringify(user));
         console.log("user.id is " + user.id);
         console.log("type of user is " + typeof user);
-        // return axios.get("http://172.24.26.244:4567/users/" + user.id)
-        return axios.get("http://192.168.1.194:4567/users/" + user.id) // home
+        return axios.get("http://172.24.26.244:4567/users/" + user.id) // Ada
+        // return axios.get("http://192.168.1.194:4567/users/" + user.id) // home
                 .then(response => {
                     console.log('response is', JSON.stringify(response));
                     console.log(typeof user);
@@ -95,16 +95,17 @@ class Login extends React.Component {
     }
 
     saveUserToDatabase = async(user) => {
+        const userEmail = user.email ? user.email : "na"
         const newUser = {
             fbId: user.id,
             firstName: user.name,
             lastName: user.name,
-            email: user.email,
-            // photoUrl: "string too long"
+            email: userEmail,
+            photoUrl: user.picture.data.url
         }
-        return axios.post("http://localhost:4567/users", newUser)
-        // return axios.post("http://172.24.26.244:4567/users", newUser)
-        // return axios.post("http://192.168.1.194:4567/users", newUser)
+        // return axios.post("http://localhost:4567/users", newUser)
+        return axios.post("http://172.24.26.244:4567/users", newUser) //Ada
+        // return axios.post("http://192.168.1.194:4567/users", newUser) //home
                 .then(response => {
                     if(response === "SUCCESS"){
                         console.log("new user added");

@@ -2,15 +2,20 @@ import React from 'react';
 import { Image, Text, View, StyleSheet, AsyncStorage } from 'react-native';
 import { 
     Container, 
+    Header,
     Content, 
     Card, 
     CardItem, 
     Button, 
-    Left, 
+    Left,
+    Right,
+    Center,
     Body,
-    Icon } from 'native-base';
+    Icon,
+    ListItem } from 'native-base';
 import axios from 'axios';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import PeopleList from './PeopleList';
 
 
 class RestDetails extends React.Component {
@@ -48,6 +53,7 @@ class RestDetails extends React.Component {
   }
 
   removeInterest = async(userFbId, restYelpId) => {
+    // return axios.delete("http://172.24.26.244:4567/users/" + userFbId + "/interests/" + restYelpId) // Ada
     return axios.delete("http://localhost:4567/users/" + userFbId + "/interests/" + restYelpId)
                 .then(response => {
                   this.setState({
@@ -82,19 +88,21 @@ class RestDetails extends React.Component {
   
     return (
       <Container>
+        <ListItem>
+            <Left>
+               <Text style={styles.name}>{this.props.navigation.getParam("rest").name}</Text>
+
+            </Left>
+            <Body>
+            {interestButton}
+              
+            </Body>
+            <Right>
+
+            </Right>
+        </ListItem>
         <Content>
           <Card style={styles.card}>
-            <CardItem>
-              <Text style={styles.name}>{this.props.navigation.getParam("rest").name}</Text>
-
-              <Left>
-                {/* <Body> */}
-                  {/* <Text note> <Text style={styles.bold}>Rating from Yelp:</Text> {this.props.navigation.getParam("rest").rating}</Text> */}
-                  {/* <Text note><Text style={styles.bold}>Reviews from Yelp: </Text>{this.props.navigation.getParam("rest").review_count}</Text> */}
-                  {/* <Text note>{this.props.navigation.getParam("rest").id} Reviews from Yelp</Text> */}
-                {/* </Body> */}
-              </Left>
-            </CardItem>
             <CardItem>
               <Body style={styles.content}>
                 <Image source={{uri: this.props.navigation.getParam("rest").image_url}} style={styles.image}/>
@@ -110,19 +118,13 @@ class RestDetails extends React.Component {
 
             </CardItem>
             <CardItem>
-            {interestButton}
-            </CardItem>
-            
+              <PeopleList
+                restYelpId={this.props.navigation.getParam("rest").id}
+              />
+
+            </CardItem>            
 
           </Card>
-          {/* <View> */}
-            {/* <Button 
-                  danger
-                  onPress={() => this.markInterested()}
-            >
-                  {interestButton}
-            </Button> */}
-          {/* </View> */}
           
         </Content>
       </Container>
@@ -133,7 +135,6 @@ class RestDetails extends React.Component {
 const styles = StyleSheet.create({
     card: {
         flex: 1,
-        // flexDirection: "row"
     },
     image: {
         width: 200,
@@ -145,7 +146,10 @@ const styles = StyleSheet.create({
     name: {
         fontWeight: "bold",
         fontSize: 20,
-        textAlign: "center"
+        alignSelf: "center"
+    },
+    nameWrapper: {
+      flexDirection: "row",
     },
     content: {
       flexDirection: "column"
@@ -155,7 +159,8 @@ const styles = StyleSheet.create({
     },
     heartIcon: {
       fontSize: 30,
-      color: "red"
+      color: "red",
+      marginLeft: 100
     }
 })
 

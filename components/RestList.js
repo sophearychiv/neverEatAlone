@@ -14,7 +14,8 @@ class RestList extends React.Component {
     }
 
     checkIsInterested = async (userFbId, selectedRest) => {
-         axios.get("http://192.168.1.194:4567/users/" + userFbId + "/interests/" + selectedRest.id)
+        //  axios.get("http://172.24.26.244:4567/users/" + userFbId + "/interests/" + selectedRest.id) //Ada
+         axios.get("http://localhost:4567/users/" + userFbId + "/interests/" + selectedRest.id)
                 .then(response => {
                     console.log("rest id in checkIsInterested in RestList: " + JSON.stringify(response.data));
                     console.log("rest id in checkIsInterested in RestList: " + response.data.data.restId);
@@ -58,26 +59,5 @@ class RestList extends React.Component {
         );
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flexDirection: "row",
-        marginTop: 10,
-    },
-    image: {
-        width: 60,
-        height: 60,
-        marginRight: 10,
-        marginLeft: 10
-    },
-    restName: {
-        fontWeight: "bold"
-    },
-    distance: {
-        color: "grey"
-    }
-})
-
-
 
 export default RestList;

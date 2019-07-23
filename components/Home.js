@@ -50,17 +50,6 @@ class Home extends React.Component {
                 });
                 return userInfo;
             })
-            // .then(userInfo => {
-            //     console.log("userid is " +userInfo.id);
-            //     return axios.get("http://localhost:4567/users/" + userInfo.id + "/interests")
-            // })
-            // .then(interestResponse => {
-            //     console.log("interest response " + JSON.stringify(interestResponse.data.data));
-            //     // return interestResponse;
-            //     this.setState({
-            //         restsOfInterest: interestResponse.data.data
-            //     });
-            // })
             .catch(error => {
                 console.log(error);
             });
@@ -140,7 +129,7 @@ class Home extends React.Component {
                         style={{ marginTop: 10 }}
                         onPress={() => navigate("SearchRestaurants", {
                             loggedInUserId: this.state.fbId,
-                            restsOfInterest: this.state.restsOfInterest
+                            // restsOfInterest: this.state.restsOfInterest
                         })}
                     >
                         <Text>Search Restaurants</Text>

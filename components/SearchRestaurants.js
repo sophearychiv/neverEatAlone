@@ -17,7 +17,7 @@ class SearchRestaurants extends React.Component {
             message: 'something',
             location: "Seattle, WA 98161",
             category: "italian, thai",
-            restsOfInterest: this.props.navigation.getParam("restsOfInterest")
+            // restsOfInterest: this.props.navigation.getParam("restsOfInterest")
         };
     }
 
@@ -52,24 +52,16 @@ class SearchRestaurants extends React.Component {
                         this.props.navigation.navigate("RestList", {
                             rests: restList,
                             loggedInUserId: this.props.navigation.getParam("loggedInUserId"),
-                            // restsOfInterest: this.props.navigation.getParam("restsOfInterest")
                         });
                     })
                     .catch(error => {
-                        this.setState({
-                            message: error
-                        })
+                        console.log("error searching for rests: " + error);
                     });
     }
 
     search = (location, category) => {
         category = category.toLowerCase();
         this.fetchData(location, category);
-        // this.props.navigation.navigate("RestList", {
-        //     rests: this.state.rests,
-        //     loggedInUserId: this.props.navigation.getParam("loggedInUserId"),
-        //     // restsOfInterest: this.props.navigation.getParam("restsOfInterest")
-        // });
         console.log("rests in SearchRestaurants: " + this.state.rests);
     }
 
@@ -130,6 +122,16 @@ const styles = StyleSheet.create({
     },
     listContainer: {
         width: "100%"
+    },
+    submitButton: {
+        marginTop: 20,
+        alignSelf: "center",
+        paddingLeft: 20,
+        paddingRight: 20
+    },
+    submitText: {
+        color: "white",
+        fontWeight: "bold"
     }
 })
 
