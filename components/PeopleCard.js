@@ -1,62 +1,62 @@
 import React from 'react';
-import { Container, Header, Content, List, ListItem, Left, Body, Right, Thumbnail, Text, CheckBox } from 'native-base';
+import { Container, Header, Content, List, ListItem, Left, Body, Right, Thumbnail, Text, CheckBox, Button } from 'native-base';
+import {StyleSheet, View} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import axios from 'axios';
 class PeopleCard extends React.Component {
     constructor(props){
         super(props);
         this.state = {
+            invited: false,
             name: null,
             photoUrl: null
         }
 
-        // this.getUser();
-
     }
 
-    // async componentDidMount(){
-    //     await this.getUser();
-    // }
+    selectPeople = () => {
+        this.setState({
+            invited: true
+        });
+        this.props.selectPeopleCallBack(this.props.userFbId);
+    }
 
-    // getUser = async() => {
-    //     return axios.get("http://172.24.26.244:4567/users/" + this.props.fbId)
-            
-    //                 .then(response => {
-    //                     this.setState({
-    //                         name: response.data.data.firstName,
-    //                         photoUrl: response.data.data.photoUrl
-    //                     });
-    //                     console.log("response in People Card: " + JSON.stringify(response));
-    //                     console.log("fbID in People Card: " + this.props.fbId);
-    //                     console.log("name in people card: " + response.data.data.firstName);
-    //                 })
-    //                 .catch(error => {
-    //                     console.log("error in PeopleCard: " + error);
-    //                 })
-    // }
     render(){
+
+                        
+        const checkBox = this.state.invited ? <CheckBox style={styles.checkBox} checked={true} /> 
+                            : <CheckBox style={styles.checkBox} checked={false} />
 
         console.log(this.props.name);
         return(
-            // <Text>{this.props.name}</Text>
 
-            <TouchableOpacity>
-                <ListItem avatar>
-                    <Left>
-                        <Thumbnail source={{ uri: this.props.photoUrl }} />
-                    </Left>
-                    <Body>
-                        <Text>{this.props.name}</Text>
-
-                        <Text note>Software Engineer</Text>
-                    </Body>
-                    <Right>
-                        <CheckBox checked={false} />
-                    </Right>
+                <ListItem avatar style={{margin: 10, borderBottomColor: "grey"}}>
+                    <TouchableOpacity>
+                        <Left>
+                            <Thumbnail source={{ uri: this.props.photoUrl }} />
+                        </Left>
+                    </TouchableOpacity>
+                        <View style={styles.listText}>
+                            <Text style={{textAlign: "left"}}>{this.props.name}</Text>
+                            <Text note style={{textAlign: "left"}}>Software Engineer</Text>
+                        </View>
+                    <TouchableOpacity onPress={this.selectPeople}>
+                        {checkBox}
+                    </TouchableOpacity>
                 </ListItem>
-             </TouchableOpacity>
         );
     }
 }
+
+const styles = StyleSheet.create({
+    checkBox: {
+        marginRight: 30
+    },
+    listText: {
+        marginRight: 20, 
+        marginLeft: 20, 
+        flexDirection: "column"
+    }
+})
 
 export default PeopleCard;

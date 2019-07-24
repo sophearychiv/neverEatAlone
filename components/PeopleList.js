@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Header, Content, List, ListItem, Left, Body, Right, Thumbnail, Text } from 'native-base';
+import { Container, Header, Content, List, ListItem, Left, Body, Right, Thumbnail, Text, Button } from 'native-base';
 import {View, StyleSheet} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import axios from 'axios';
@@ -10,7 +10,8 @@ class PeopleList extends React.Component {
     super(props);
     this.state = {
       interestedFbIds: [],
-      interestedPeople: []
+      interestedPeople: [],
+      receipientFbIds: []
     }
 
     this.getInterestedPeople();
@@ -24,9 +25,6 @@ class PeopleList extends React.Component {
     return axios.get("http://localhost:4567/interests/" + this.props.restYelpId + "/userFbIds") //Ada
     // return axios.get("http://172.24.26.244:4567/interests/" + this.props.restYelpId + "/userFbIds") //Ada
                 .then(response => {
-                  // this.setState({
-                  //   interestedFbIds: response.data.data
-                  // });
                   console.log(response.data.data);
 
                   return response.data.data
@@ -47,41 +45,79 @@ class PeopleList extends React.Component {
                         console.log("in forEach loop in PeopleList: " + error);
                       });
                   });
-                  // this.setState({
-                  //         interestedPeople: currentPeople
-                  //       })
                 })
                 .catch(error => {
                   console.log("in second nested request in PeopleList: " + error);
                 });
   }
 
+  selectPeople = (userFbId) => {
+    const fbIds= this.state.receipientFbIds;
+    fbIds.push(userFbId);
+    this.setState({
+      receipientFbIds: fbIds
+    })
+  }
+
+  sendInvite = () => {
+    const config = {
+      requesterFbId: this.props.userFbId,
+      restYelpId: this.props.restYelpId,
+      creationDateTime: new Date().toLocaleString(),
+      mealStartDateTime: new Date().toLocaleString(),
+      mealEndDateTime: new Date().toLocaleString(),
+      receipientFbIds: this.state.receipientFbIds
+    }
+
+    axios.post("http://localhost:4567/invites", config)
+      .then(response => {
+        this.setState({
+          receipientFbIds: []
+        });
+      })
+      .catch(error => {
+        console.log("error inviting people: " + error);
+      })
+  }
+
 
     render(){
-      // console.log("interested people: " + JSON.stringify(this.state.interestedPeople));
+      console.log("invited people: " + JSON.stringify(this.state.receipientFbIds));
 
       const interestedPeople = this.state.interestedPeople.map( (user, i) => {
-        // console.log("firstName in map: " + user.data.data.firstName);
+        console.log("id in map: " + user.data.data.id);
         return (
           <PeopleCard
             key={i}
+            // user = {user}
+            userFbId={user.data.data.fbId}
             name={user.data.data.firstName}
             photoUrl={user.data.data.photoUrl}
+            selectPeopleCallBack={(userFbId)=> this.selectPeople(userFbId)}
           />
           )
       });
 
         return(
+              <Container>
+                {/* <Header /> */}
+                  <Text style={styles.listHeader}> Interested People</Text>
+                  <Content>
+                    <List>
+                      {interestedPeople}
+                    </List>
+                    <Button 
+                      medium 
+                      danger 
+                      style={styles.inviteButton}
+                      onPress={this.sendInvite}
+                    >
+                      <Text> Lets Eat Together! </Text>
+                    </Button>
+                  </Content>
 
-      <Container>
-        {/* <Header /> */}
-        <Text style={styles.listHeader}> Other Interested People</Text>
-        <Content>
-          <List>
-            {interestedPeople}
-          </List>
-        </Content>
-      </Container>
+              </Container>
+
         );
     }
 }
@@ -90,6 +126,10 @@ const styles = StyleSheet.create({
   listHeader: {
     alignSelf: "center",
     fontWeight: "bold"
+  },
+  inviteButton: {
+    alignSelf: "center", 
+    marginTop: 10
   }
 })
 

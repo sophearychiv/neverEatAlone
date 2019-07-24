@@ -103,7 +103,7 @@ class RestDetails extends React.Component {
         </ListItem>
         <Content>
           <Card style={styles.card}>
-            <CardItem>
+            <CardItem style={styles.list}>
               <Body style={styles.content}>
                 <Image source={{uri: this.props.navigation.getParam("rest").image_url}} style={styles.image}/>
                 <View>
@@ -115,17 +115,16 @@ class RestDetails extends React.Component {
                   <Text><Text style={styles.bold}>Categories: </Text>{categories}</Text>
                 </View>
               </Body>
-
-            </CardItem>
-            <CardItem>
               <PeopleList
                 restYelpId={this.props.navigation.getParam("rest").id}
+                userFbId={this.props.navigation.getParam("loggedInUserFbId")}
               />
-
-            </CardItem>            
-
+            </CardItem>
+            {/* <CardItem style={styles.list}>
+              
+            </CardItem>     */}
           </Card>
-          
+
         </Content>
       </Container>
     );
@@ -161,6 +160,9 @@ const styles = StyleSheet.create({
       fontSize: 30,
       color: "red",
       marginLeft: 100
+    },
+    list: {
+      flexDirection: "column"
     }
 })
 
