@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Header, Content, List, ListItem, Left, Body, Right, Thumbnail, Text, CheckBox, Button } from 'native-base';
+import { Container, Header, Content, List, ListItem, Left, Body, Right, Thumbnail, CheckBox, Button, Text } from 'native-base';
 import {StyleSheet, View} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import axios from 'axios';
@@ -7,27 +7,55 @@ class PeopleCard extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            invited: false,
+            selected: false,
             name: null,
-            photoUrl: null
+            photoUrl: null,
+            // onInviteList: false
         }
 
     }
 
-    selectPeople = () => {
+    select = () => {
         this.setState({
-            invited: true
+            selected: !this.state.selected
         });
-        this.props.selectPeopleCallBack(this.props.userFbId);
+        this.props.selectPeopleCallBack();
+        // this.props.selectPeopleCallBack(this.props.userFbId);
+    }
+
+    remove = (user) => {
+        this.setState({
+            selected: false
+        });
+        this.props.removePeopleOnInviteListCallBack(user);
     }
 
     render(){
 
                         
-        const checkBox = this.state.invited ? <CheckBox style={styles.checkBox} checked={true} /> 
-                            : <CheckBox style={styles.checkBox} checked={false} />
+        let checkBox = this.state.selected ? 
+                            <TouchableOpacity onPress={this.remove}>
+                                <CheckBox style={styles.checkBox} checked={true} />
+                            </TouchableOpacity>
+                            : <TouchableOpacity onPress={this.select}>
+                                <CheckBox style={styles.checkBox} checked={false} />
+                                </TouchableOpacity>
+        let removeButton = null;
+        if(this.props.fbIdsOnInviteList){
+            checkBox = null;
+            if(this.props.fbIdsOnInviteList.includes(this.props.userFbId))
+             {
+                removeButton = <TouchableOpacity onPress={() => this.remove(this.props.user)}>
+                                    <Button 
+                                    danger 
+                                    small
+                                    onPress={this.remove}> 
+                                        <Text>Remove</Text> 
+                                    </Button>
+                                </TouchableOpacity>
+            }
+        }
 
-        console.log(this.props.name);
         return(
 
                 <ListItem avatar style={{margin: 10, borderBottomColor: "grey"}}>
@@ -40,9 +68,7 @@ class PeopleCard extends React.Component {
                             <Text style={{textAlign: "left"}}>{this.props.name}</Text>
                             <Text note style={{textAlign: "left"}}>Software Engineer</Text>
                         </View>
-                    <TouchableOpacity onPress={this.selectPeople}>
-                        {checkBox}
-                    </TouchableOpacity>
+                        {checkBox ? checkBox : removeButton}
                 </ListItem>
         );
     }

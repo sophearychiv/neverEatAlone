@@ -6,7 +6,7 @@ import {
     Content, 
     Card, 
     CardItem, 
-    Button, 
+    Button,
     Left,
     Right,
     Center,
@@ -18,6 +18,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import PeopleList from './PeopleList';
 
 
+
 class RestDetails extends React.Component {
 
   constructor(props) {
@@ -25,6 +26,7 @@ class RestDetails extends React.Component {
     this.state = {
       interested: this.props.navigation.getParam("beenMarkedInterested"),
       userFbId: this.props.navigation.getParam("loggedInUserFbId"),
+      isModalVisible: false
     }
 
     console.log("rest param: " + JSON.stringify(this.props.navigation.getParam("rest").id));
@@ -37,9 +39,9 @@ class RestDetails extends React.Component {
       userFbId: this.state.userFbId,
       restYelpId: this.props.navigation.getParam("rest").id
     }
-    return axios.post("http://localhost:4567/interests", config)
+    // return axios.post("http://localhost:4567/interests", config)
     // return axios.post("http://172.24.26.244:4567/interests", config) // Ada
-    // return axios.post("http://192.168.1.194:4567/interests", config) //home
+    return axios.post("http://192.168.1.194:4567/interests", config) //home
                 .then(response => {
                     this.setState({
                       interested: true
@@ -54,7 +56,8 @@ class RestDetails extends React.Component {
 
   removeInterest = async(userFbId, restYelpId) => {
     // return axios.delete("http://172.24.26.244:4567/users/" + userFbId + "/interests/" + restYelpId) // Ada
-    return axios.delete("http://localhost:4567/users/" + userFbId + "/interests/" + restYelpId)
+    return axios.delete("http://192.168.1.194:4567/users/" + userFbId + "/interests/" + restYelpId)
+    // return axios.delete("http://localhost:4567/users/" + userFbId + "/interests/" + restYelpId)
                 .then(response => {
                   this.setState({
                     interested: false
@@ -84,7 +87,6 @@ class RestDetails extends React.Component {
                           <Icon name='heart-empty' style={styles.heartIcon} />
                       </TouchableOpacity>
     }
-    
   
     return (
       <Container>
@@ -120,13 +122,10 @@ class RestDetails extends React.Component {
                 userFbId={this.props.navigation.getParam("loggedInUserFbId")}
               />
             </CardItem>
-            {/* <CardItem style={styles.list}>
-              
-            </CardItem>     */}
           </Card>
-
         </Content>
       </Container>
+
     );
   }
 }

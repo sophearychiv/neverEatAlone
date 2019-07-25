@@ -9,6 +9,7 @@ import Profile from './components/Profile';
 import RestList from './components/RestList';
 import Restaurant from './components/Restaurant';
 import RestDetails from './components/RestDetails';
+import Invite from './components/Invite';
 
 class AuthLoadingScreen extends React.Component {
   constructor() {
@@ -19,17 +20,6 @@ class AuthLoadingScreen extends React.Component {
   _bootstrapAsync = async () => {
     const userToken = await AsyncStorage.getItem("access_token");
     this.props.navigation.navigate(userToken ? 'App': 'Auth');
-    // const user = JSON.parse(userToken);
-    // console.log("userToken in AuthScreen is " + user);
-
-
-    // if (user) {
-    //   this.props.navigation.navigate("App",{
-    //     loggedInUser: user
-    //   })
-    // } else {
-    // this.props.navigation.navigate('Auth');
-    // }
   }
 
   render(){
@@ -68,7 +58,9 @@ const AppStack = createStackNavigator({
     screen: RestDetails
   },
 
-  // SearchRestaurants: RestStack,
+  Invite: {
+    screen: Invite
+  },
 
   SearchPeople: {
     screen: SearchPeople

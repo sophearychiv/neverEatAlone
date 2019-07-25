@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Header, Content, List, ListItem, Left, Body, Right, Thumbnail, Text, Button } from 'native-base';
 import {View, StyleSheet} from 'react-native';
+import {withNavigation} from 'react-navigation';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import axios from 'axios';
 import PeopleCard from './PeopleCard';
@@ -11,7 +12,8 @@ class PeopleList extends React.Component {
     this.state = {
       interestedFbIds: [],
       interestedPeople: [],
-      receipientFbIds: []
+      receipientFbIds: [],
+      invitedPeople: []
     }
 
     this.getInterestedPeople();
@@ -22,7 +24,8 @@ class PeopleList extends React.Component {
   }
 
   getInterestedPeople = async() => {
-    return axios.get("http://localhost:4567/interests/" + this.props.restYelpId + "/userFbIds") //Ada
+    return axios.get("http://192.168.1.194:4567/interests/" + this.props.restYelpId + "/userFbIds") //home
+    // return axios.get("http://localhost:4567/interests/" + this.props.restYelpId + "/userFbIds") 
     // return axios.get("http://172.24.26.244:4567/interests/" + this.props.restYelpId + "/userFbIds") //Ada
                 .then(response => {
                   console.log(response.data.data);
@@ -33,7 +36,8 @@ class PeopleList extends React.Component {
                   let currentPeople = []
                   fbIds.forEach ( async fbId => {
                     // axios.get("http://172.24.26.244:4567/users/" + fbId) //Ada
-                    return axios.get("http://localhost:4567/users/" + fbId) //Ada
+                    return axios.get("http://192.168.1.194:4567/users/" + fbId)  // home
+                    // return axios.get("http://localhost:4567/users/" + fbId) 
 
                       .then(user => {
                         currentPeople.push(user);
@@ -51,34 +55,49 @@ class PeopleList extends React.Component {
                 });
   }
 
-  selectPeople = (userFbId) => {
+  selectPeople = (user) => {
     const fbIds= this.state.receipientFbIds;
-    fbIds.push(userFbId);
+    fbIds.push(user.data.data.fbId);
+    const people = this.state.invitedPeople;
+    people.push(user)
     this.setState({
-      receipientFbIds: fbIds
+      receipientFbIds: fbIds,
+      invitedPeople: people
     })
   }
 
-  sendInvite = () => {
-    const config = {
-      requesterFbId: this.props.userFbId,
-      restYelpId: this.props.restYelpId,
-      creationDateTime: new Date().toLocaleString(),
-      mealStartDateTime: new Date().toLocaleString(),
-      mealEndDateTime: new Date().toLocaleString(),
-      receipientFbIds: this.state.receipientFbIds
+  removePeople = (user) => {
+    let invitedFbIds = this.state.receipientFbIds;
+    for (let i = 0; i < invitedFbIds.length; i++){
+      if ( invitedFbIds[i] === user.data.data.fbId) {
+        invitedFbIds.splice(i, 1);
+          this.setState({
+            receipientFbIds: invitedFbIds
+          });
+      }
     }
-
-    axios.post("http://localhost:4567/invites", config)
-      .then(response => {
-        this.setState({
-          receipientFbIds: []
-        });
-      })
-      .catch(error => {
-        console.log("error inviting people: " + error);
-      })
+    let people = this.state.invitedPeople;
+    for (let i = 0; i < people.length; i++){
+      if ( people[i] === user) {
+        people.splice(i, 1);
+          this.setState({
+            invitedPeople: people
+          });
+      }
+    }
   }
+
+
+  openInvite = () => {
+    this.props.navigation.navigate("Invite", {
+      peopleOnInviteList: this.state.invitedPeople,
+      fbIdsOnInviteList: this.state.receipientFbIds,
+      requesterFbId: this.props.userFbId,
+      restYelpId: this.props.restYelpId
+    });
+  }
+
+ 
 
 
     render(){
@@ -93,7 +112,9 @@ class PeopleList extends React.Component {
             userFbId={user.data.data.fbId}
             name={user.data.data.firstName}
             photoUrl={user.data.data.photoUrl}
-            selectPeopleCallBack={(userFbId)=> this.selectPeople(userFbId)}
+            selectPeopleCallBack={()=> this.selectPeople(user)}
+            removePeopleCallBack={()=> this.removePeople(user)}
+            // selectPeopleCallBack={(userFbId)=> this.selectPeople(userFbId)}
           />
           )
       });
@@ -110,7 +131,7 @@ class PeopleList extends React.Component {
                       medium 
                       danger 
                       style={styles.inviteButton}
-                      onPress={this.sendInvite}
+                      onPress={this.openInvite}
                     >
                       <Text> Lets Eat Together! </Text>
                     </Button>
@@ -133,4 +154,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default PeopleList;
+export default withNavigation(PeopleList);
