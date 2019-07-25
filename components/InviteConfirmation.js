@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Container, Header, Text, List, ListItem, Content, Card, CardItem, Body } from 'native-base';
+import { Container, Header, Text, List, ListItem, Content, Card, CardItem, Body, Button } from 'native-base';
 import PeopleCard from './PeopleCard';
 
 class InviteConfirmation extends React.Component {
@@ -49,7 +49,11 @@ class InviteConfirmation extends React.Component {
                             <List>
                                 {invitedPeople}
                             </List>
+
                         </CardItem>
+                        <Button success medium style={styles.seeInviteButton}>
+                            <Text style={styles.textInvite}>See Invitations</Text>
+                        </Button>
                     </Card>
                 </Content>
 
@@ -64,6 +68,13 @@ const styles = StyleSheet.create({
     },
     companions: {
         fontWeight: "bold",
+        textAlign: "center"
+    },
+    seeInviteButton: {
+        alignSelf: "center",
+        marginBottom: 20
+    },
+    textInvite: {
         textAlign: "center"
     }
 })
