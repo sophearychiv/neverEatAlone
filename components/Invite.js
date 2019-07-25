@@ -7,6 +7,7 @@ import DateTimePicker from "react-native-modal-datetime-picker";
 import PeopleCard from './PeopleCard';
 import { TouchableOpacity } from "react-native-gesture-handler";
 import axios from 'axios';
+import FooterTabs from './FooterTabs';
 // import Modal from "react-native-modal";
 
 export default class Invite extends Component {
@@ -150,24 +151,11 @@ export default class Invite extends Component {
           peopleOnInviteList={this.state.peopleOnInviteList}
           fbIdsOnInviteList={this.state.fbIdsOnInviteList}
           removePeopleOnInviteListCallBack={(user) => this.removePeopleFromInviteList(user)}
-        // selectPeopleCallBack={()=> this.selectPeople(user)}
-        // selectPeopleCallBack={(userFbId)=> this.selectPeople(userFbId)}
         />
       )
     });
-
-    // const sendOrConfirm = this.state.inviteSent ? <Text> Invite has been sent! </Text>
-    //     :  <Button
-    //     medium
-    //     danger
-    //     style={styles.inviteButton}
-    //     onPress={() => this.sendInvite()}
-    //   >
-    //     <Text> Send Invite </Text>
-    //   </Button>
     return (
       <Container>
-        {/* <Header /> */}
         <Text style={styles.listHeader}> Your Invite</Text>
 
         <Content>
@@ -206,15 +194,14 @@ export default class Invite extends Component {
           </List>
           <Button
             medium
-            danger
+            success
             style={styles.inviteButton}
             onPress={() => this.sendInvite()}
           >
             <Text> Send Invite </Text>
           </Button>
-          {/* {sendOrConfirm} */}
         </Content>
-
+        <FooterTabs/>
       </Container>
     );
   }

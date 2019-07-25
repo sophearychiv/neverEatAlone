@@ -19,6 +19,7 @@ import {
     Icon,
     Right
 } from 'native-base';
+import FooterTabs from './FooterTabs';
 import axios from 'axios';
 
 class Home extends React.Component {
@@ -160,6 +161,7 @@ class Home extends React.Component {
                     </Button>
                 </Content>
             </Container>
+            <FooterTabs/>
         </Drawer>
         
         );

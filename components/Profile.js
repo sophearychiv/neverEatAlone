@@ -1,6 +1,8 @@
 import React from 'react';
 import {View, Text, Image} from 'react-native';
 import {Container, Content, Thumbnail} from 'native-base';
+import FooterTabs from './FooterTabs';
+
 
 
 const Profile = (props) => {
@@ -16,6 +18,7 @@ const Profile = (props) => {
                 <Content>
                     <Thumbnail size={80} source={{uri: photoUrl}} />
                 </Content>
+                <FooterTabs/>
             </Container>
         );
     // }

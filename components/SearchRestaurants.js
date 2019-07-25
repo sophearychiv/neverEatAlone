@@ -4,7 +4,7 @@ import axios from 'axios';
 import Restaurant from './Restaurant';
 import SearchBar from './SearchBar';
 import { Container, Header, Content, Form, Item, Input, Label, Button } from 'native-base';
-
+import FooterTabs from './FooterTabs';
 import RestDetails from './RestDetails';
 
 class SearchRestaurants extends React.Component {
@@ -108,6 +108,7 @@ class SearchRestaurants extends React.Component {
                         </Button>
                     </Form>
                 </Content>
+                <FooterTabs/>
             </Container>
         );
           

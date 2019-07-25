@@ -16,7 +16,7 @@
     "expo-font": "^5.0.1",
     "lodash": "^4.17.15",
     "mem": "^5.1.1",
-    "native-base": "^2.13.0",
+    "native-base": "^2.13.1",
     "react": "16.8.6",
     "react-dom": "^16.8.6",
     "react-native": "https://github.com/expo/react-native/archive/sdk-33.0.0.tar.gz",

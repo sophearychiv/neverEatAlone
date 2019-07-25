@@ -2,6 +2,8 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Container, Header, Text, List, ListItem, Content, Card, CardItem, Body, Button } from 'native-base';
 import PeopleCard from './PeopleCard';
+import FooterTabs from './FooterTabs';
+
 
 class InviteConfirmation extends React.Component {
 
@@ -56,7 +58,7 @@ class InviteConfirmation extends React.Component {
                         </Button>
                     </Card>
                 </Content>
-
+                <FooterTabs/>
             </Container>
         );
     }
