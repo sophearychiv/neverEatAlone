@@ -10,6 +10,7 @@ import RestList from './components/RestList';
 import Restaurant from './components/Restaurant';
 import RestDetails from './components/RestDetails';
 import Invite from './components/Invite';
+import InviteConfirmation from './components/InviteConfirmation';
 
 class AuthLoadingScreen extends React.Component {
   constructor() {
@@ -60,6 +61,10 @@ const AppStack = createStackNavigator({
 
   Invite: {
     screen: Invite
+  },
+
+  InviteConfirmation: {
+    screen: InviteConfirmation
   },
 
   SearchPeople: {

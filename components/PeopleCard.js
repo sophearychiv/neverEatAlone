@@ -56,6 +56,12 @@ class PeopleCard extends React.Component {
             }
         }
 
+        if(this.props.confirmedInviteList){
+            if(this.props.confirmedInviteList.includes(this.props.user))
+            removeButton = null;
+            checkBox = null;
+        }
+
         return(
 
                 <ListItem avatar style={{margin: 10, borderBottomColor: "grey"}}>

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, DatePickerIOS} from "react-native";
+import { StyleSheet, DatePickerIOS } from "react-native";
 // import moment from 'mosment';
 import { Container, Header, Content, List, Form, Item, Label, Input, DatePicker, Text, Button } from 'native-base';
 import DateTimePicker from "react-native-modal-datetime-picker";
@@ -20,7 +20,7 @@ export default class Invite extends Component {
       isEndDateTimePickerVisible: false,
       startDate: 'Select Date',
       endDate: 'Select Date',
-      inviteSent: false
+      // inviteSent: false
       // chosenDate: new Date()
 
     };
@@ -28,7 +28,7 @@ export default class Invite extends Component {
     // this.setDate = this.setDate.bind(this);
   }
 
-  async componentDidMount(){
+  async componentDidMount() {
     await this.sendInvite();
   }
 
@@ -44,16 +44,26 @@ export default class Invite extends Component {
 
     console.log(config);
 
-    return axios.post("http://192.168.1.194:4567/invites", config) //home
-    // return axios.post("http://localhost:4567/invites", config)
+    const IN_USE_HTTP = require('../internet.json').IN_USE_HTTP;
+
+    return axios.post(IN_USE_HTTP + "/invites", config)
+      // return axios.post("http://localhost:4567/invites", config)
       .then(response => {
-        this.setState({
-          receipientFbIds: [],
-          inviteSent: true
+        // this.setState({
+        //   // receipientFbIds: [],
+        //   inviteSent: true
+        // });
+        this.props.navigation.navigate("InviteConfirmation", {
+          invitedPeople: this.state.peopleOnInviteList,
+          rest: this.props.navigation.getParam("rest"),
+          restYelpId: this.state.restYelpId,
+          creationDateTime: config.creationDateTime,
+          mealStartDateTime: this.state.startDate.toLocaleString(),
+          mealEndDateTime: this.state.endDate.toLocaleString(),
         });
       })
       .catch(error => {
-        console.log("error inviting people: " + error);
+        console.log("error sending invite: " + error);
       })
   }
 
@@ -133,7 +143,7 @@ export default class Invite extends Component {
       return (
         <PeopleCard
           key={i}
-          user = {user}
+          user={user}
           userFbId={user.data.data.fbId}
           name={user.data.data.firstName}
           photoUrl={user.data.data.photoUrl}
@@ -146,15 +156,15 @@ export default class Invite extends Component {
       )
     });
 
-    const sendOrConfirm = this.state.inviteSent ? <Text> Invite has been sent! </Text>
-        :  <Button
-        medium
-        danger
-        style={styles.inviteButton}
-        onPress={() => this.sendInvite()}
-      >
-        <Text> Send Invite </Text>
-      </Button>
+    // const sendOrConfirm = this.state.inviteSent ? <Text> Invite has been sent! </Text>
+    //     :  <Button
+    //     medium
+    //     danger
+    //     style={styles.inviteButton}
+    //     onPress={() => this.sendInvite()}
+    //   >
+    //     <Text> Send Invite </Text>
+    //   </Button>
     return (
       <Container>
         {/* <Header /> */}
@@ -164,37 +174,45 @@ export default class Invite extends Component {
           <Form>
             <Item fixedLabel>
               <Label>Start Date</Label>
-                <TouchableOpacity onPress={this.showStartDateTimePicker}><Text>{this.state.startDate.toLocaleString()}</Text></TouchableOpacity>
-                <DateTimePicker
-                  mode={'datetime'}
-                  isVisible={this.state.isStartDateTimePickerVisible}
-                  value={this.state.startDate}
-                  onConfirm={this.handleStartDatePicked}
-                  onCancel={this.hideStartDateTimePicker}
-                  datePickerModeAndroid={"spinner"}
-                  is24Hour={false}
-                />
+              <TouchableOpacity onPress={this.showStartDateTimePicker}><Text>{this.state.startDate.toLocaleString()}</Text></TouchableOpacity>
+              <DateTimePicker
+                mode={'datetime'}
+                isVisible={this.state.isStartDateTimePickerVisible}
+                value={this.state.startDate}
+                onConfirm={this.handleStartDatePicked}
+                onCancel={this.hideStartDateTimePicker}
+                datePickerModeAndroid={"spinner"}
+                is24Hour={false}
+              />
 
             </Item>
             <Item fixedLabel last>
               <Label>End Date</Label>
               <TouchableOpacity onPress={this.showEndDateTimePicker}><Text>{this.state.endDate.toLocaleString()}</Text></TouchableOpacity>
-                <DateTimePicker
-                  mode={'datetime'}
-                  isVisible={this.state.isEndDateTimePickerVisible}
-                  value={this.state.endDate}
-                  onConfirm={this.handleEndDatePicked}
-                  onCancel={this.hideEndDateTimePicker}
-                  datePickerModeAndroid={"spinner"}
-                  is24Hour={false}
-                />
+              <DateTimePicker
+                mode={'datetime'}
+                isVisible={this.state.isEndDateTimePickerVisible}
+                value={this.state.endDate}
+                onConfirm={this.handleEndDatePicked}
+                onCancel={this.hideEndDateTimePicker}
+                datePickerModeAndroid={"spinner"}
+                is24Hour={false}
+              />
             </Item>
           </Form>
 
           <List>
             {invitedPeople}
           </List>
-          {sendOrConfirm}
+          <Button
+            medium
+            danger
+            style={styles.inviteButton}
+            onPress={() => this.sendInvite()}
+          >
+            <Text> Send Invite </Text>
+          </Button>
+          {/* {sendOrConfirm} */}
         </Content>
 
       </Container>

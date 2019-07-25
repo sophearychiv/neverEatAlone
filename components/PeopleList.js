@@ -24,7 +24,8 @@ class PeopleList extends React.Component {
   }
 
   getInterestedPeople = async() => {
-    return axios.get("http://192.168.1.194:4567/interests/" + this.props.restYelpId + "/userFbIds") //home
+    const IN_USE_HTTP = require('../internet.json').IN_USE_HTTP;
+    return axios.get(IN_USE_HTTP + "/interests/" + this.props.restYelpId + "/userFbIds") //home
     // return axios.get("http://localhost:4567/interests/" + this.props.restYelpId + "/userFbIds") 
     // return axios.get("http://172.24.26.244:4567/interests/" + this.props.restYelpId + "/userFbIds") //Ada
                 .then(response => {
@@ -35,8 +36,9 @@ class PeopleList extends React.Component {
                 .then(fbIds => {
                   let currentPeople = []
                   fbIds.forEach ( async fbId => {
+                    const IN_USE_HTTP = require('../internet.json').IN_USE_HTTP;
                     // axios.get("http://172.24.26.244:4567/users/" + fbId) //Ada
-                    return axios.get("http://192.168.1.194:4567/users/" + fbId)  // home
+                    return axios.get(IN_USE_HTTP + "/users/" + fbId)  // home
                     // return axios.get("http://localhost:4567/users/" + fbId) 
 
                       .then(user => {
@@ -93,7 +95,8 @@ class PeopleList extends React.Component {
       peopleOnInviteList: this.state.invitedPeople,
       fbIdsOnInviteList: this.state.receipientFbIds,
       requesterFbId: this.props.userFbId,
-      restYelpId: this.props.restYelpId
+      restYelpId: this.props.restYelpId,
+      rest: this.props.rest
     });
   }
 

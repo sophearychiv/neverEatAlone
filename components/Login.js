@@ -43,9 +43,10 @@ class Login extends React.Component {
         console.log("user is " + JSON.stringify(user));
         console.log("user.id is " + user.id);
         console.log("type of user is " + typeof user);
+        const IN_USE_HTTP = require('../internet.json').IN_USE_HTTP;
         // return axios.get("http://localhost:4567/users/" + user.id) // phone
         // return axios.get("http://172.24.26.244:4567/users/" + user.id) // Ada
-        return axios.get("http://192.168.1.194:4567/users/" + user.id) // home
+        return axios.get(IN_USE_HTTP + "/users/" + user.id)
                 .then(response => {
                     console.log('response is', JSON.stringify(response));
                     console.log(typeof user);
@@ -104,9 +105,11 @@ class Login extends React.Component {
             email: userEmail,
             photoUrl: user.picture.data.url
         }
+
+        const IN_USE_HTTP = require('../internet.json').IN_USE_HTTP;
         // return axios.post("http://localhost:4567/users", newUser)
         // return axios.post("http://172.24.26.244:4567/users", newUser) //Ada
-        return axios.post("http://192.168.1.194:4567/users", newUser) //home
+        return axios.post(IN_USE_HTTP + "/users", newUser) //home
                 .then(response => {
                     if(response === "SUCCESS"){
                         console.log("new user added");

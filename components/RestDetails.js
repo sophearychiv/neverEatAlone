@@ -39,9 +39,11 @@ class RestDetails extends React.Component {
       userFbId: this.state.userFbId,
       restYelpId: this.props.navigation.getParam("rest").id
     }
+
+    const IN_USE_HTTP = require('../internet.json').IN_USE_HTTP;
     // return axios.post("http://localhost:4567/interests", config)
     // return axios.post("http://172.24.26.244:4567/interests", config) // Ada
-    return axios.post("http://192.168.1.194:4567/interests", config) //home
+    return axios.post(IN_USE_HTTP + "/interests", config) //home
                 .then(response => {
                     this.setState({
                       interested: true
@@ -55,8 +57,9 @@ class RestDetails extends React.Component {
   }
 
   removeInterest = async(userFbId, restYelpId) => {
+    const IN_USE_HTTP = require('../internet.json').IN_USE_HTTP;
     // return axios.delete("http://172.24.26.244:4567/users/" + userFbId + "/interests/" + restYelpId) // Ada
-    return axios.delete("http://192.168.1.194:4567/users/" + userFbId + "/interests/" + restYelpId)
+    return axios.delete(IN_USE_HTTP + "/users/" + userFbId + "/interests/" + restYelpId)
     // return axios.delete("http://localhost:4567/users/" + userFbId + "/interests/" + restYelpId)
                 .then(response => {
                   this.setState({
@@ -119,6 +122,7 @@ class RestDetails extends React.Component {
               </Body>
               <PeopleList
                 restYelpId={this.props.navigation.getParam("rest").id}
+                rest={this.props.navigation.getParam("rest")}
                 userFbId={this.props.navigation.getParam("loggedInUserFbId")}
               />
             </CardItem>
