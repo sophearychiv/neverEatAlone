@@ -1,5 +1,5 @@
 {
-    "IN_USE_HTTP": "http://localhost:4567",
+    "IN_USE_HTTP": "http://172.24.26.244:4567",
     "HOME": "http://192.168.1.194:4567",
     "ADA": "http://172.24.26.244:4567",
     "LOCALHOST": "http://localhost:4567"

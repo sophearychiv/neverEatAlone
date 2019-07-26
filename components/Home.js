@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, AsyncStorage, View} from 'react-native';
+import { StyleSheet, AsyncStorage, View } from 'react-native';
 import { Drawer } from 'native-base';
 import SideBar from './SideBar';
 import { AppLoading } from "expo";
@@ -58,11 +58,11 @@ class Home extends React.Component {
 
     async UNSAFE_componentWillMount() {
         await Font.loadAsync({
-          Roboto: require("../node_modules/native-base/Fonts/Roboto.ttf"),
-          Roboto_medium: require("../node_modules/native-base/Fonts/Roboto_medium.ttf")
+            Roboto: require("../node_modules/native-base/Fonts/Roboto.ttf"),
+            Roboto_medium: require("../node_modules/native-base/Fonts/Roboto_medium.ttf")
         });
         this.setState({ loading: false });
-      }
+    }
 
     closeDrawer = () => {
         this.drawer._root.close()
@@ -80,105 +80,104 @@ class Home extends React.Component {
 
     render() {
         console.log(this.state);
-        const {navigate} = this.props.navigation;
+        const { navigate } = this.props.navigation;
 
         if (this.state.loading) {
             return (
-            <View><AppLoading/></View>
+                <View><AppLoading /></View>
             );
         }
         return (
+            <Drawer
+                ref={(ref) => { this.drawer = ref; }}
+                content={<SideBar
+                    navigator={this.navigator}
+                    logout={() => this.logout()}
+                    isLoggedIn={this.state.isLoggedIn}
+                />}
+                onClose={() => this.closeDrawer()}
+            >
 
-            <Drawer 
-            ref={(ref) => { this.drawer = ref; }} 
-            content={<SideBar 
-                navigator={this.navigator} 
-                logout={() => this.logout()}
-                isLoggedIn={this.state.isLoggedIn}
-                />} 
-            onClose={() => this.closeDrawer()} 
-            > 
-
-            <Container>
-                <Header>
-                    <Left>
-                        <Button
-                        transparent
-                        onPress={() => this.openDrawer()}
-                        >
-                        <Icon name="menu" />
-                        </Button>
-                    </Left>
-                    <Body>
-                        <Title>Home</Title>
-                    </Body>
-                    <Right />
-                </Header>
-                <Content padder>
-                    <Thumbnail size={80} source={{uri: this.state.photoUrl}} />
-                    <Card>
-                        <CardItem>
+                <Container>
+                    <Header>
+                        <Left>
+                            <Button
+                                transparent
+                                onPress={() => this.openDrawer()}
+                            >
+                                <Icon name="menu" />
+                            </Button>
+                        </Left>
                         <Body>
-                            <Text style={{alignSelf: "center"}}>Never Eat Alone!</Text>
+                            <Title>Home</Title>
                         </Body>
-                        </CardItem>
-                    </Card>
-                    <Button
-                        full
-                        rounded
-                        dark
-                        style={{ marginTop: 10 }}
-                        onPress={() => navigate("SearchRestaurants", {
-                            loggedInUserId: this.state.fbId,
-                            // restsOfInterest: this.state.restsOfInterest
-                        })}
-                    >
-                        <Text>Search Restaurants</Text>
-                    </Button>
-                    <Button
-                        full
-                        rounded
-                        success
-                        style={{ marginTop: 10 }}
-                        onPress={() => navigate("SearchPeople")}
-                    >
-                        <Text>Search People</Text>
-                    </Button>
-                    <Button
-                        full
-                        rounded
-                        primary
-                        style={{ marginTop: 10 }}
-                        onPress={() => {
-                            /* 1. Navigate to the Profile route with params */
-                            navigate('Profile', {
-                                name: this.state.name,
-                                photoUrl: this.state.photoUrl,
-                            });
+                        <Right />
+                    </Header>
+                    <Content padder>
+                        <Thumbnail size={80} source={{ uri: this.state.photoUrl }} />
+                        <Card>
+                            <CardItem>
+                                <Body>
+                                    <Text style={{ alignSelf: "center" }}>Never Eat Alone!</Text>
+                                </Body>
+                            </CardItem>
+                        </Card>
+                        <Button
+                            full
+                            rounded
+                            dark
+                            style={{ marginTop: 10 }}
+                            onPress={() => navigate("SearchRestaurants", {
+                                loggedInUserId: this.state.fbId,
+                                // restsOfInterest: this.state.restsOfInterest
+                            })}
+                        >
+                            <Text>Search Restaurants</Text>
+                        </Button>
+                        <Button
+                            full
+                            rounded
+                            success
+                            style={{ marginTop: 10 }}
+                            onPress={() => navigate("SearchPeople")}
+                        >
+                            <Text>Search People</Text>
+                        </Button>
+                        <Button
+                            full
+                            rounded
+                            primary
+                            style={{ marginTop: 10 }}
+                            onPress={() => {
+                                /* 1. Navigate to the Profile route with params */
+                                navigate('Profile', {
+                                    name: this.state.name,
+                                    photoUrl: this.state.photoUrl,
+                                });
                             }}
-                    >
-                        <Text>Go to Profile</Text>
-                    </Button>
-                </Content>
-            </Container>
-            <FooterTabs/>
-        </Drawer>
-        
+                        >
+                            <Text>Go to Profile</Text>
+                        </Button>
+                    </Content>
+                </Container>
+                <FooterTabs fbId={this.state.fbId} />
+
+            </Drawer>
         );
     }
-    
+
 }
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     nav: {
         marginTop: 50
     }
-  });
+});
 
 export default Home;

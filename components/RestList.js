@@ -59,9 +59,10 @@ class RestList extends React.Component {
             <View>
                 <ScrollView>
                     {restCards}
-                <FooterTabs />
 
                 </ScrollView>
+                <FooterTabs />
+
             </View>
         );
     }
