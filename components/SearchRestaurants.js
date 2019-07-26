@@ -128,7 +128,8 @@ const styles = StyleSheet.create({
         marginTop: 20,
         alignSelf: "center",
         paddingLeft: 20,
-        paddingRight: 20
+        paddingRight: 20,
+        backgroundColor: "#00deff"
     },
     submitText: {
         color: "white",

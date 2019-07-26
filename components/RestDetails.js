@@ -96,7 +96,7 @@ class RestDetails extends React.Component {
 
     return (
         <Container>
-          <ListItem>
+          <ListItem style={{backgroundColor: "#00deff", paddingLeft: 20, marginRight: 15, borderRadius: 5}}>
             <Left>
               <Text style={styles.name}>{this.props.navigation.getParam("rest").name}</Text>
 

@@ -13,6 +13,7 @@ class Interests extends React.Component {
         this.state = {
             rests: []
         }
+        this.getInterests();
     }
 
     async componentDidMount() {

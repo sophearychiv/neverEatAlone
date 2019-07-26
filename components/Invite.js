@@ -214,6 +214,7 @@ const styles = StyleSheet.create({
   },
   inviteButton: {
     alignSelf: "center",
-    marginTop: 10
+    marginTop: 10,
+    backgroundColor: "#00deff"
   }
 })

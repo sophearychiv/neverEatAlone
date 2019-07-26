@@ -75,13 +75,16 @@ const AppStack = createStackNavigator({
   },
 
   Invites: {
-    screen: Invites
+    screen: Invites,
+    navigationOptions: {
+      title: "Your Invitations",
+    }
   },
 
   Interests: {
     screen: Interests,
     navigationOptions: {
-      title: "Your List of Interests",
+      title: "Your Interests",
     }
   },
 

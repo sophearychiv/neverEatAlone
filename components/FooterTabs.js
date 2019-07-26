@@ -35,7 +35,9 @@ class FooterTabs extends Component {
     }
 
     clickOnInvites = () => {
-        this.props.navigation.navigate("Invites");
+        this.props.navigation.navigate("Invites", {
+            fbId: this.props.fbId
+        });
 
         this.setState({
             activeHome: false,

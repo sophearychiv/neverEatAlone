@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, AsyncStorage, View } from 'react-native';
+import { StyleSheet, AsyncStorage, View, ImageBackground } from 'react-native';
 import { Drawer } from 'native-base';
 import SideBar from './SideBar';
 import { AppLoading } from "expo";
@@ -99,55 +99,64 @@ class Home extends React.Component {
             >
 
                 <Container>
+
                     <Header>
-                        <Left>
-                            <Button
-                                transparent
-                                onPress={() => this.openDrawer()}
-                            >
-                                <Icon name="menu" />
-                            </Button>
-                        </Left>
+                        {/* <Left> */}
+                        <Button
+                            transparent
+                            onPress={() => this.openDrawer()}
+                        >
+                            <Icon name="menu" />
+                        </Button>
+                        {/* </Left> */}
                         <Body>
-                            <Title>Home</Title>
+                            <Title>Never Eat Alone</Title>
                         </Body>
-                        <Right />
+                        <Right>
+                            <Thumbnail style={{ marginBottom: 20 }} size={80} source={{ uri: this.state.photoUrl }} />
+                        </Right>
+
                     </Header>
                     <Content padder>
-                        <Thumbnail size={80} source={{ uri: this.state.photoUrl }} />
-                        <Card>
-                            <CardItem>
-                                <Body>
+                        {/* <Card> */}
+                        {/* <CardItem> */}
+                            {/* <Body>
                                     <Text style={{ alignSelf: "center" }}>Never Eat Alone!</Text>
-                                </Body>
-                            </CardItem>
-                        </Card>
+                                </Body> */}
+                            <ImageBackground
+                                source={require("../assets/Logo_96.png")}
+                                style={{ width: 150, height: 150, marginBottom: 50, marginTop: 20, alignSelf: "center" }}
+                            >
+                            </ImageBackground>
+                        {/* </CardItem> */}
+                        {/* </Card> */}
+
                         <Button
                             full
                             rounded
-                            dark
-                            style={{ marginTop: 10 }}
+                            // dark
+                            style={{ marginTop: 20, backgroundColor: "#00deff" }}
                             onPress={() => navigate("SearchRestaurants", {
                                 loggedInUserId: this.state.fbId,
                                 // restsOfInterest: this.state.restsOfInterest
                             })}
                         >
-                            <Text>Search Restaurants</Text>
+                            <Text style={{ color: "black" }}>Search Restaurants</Text>
                         </Button>
                         <Button
                             full
                             rounded
                             success
-                            style={{ marginTop: 10 }}
+                            style={{ marginTop: 20, backgroundColor: "#00deff" }}
                             onPress={() => navigate("SearchPeople")}
                         >
-                            <Text>Search People</Text>
+                            <Text style={{ color: "black" }}>Search People</Text>
                         </Button>
                         <Button
                             full
                             rounded
-                            primary
-                            style={{ marginTop: 10 }}
+                            // primary
+                            style={{ marginTop: 20, backgroundColor: "#00deff" }}
                             onPress={() => {
                                 /* 1. Navigate to the Profile route with params */
                                 navigate('Profile', {
@@ -156,7 +165,7 @@ class Home extends React.Component {
                                 });
                             }}
                         >
-                            <Text>Go to Profile</Text>
+                            <Text style={{ color: "black" }}>Go to Profile</Text>
                         </Button>
                     </Content>
                 </Container>
