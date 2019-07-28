@@ -117,7 +117,6 @@ class PeopleList extends React.Component {
             photoUrl={user.data.data.photoUrl}
             selectPeopleCallBack={()=> this.selectPeople(user)}
             removePeopleCallBack={()=> this.removePeople(user)}
-            // selectPeopleCallBack={(userFbId)=> this.selectPeople(userFbId)}
           />
           )
       });

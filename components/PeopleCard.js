@@ -49,7 +49,8 @@ class PeopleCard extends React.Component {
                                     <Button 
                                     danger 
                                     small
-                                    onPress={this.remove}> 
+                                    // onPress={this.remove}
+                                    > 
                                         <Text>Remove</Text> 
                                     </Button>
                                 </TouchableOpacity>

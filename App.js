@@ -1,4 +1,5 @@
 import React from 'react';
+import { Root } from "native-base";
 import {ActivityIndicator, AsyncStorage, Button, StyleSheet, View} from 'react-native';
 import {createStackNavigator, createSwitchNavigator, createAppContainer} from 'react-navigation';
 import Login from './components/Login';
@@ -36,6 +37,7 @@ class AuthLoadingScreen extends React.Component {
 }
 
 const AppStack = createStackNavigator({
+  // Page: { screen: Page },
   Home: {
     screen: Home
   },
