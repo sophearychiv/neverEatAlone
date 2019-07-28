@@ -25,22 +25,39 @@ class SearchRestaurants extends React.Component {
         await this.fetchData();
       }
 
-    async fetchData(location, category) {
+    async fetchData(category, location, latitude, longitude) {
         const CONFIG = require('../secrets.json');
-
-        const config = {
-            headers: {
-                Authorization: `Bearer ${CONFIG.YELP_API_KEY}`,
-            },
-            params: {
-                term: 'restaurants',
-                location: location,
-                // eslint-disable-next-line camelcase
-                sort_by: 'distance',
-                categories: category,
-                limit: 15
-            }
-        };
+        let config = null;
+        if (location != null){
+            config = {
+                headers: {
+                    Authorization: `Bearer ${CONFIG.YELP_API_KEY}`,
+                },
+                params: {
+                    term: 'restaurants',
+                    location: location,
+                    // eslint-disable-next-line camelcase
+                    sort_by: 'distance',
+                    categories: category,
+                    limit: 15
+                }
+            };
+        } else {
+            config = {
+                headers: {
+                    Authorization: `Bearer ${CONFIG.YELP_API_KEY}`,
+                },
+                params: {
+                    term: 'restaurants',
+                    latitude: latitude,
+                    longitude: longitude,
+                    // eslint-disable-next-line camelcase
+                    sort_by: 'distance',
+                    categories: category,
+                    limit: 15
+                }
+            };
+        }
         return axios.get('https://api.yelp.com/v3/businesses/search', config)
                     .then(response => {
                         const restList = response.data.businesses.map(rest => rest);
@@ -61,8 +78,20 @@ class SearchRestaurants extends React.Component {
 
     search = (location, category) => {
         category = category.toLowerCase();
-        this.fetchData(location, category);
-        console.log("rests in SearchRestaurants: " + this.state.rests);
+        if (location != "") {
+            this.fetchData(category, location);
+            console.log("rests in SearchRestaurants: " + this.state.rests);
+        } else {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+                    this.fetchData(category, null, latitude, longitude);
+                },
+                (error) => this.setState({ error: error.message }),
+                { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+                );
+            }
     }
 
     updateLocationState = (val) => {

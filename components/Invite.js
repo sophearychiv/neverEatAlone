@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { StyleSheet, DatePickerIOS } from "react-native";
-// import moment from 'mosment';
 import { Container, Header, Content, List, Form, Item, Label, Input, DatePicker, Text, Button } from 'native-base';
 import DateTimePicker from "react-native-modal-datetime-picker";
 // import DateTimePicker from 'react-datetime-picker/dist/entry.nostyle';
@@ -8,7 +7,6 @@ import PeopleCard from './PeopleCard';
 import { TouchableOpacity } from "react-native-gesture-handler";
 import axios from 'axios';
 import FooterTabs from './FooterTabs';
-// import Modal from "react-native-modal";
 
 export default class Invite extends Component {
   constructor(props) {
@@ -21,16 +19,11 @@ export default class Invite extends Component {
       isEndDateTimePickerVisible: false,
       startDate: 'Select Date',
       endDate: 'Select Date',
-      // inviteSent: false
-      // chosenDate: new Date()
+      // startDate: new Date().toLocaleString(),
+      // endDate: new Date().toLocaleString(),
 
     };
 
-    // this.setDate = this.setDate.bind(this);
-  }
-
-  async componentDidMount() {
-    await this.sendInvite();
   }
 
   sendInvite = async () => {
@@ -48,12 +41,7 @@ export default class Invite extends Component {
     const IN_USE_HTTP = require('../internet.json').IN_USE_HTTP;
 
     return axios.post(IN_USE_HTTP + "/invites", config)
-      // return axios.post("http://localhost:4567/invites", config)
       .then(response => {
-        // this.setState({
-        //   // receipientFbIds: [],
-        //   inviteSent: true
-        // });
         this.props.navigation.navigate("InviteConfirmation", {
           invitedPeople: this.state.peopleOnInviteList,
           rest: this.props.navigation.getParam("rest"),
@@ -66,14 +54,6 @@ export default class Invite extends Component {
       .catch(error => {
         console.log("error sending invite: " + error);
       })
-  }
-
-  setStartDate = (date) => {
-    this.setState({ date });
-  }
-
-  setEndDate = () => {
-
   }
 
   removePeopleFromInviteList = (user) => {
@@ -118,7 +98,6 @@ export default class Invite extends Component {
   };
 
   handleStartDatePicked = date => {
-    console.log("A date has been picked: ", date);
     this.setState({
       startDate: date
     })
@@ -126,17 +105,11 @@ export default class Invite extends Component {
   };
 
   handleEndDatePicked = date => {
-    console.log("A date has been picked: ", date);
     this.setState({
       endDate: date
     })
     this.hideEndDateTimePicker();
   };
-
-  // setDate(newDate) {
-  //   this.setState({ chosenDate: newDate });
-  // }
-
 
 
   render() {

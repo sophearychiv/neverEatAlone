@@ -14,7 +14,9 @@ class InviteCard extends React.Component {
             name: null,
             photoUrl: null,
             invitedName: null,
-            invitedPhotoUrl: null
+            invitedPhotoUrl: null,
+            requesterName: null,
+            requesterPhotoUrl: null
         }
         this.getUsers(this.props.invite);
         console.log("executed in constructor in InviteCard");
@@ -26,13 +28,34 @@ class InviteCard extends React.Component {
 
     getUsers = async (invite) => {
 
-        axios.get(IN_USE_HTTP + "/users/" + invite.receipientFbId)
+        let fbId;
+        if(this.props.currentlyChecking === "received"){
+            fbId = invite.requesterFbId
+            axios.get(IN_USE_HTTP + "/users/" + fbId)
+            .then(response => {
+                this.setState({
+                    requesterName: response.data.data.firstName,
+                    requesterPhotoUrl: response.data.data.photoUrl
+                })
+            })
+            .catch(error => {
+                console.log("error getting requesters in InviteCard: " + error);
+            })
+        } else if(this.props.currentlyChecking === "sent"){
+            fbId = invite.receipientFbId
+            axios.get(IN_USE_HTTP + "/users/" + fbId)
             .then(response => {
                 this.setState({
                     invitedName: response.data.data.firstName,
                     invitedPhotoUrl: response.data.data.photoUrl
                 })
             })
+            .catch(error => {
+                console.log("error getting receipients in InviteCard: " + error);
+            })
+        }
+
+        
     }
 
     deleteInvite = (invite) => {
@@ -42,26 +65,66 @@ class InviteCard extends React.Component {
         this.props.deleteInviteCallback(invite);
     }
 
-    componentDidUpdate(prevProps){
-        if(this.props.invite !== prevProps.invite){
+    acceptInvite = (invite) => {
+        this.props.acceptInviteCallback(invite);
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.invite !== prevProps.invite) {
             this.getUsers(this.props.invite);
         }
     }
 
     render() {
         console.log("rendering InviteCard");
-        return (
-            <ListItem avatar>
+        console.log(this.state);
 
+        let displayCard;
 
-                <Body>
-                    <Text>receipientFbId: {this.props.invite.receipientFbId}</Text>
-                    <Text>inviteId: {this.props.invite.inviteId}</Text>
-                    <Button
-                        title="remove"
-                        onPress={() => this.deleteInvite(this.props.invite)}
-                    />
-                    <Text>Yout sent an invite to {this.state.invitedName}</Text>
+        if (this.props.currentlyChecking === "received") {
+            displayCard = <ListItem avatar>
+                     <Body>
+                     <Text>You have received an invitation from <Text style={styles.name}>{this.state.requesterName}</Text></Text>
+                     <View>
+                         <Text note>on {this.props.invite.creationDate}</Text>
+                     </View>
+                     <Button
+                         title="Accept"
+                         color="grey"
+                         onPress={() => {
+                             this.setState({ visible: true });
+                         }}
+                     />
+                     <Dialog
+                         visible={this.state.visible}
+                         footer={
+                             <DialogFooter>
+                                 <DialogButton
+                                     text="NO"
+                                     onPress={() => this.setState({ visible: false })}
+                                 />
+                                 <DialogButton
+                                     text="YES"
+                                     onPress={() => this.acceptInvite(this.props.invite)}
+                                 />
+                             </DialogFooter>
+                         }
+                     >
+                         <DialogContent style={{ paddingTop: 30 }}>
+                             <Text> Are you sure you want to accept the invite?</Text>
+                         </DialogContent>
+                     </Dialog>
+                 </Body>
+                 <Right>
+                     <Thumbnail source={{ uri: this.state.requesterPhotoUrl }} />
+                 </Right>
+             </ListItem>
+         }
+
+        if (this.props.currentlyChecking === "sent") {
+           displayCard = <ListItem avatar>
+                    <Body>
+                    <Text>Yout sent an invite to <Text style={styles.name}>{this.state.invitedName}</Text></Text>
                     <View>
                         <Text note>on {this.props.invite.creationDate}</Text>
                     </View>
@@ -83,7 +146,6 @@ class InviteCard extends React.Component {
                                 <DialogButton
                                     text="YES"
                                     onPress={() => this.deleteInvite(this.props.invite)}
-                                // onPress={() => this.deleteInvite(this.props.uniqueKey, this.props.invite.inviteId, this.props.invite.receipientFbId)}
                                 />
                             </DialogFooter>
                         }
@@ -97,14 +159,25 @@ class InviteCard extends React.Component {
                     <Thumbnail source={{ uri: this.state.invitedPhotoUrl }} />
                 </Right>
             </ListItem>
-        );
-    }
+        }
+
+        
+    return (
+        <>
+            {displayCard}
+        </>
+        
+    );
+}
 }
 
 const styles = StyleSheet.create({
     button: {
         backgroundColor: "red",
         borderRadius: 5
+    },
+    name: {
+        fontWeight: "bold"
     }
 })
 

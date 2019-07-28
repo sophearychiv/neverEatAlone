@@ -23,6 +23,13 @@ class PeopleCard extends React.Component {
         // this.props.selectPeopleCallBack(this.props.userFbId);
     }
 
+    unSelect = () => {
+        this.setState({
+            selected: false
+        });
+        this.props.removePeopleCallBack();
+    }
+
     remove = (user) => {
         this.setState({
             selected: false
@@ -34,10 +41,10 @@ class PeopleCard extends React.Component {
 
                         
         let checkBox = this.state.selected ? 
-                            <TouchableOpacity onPress={this.remove}>
+                            <TouchableOpacity onPress={() => this.unSelect()}>
                                 <CheckBox style={styles.checkBox} checked={true} />
                             </TouchableOpacity>
-                            : <TouchableOpacity onPress={this.select}>
+                            : <TouchableOpacity onPress={() => this.select()}>
                                 <CheckBox style={styles.checkBox} checked={false} />
                                 </TouchableOpacity>
         let removeButton = null;
