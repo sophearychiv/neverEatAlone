@@ -13,7 +13,6 @@ class Interests extends React.Component {
         this.state = {
             rests: []
         }
-        this.getInterests();
     }
 
     async componentDidMount() {
@@ -28,9 +27,7 @@ class Interests extends React.Component {
             })
             .then(restIds => {
                 const CONFIG = require('../secrets.json');
-
                 const config = {
-
                     headers: {
                         Authorization: `Bearer ${CONFIG.YELP_API_KEY}`,
                     },
@@ -42,7 +39,6 @@ class Interests extends React.Component {
                             const rests = this.state.rests;
                             rests.push(response.data);
                             this.setState({ rests });
-                            console.log("by searching id from yelp: " + JSON.stringify(response));
                         })
                         .catch(error => {
                             console.log("nested request in getting restaurants for interests: " + error);
@@ -55,7 +51,6 @@ class Interests extends React.Component {
     }
 
     render() {
-
         const rests = this.state.rests.map((rest, i) => {
             return [<Interest
                 key={i}

@@ -15,7 +15,8 @@ class SearchRestaurants extends React.Component {
         this.state = {
             rests : [],
             message: 'something',
-            location: "Seattle, WA 98161",
+            location: "Current Location",
+            // location: "Seattle, WA 98161",
             category: "italian, thai",
             // restsOfInterest: this.props.navigation.getParam("restsOfInterest")
         };
@@ -78,7 +79,7 @@ class SearchRestaurants extends React.Component {
 
     search = (location, category) => {
         category = category.toLowerCase();
-        if (location != "") {
+        if (location != "" && location != "Current Location") {
             this.fetchData(category, location);
             console.log("rests in SearchRestaurants: " + this.state.rests);
         } else {
