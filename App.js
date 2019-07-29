@@ -99,6 +99,13 @@ const AppStack = createStackNavigator({
       title: "Profile"
     }
   }
+},
+{
+  transitionConfig: () => ({
+    transitionSpec: {
+      duration: 0,  // Set the animation duration time as 0 !!
+    },
+  }),
 });
 
 const AuthStack = createStackNavigator({Login: Login})
