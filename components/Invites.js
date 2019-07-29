@@ -20,7 +20,7 @@ class Invites extends React.Component {
     }
 
     async componentDidMount() {
-        // await this.getSentInvites();
+        // await this.getConfirmedInvites();
         await this.getReceivedInvites();
     }
 
@@ -177,26 +177,26 @@ class Invites extends React.Component {
                 </Button> */}
 
                 <Button last onPress={() => this.handleConfirmedInvites()}>
-                    <Text>Going</Text>
+                    <Text>Confirmed</Text>
                 </Button>
             </Segment>
         }
 
-        if (this.state.currentlyChecking === "sent") {
-            segment = <Segment>
-                        <Button first onPress={() => this.handleReceivedInvites()}>
-                            <Text>Pending</Text>
-                        </Button>
+        // if (this.state.currentlyChecking === "sent") {
+        //     segment = <Segment>
+        //                 <Button first onPress={() => this.handleReceivedInvites()}>
+        //                     <Text>Pending</Text>
+        //                 </Button>
 
-                        {/* <Button active onPress={() => this.handleSentInvites()}>
-                            <Text>Sent</Text>
-                        </Button> */}
+        //                 {/* <Button active onPress={() => this.handleSentInvites()}>
+        //                     <Text>Sent</Text>
+        //                 </Button> */}
 
-                        <Button last onPress={() => this.handleConfirmedInvites()}>
-                            <Text>Going</Text>
-                        </Button>
-                    </Segment>
-        }
+        //                 <Button last onPress={() => this.handleConfirmedInvites()}>
+        //                     <Text>Confirmed</Text>
+        //                 </Button>
+        //             </Segment>
+        // }
 
         if (this.state.currentlyChecking === "confirmed") {
             segment = <Segment>
@@ -209,7 +209,7 @@ class Invites extends React.Component {
                         </Button> */}
 
                         <Button last active onPress={() => this.handleConfirmedInvites()}>
-                            <Text>Going</Text>
+                            <Text>Confirmed</Text>
                         </Button>
                     </Segment>
         }

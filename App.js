@@ -15,6 +15,7 @@ import InviteConfirmation from './components/InviteConfirmation';
 import Invites from './components/Invites';
 import Interests from './components/Interests';
 import FooterTabs from './components/FooterTabs';
+import InviteDetails from './components/InviteDetails';
 
 class AuthLoadingScreen extends React.Component {
   constructor() {
@@ -66,6 +67,10 @@ const AppStack = createStackNavigator({
 
   Invite: {
     screen: Invite
+  },
+
+  InviteDetails: {
+    screen: InviteDetails
   },
 
   InviteConfirmation: {

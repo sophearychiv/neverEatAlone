@@ -3,6 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { Container, Header, Text, List, ListItem, Content, Card, CardItem, Body, Button } from 'native-base';
 import PeopleCard from './PeopleCard';
 import FooterTabs from './FooterTabs';
+import { withNavigation } from 'react-navigation';
 
 
 class InviteConfirmation extends React.Component {
@@ -51,14 +52,18 @@ class InviteConfirmation extends React.Component {
                             <List>
                                 {invitedPeople}
                             </List>
-
                         </CardItem>
-                        <Button success medium style={styles.seeInviteButton}>
+                        {/* <Button
+                            success
+                            medium
+                            style={styles.seeInviteButton}
+                            onPress={() => this.props.navigation.navigate("Invites")}
+                        >
                             <Text style={styles.textInvite}>See Invitations</Text>
-                        </Button>
+                        </Button> */}
                     </Card>
                 </Content>
-                <FooterTabs/>
+                <FooterTabs />
             </Container>
         );
     }
@@ -81,4 +86,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default InviteConfirmation;
+export default withNavigation(InviteConfirmation);

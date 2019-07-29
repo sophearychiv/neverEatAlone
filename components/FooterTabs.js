@@ -3,35 +3,33 @@ import { withNavigation } from 'react-navigation';
 import { Container, Header, Content, Footer, FooterTab, Button, Icon, Text } from 'native-base';
 class FooterTabs extends Component {
 
-    state = {
-        activeHome: false,
-        activeSearch: false,
-        activeInvites: false,
-        activeFav: false
+    constructor(props){
+        super(props);
+        this.state = {
+            currentTab: "home"
+        }
     }
-
+    
+    // componentDidUpdate(prevState){
+    //     if(this.state.currentTab != prevState.currentTab){
+            
+    //     }
+    // }
     clickOnHome = () => {
-        this.props.navigation.navigate("Home");
 
         this.setState({
-            activeHome: true,
-            activeSearch: false,
-            activeInvites: false,
-            activeFav: false
+            currentTab: "home"
         });
-
+        this.props.navigation.navigate("Home");
     }
 
     clickOnSearch = () => {
-        this.props.navigation.navigate("SearchRestaurants");
-
         this.setState({
-            activeHome: false,
-            activeSearch: true,
-            activeInvites: false,
-            activeFav: false
+            currentTab: "search"
         });
-
+        this.props.navigation.navigate("SearchRestaurants", {
+            fbId: this.props.fbId
+        });
     }
 
     clickOnInvites = () => {
@@ -40,10 +38,7 @@ class FooterTabs extends Component {
         });
 
         this.setState({
-            activeHome: false,
-            activeSearch: false,
-            activeInvites: true,
-            activeFav: false
+            currentTab: "invites"
         });
 
     }
@@ -55,16 +50,61 @@ class FooterTabs extends Component {
         });
 
         this.setState({
-            activeHome: false,
-            activeSearch: false,
-            activeInvites: false,
-            activeFav: true
+            currentTab: "fav"
         });
 
     }
     render() {
 
-        const home = this.state.activeHome ?
+        // let displayTabs;
+        // if (this.state.currentTab === "home") {
+
+        //     displayTabs = <FooterTab>
+        //         <Button vertical active onPress={() => this.clickOnHome()}>
+        //             <Icon name="home" />
+        //             <Text>Home</Text>
+        //         </Button>
+
+        //         <Button vertical onPress={() => this.clickOnSearch()}>
+        //             <Icon name="search" />
+        //             <Text>Search</Text>
+        //         </Button>
+
+        //         <Button vertical onPress={() => this.clickOnInvites()}>
+        //             <Icon name="mail-open" />
+        //             <Text>Invites</Text>
+        //         </Button>
+
+        //         <Button vertical onPress={() => this.clickOnFav()}>
+        //             <Icon name="heart" />
+        //             <Text>Fav</Text>
+        //         </Button>
+        //     </FooterTab>
+        // } else if (this.state.currentTab === "search"){
+        //     displayTabs = <FooterTab>
+        //     <Button vertical onPress={() => this.clickOnHome()}>
+        //         <Icon name="home" />
+        //         <Text>Home</Text>
+        //     </Button>
+
+        //     <Button vertical active onPress={() => this.clickOnSearch()}>
+        //         <Icon name="search" />
+        //         <Text>Search</Text>
+        //     </Button>
+
+        //     <Button vertical onPress={() => this.clickOnInvites()}>
+        //         <Icon name="mail-open" />
+        //         <Text>Invites</Text>
+        //     </Button>
+
+        //     <Button vertical onPress={() => this.clickOnFav()}>
+        //         <Icon name="heart" />
+        //         <Text>Fav</Text>
+        //     </Button>
+        // </FooterTab>
+        // }
+
+        const home = this.state.currentTab === "home" ?
             <Button vertical active onPress={() => this.clickOnHome()}>
                 <Icon name="home" />
                 <Text>Home</Text>
@@ -74,7 +114,7 @@ class FooterTabs extends Component {
                 <Text>Home</Text>
             </Button>
 
-        const search = this.state.activeSearch ?
+        const search = this.state.currentTab === "search" ?
             <Button vertical active onPress={() => this.clickOnSearch()}>
                 <Icon name="search" />
                 <Text>Search</Text>
@@ -83,7 +123,7 @@ class FooterTabs extends Component {
                 <Icon name="search" />
                 <Text>Search</Text>
             </Button>
-        const invites = this.state.activeInvites ?
+        const invites = this.state.currentTab === "invites" ?
             <Button vertical active onPress={() => this.clickOnInvites()}>
                 <Icon name="mail-open" />
                 <Text>Invites</Text>
@@ -93,7 +133,7 @@ class FooterTabs extends Component {
                 <Text>Invites</Text>
             </Button>
 
-        const fav = this.state.activeFav ?
+        const fav = this.state.currentTab === "fav" ?
             <Button vertical active onPress={() => this.clickOnFav()}>
                 <Icon name="heart" />
                 <Text>Fav</Text>
@@ -105,6 +145,7 @@ class FooterTabs extends Component {
 
         return (
             <Footer>
+                {/* {displayTabs} */}
                 <FooterTab>
                     {home}
                     {search}
