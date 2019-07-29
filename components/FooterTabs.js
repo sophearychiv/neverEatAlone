@@ -80,7 +80,9 @@ class FooterTabs extends Component {
         //             <Text>Fav</Text>
         //         </Button>
         //     </FooterTab>
-        // } else if (this.state.currentTab === "search"){
+        // }
+        
+        // if (this.state.currentTab === "search"){
         //     displayTabs = <FooterTab>
         //     <Button vertical onPress={() => this.clickOnHome()}>
         //         <Icon name="home" />
@@ -105,7 +107,8 @@ class FooterTabs extends Component {
         // }
 
         const home = this.state.currentTab === "home" ?
-            <Button vertical active onPress={() => this.clickOnHome()}>
+            <Button vertical onPress={() => this.clickOnHome()}>
+            {/* <Button vertical active onPress={() => this.clickOnHome()}> */}
                 <Icon name="home" />
                 <Text>Home</Text>
             </Button>
@@ -115,7 +118,8 @@ class FooterTabs extends Component {
             </Button>
 
         const search = this.state.currentTab === "search" ?
-            <Button vertical active onPress={() => this.clickOnSearch()}>
+            <Button vertical onPress={() => this.clickOnSearch()}>
+            {/* <Button vertical active onPress={() => this.clickOnSearch()}> */}
                 <Icon name="search" />
                 <Text>Search</Text>
             </Button>
@@ -124,7 +128,8 @@ class FooterTabs extends Component {
                 <Text>Search</Text>
             </Button>
         const invites = this.state.currentTab === "invites" ?
-            <Button vertical active onPress={() => this.clickOnInvites()}>
+            <Button vertical onPress={() => this.clickOnInvites()}>
+            {/* <Button vertical active onPress={() => this.clickOnInvites()}> */}
                 <Icon name="mail-open" />
                 <Text>Invites</Text>
             </Button>
@@ -134,7 +139,8 @@ class FooterTabs extends Component {
             </Button>
 
         const fav = this.state.currentTab === "fav" ?
-            <Button vertical active onPress={() => this.clickOnFav()}>
+            <Button vertical onPress={() => this.clickOnFav()}>
+            {/* <Button vertical active onPress={() => this.clickOnFav()}> */}
                 <Icon name="heart" />
                 <Text>Fav</Text>
             </Button>

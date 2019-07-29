@@ -74,25 +74,12 @@ class Invites extends React.Component {
         this.getReceivedInvites();
     }
 
-    // handleSentInvites = () => {
-    //     this.setState({
-    //         currentlyChecking: "sent"
-    //     });
-    //     this.getSentInvites();
-    // }
-
     handleConfirmedInvites = () => {
         this.setState({
             currentlyChecking: "confirmed"
         });
         this.getConfirmedInvites();
     }
-
-    // componentDidUpdate(prevState){
-    //     if(this.state.checkingSent !== prevState.checkingSent) {
-    //         this.getSentInvites();
-    //     }
-    // }
 
     deleteInvite = (invite) => {
         axios.delete(IN_USE_HTTP + "/invites/" + invite.inviteId + "/receipients/" + invite.receipientFbId)
@@ -172,41 +159,17 @@ class Invites extends React.Component {
                     <Text>Pending</Text>
                 </Button>
 
-                {/* <Button onPress={() => this.handleSentInvites()}>
-                    <Text>Sent</Text>
-                </Button> */}
-
                 <Button last onPress={() => this.handleConfirmedInvites()}>
                     <Text>Confirmed</Text>
                 </Button>
             </Segment>
         }
 
-        // if (this.state.currentlyChecking === "sent") {
-        //     segment = <Segment>
-        //                 <Button first onPress={() => this.handleReceivedInvites()}>
-        //                     <Text>Pending</Text>
-        //                 </Button>
-
-        //                 {/* <Button active onPress={() => this.handleSentInvites()}>
-        //                     <Text>Sent</Text>
-        //                 </Button> */}
-
-        //                 <Button last onPress={() => this.handleConfirmedInvites()}>
-        //                     <Text>Confirmed</Text>
-        //                 </Button>
-        //             </Segment>
-        // }
-
         if (this.state.currentlyChecking === "confirmed") {
             segment = <Segment>
                         <Button first onPress={() => this.handleReceivedInvites()}>
                             <Text>Pending</Text>
                         </Button>
-
-                        {/* <Button onPress={() => this.handleSentInvites()}>
-                            <Text>Sent</Text>
-                        </Button> */}
 
                         <Button last active onPress={() => this.handleConfirmedInvites()}>
                             <Text>Confirmed</Text>

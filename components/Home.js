@@ -32,7 +32,6 @@ class Home extends React.Component {
             photoUrl: null,
             loading: true,
             isLoggedIn: false,
-            // restsOfInterest: []
         }
         this.getToken();
     }
@@ -101,14 +100,12 @@ class Home extends React.Component {
                 <Container>
 
                     <Header>
-                        {/* <Left> */}
                         <Button
                             transparent
                             onPress={() => this.openDrawer()}
                         >
                             <Icon name="menu" />
                         </Button>
-                        {/* </Left> */}
                         <Body>
                             <Title>Never Eat Alone</Title>
                         </Body>
@@ -118,27 +115,18 @@ class Home extends React.Component {
 
                     </Header>
                     <Content padder>
-                        {/* <Card> */}
-                        {/* <CardItem> */}
-                            {/* <Body>
-                                    <Text style={{ alignSelf: "center" }}>Never Eat Alone!</Text>
-                                </Body> */}
                             <ImageBackground
                                 source={require("../assets/Logo_512.png")}
                                 style={{ width: 150, height: 150, marginBottom: 50, marginTop: 20, alignSelf: "center" }}
                             >
                             </ImageBackground>
-                        {/* </CardItem> */}
-                        {/* </Card> */}
 
                         <Button
                             full
                             rounded
-                            // dark
                             style={{ marginTop: 20, backgroundColor: "#00deff" }}
                             onPress={() => navigate("SearchRestaurants", {
                                 loggedInUserId: this.state.fbId,
-                                // restsOfInterest: this.state.restsOfInterest
                             })}
                         >
                             <Text style={{ color: "black" }}>Search Restaurants</Text>
@@ -152,21 +140,6 @@ class Home extends React.Component {
                         >
                             <Text style={{ color: "black" }}>Search People</Text>
                         </Button>
-                         {/* <Button */}
-                            {/* full */}
-                            {/* rounded */}
-                            {/* // primary */}
-                            {/* style={{ marginTop: 20, backgroundColor: "#00deff" }} */}
-                            {/* onPress={() => { */}
-                                {/* /* 1. Navigate to the Profile route with params */ }
-                                {/* navigate('Profile', { */}
-                                    {/* // name: this.state.name, */}
-                                    {/* // photoUrl: this.state.photoUrl, */}
-                                {/* // }); */}
-                            {/* // }} */}
-                        {/* /* >  */}
-                            {/* /* <Text style={{ color: "black" }}>Go to Profile</Text> */ }
-                        {/* /* </Button> */ }
                     </Content>
                 </Container>
                 <FooterTabs fbId={this.state.fbId} />
