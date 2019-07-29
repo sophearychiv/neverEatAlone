@@ -53,6 +53,24 @@ class InviteCard extends React.Component {
             .catch(error => {
                 console.log("error getting receipients in InviteCard: " + error);
             })
+        } else if(this.props.currentlyChecking === "confirmed"){
+            
+            if(this.props.invite.requesterFbId === this.props.userFbId){
+                fbId = invite.receipientFbId
+            } else if(this.props.invite.receipientFbId === this.props.userFbId){
+                fbId = invite.requesterFbId;
+            }
+
+            axios.get(IN_USE_HTTP + "/users/" + fbId)
+                .then(response => {
+                    this.setState({
+                        invitedName: response.data.data.firstName,
+                        invitedPhotoUrl: response.data.data.photoUrl
+                    })
+                })
+                .catch(error => {
+                    console.log("error getting receipients in InviteCard: " + error);
+                })
         }
 
         
@@ -65,8 +83,10 @@ class InviteCard extends React.Component {
         this.props.deleteInviteCallback(invite);
     }
 
-    acceptInvite = (invite) => {
-        this.props.acceptInviteCallback(invite);
+    respondToReceivedInvite = (invite) => {
+        this.setState({visible: false});
+        console.log("status after click: " + this.state.status);
+        this.state.status === "accepted" ? this.props.acceptInviteCallback(invite) : this.props.declineInviteCallback(invite)
     }
 
     componentDidUpdate(prevProps) {
@@ -92,6 +112,99 @@ class InviteCard extends React.Component {
                          title="Accept"
                          color="grey"
                          onPress={() => {
+                             this.setState({ 
+                                 visible: true ,
+                                 status: "accepted"
+                                });
+                         }}
+                     />
+                      <Button
+                         title="Decline"
+                         color="grey"
+                         onPress={() => {
+                             this.setState({ 
+                                 visible: true ,
+                                 status: "declined"
+                                });
+                         }}
+                     />
+                     <Dialog
+                         visible={this.state.visible}
+                         footer={
+                             <DialogFooter>
+                                 <DialogButton
+                                     text="NO"
+                                     onPress={() => this.setState({ visible: false })}
+                                 />
+                                 <DialogButton
+                                     text="YES"
+                                     onPress={() => this.respondToReceivedInvite(this.props.invite, this.state.status)}
+                                 />
+                             </DialogFooter>
+                         }
+                     >
+                         <DialogContent style={{ paddingTop: 30 }}>
+                            {this.state.status === "accepted" ? <Text> Are you sure you want to accept the invite?</Text> : <Text> Are you sure you want to decline the invite?</Text>}
+                         </DialogContent>
+                     </Dialog>
+                 </Body>
+                 <Right>
+                     <Thumbnail source={{ uri: this.state.requesterPhotoUrl }} />
+                 </Right>
+             </ListItem>
+         }
+
+        // if (this.props.currentlyChecking === "sent") {
+        //    displayCard = <ListItem avatar>
+        //             <Body>
+        //             <Text>You've sent an invite to <Text style={styles.name}>{this.state.invitedName}</Text></Text>
+        //             <View>
+        //                 <Text note>on {this.props.invite.creationDate}</Text>
+        //             </View>
+        //             <Button
+        //                 title="Cancel"
+        //                 color="grey"
+        //                 onPress={() => {
+        //                     this.setState({ visible: true });
+        //                 }}
+        //             />
+        //             <Dialog
+        //                 visible={this.state.visible}
+        //                 footer={
+        //                     <DialogFooter>
+        //                         <DialogButton
+        //                             text="NO"
+        //                             onPress={() => this.setState({ visible: false })}
+        //                         />
+        //                         <DialogButton
+        //                             text="YES"
+        //                             onPress={() => this.deleteInvite(this.props.invite)}
+        //                         />
+        //                     </DialogFooter>
+        //                 }
+        //             >
+        //                 <DialogContent style={{ paddingTop: 30 }}>
+        //                     <Text> Are you sure you want to cancel the invite?</Text>
+        //                 </DialogContent>
+        //             </Dialog>
+        //         </Body>
+        //         <Right>
+        //             <Thumbnail source={{ uri: this.state.invitedPhotoUrl }} />
+        //         </Right>
+        //     </ListItem>
+        // }
+
+        if (this.props.currentlyChecking === "confirmed") {
+            displayCard = <ListItem avatar>
+                     <Body>
+                     <Text>You've confirmed an invite with <Text style={styles.name}>{this.state.invitedName}</Text></Text>
+                     <View>
+                         <Text note></Text>
+                     </View>
+                     <Button
+                         title="Cancel"
+                         color="grey"
+                         onPress={() => {
                              this.setState({ visible: true });
                          }}
                      />
@@ -105,61 +218,21 @@ class InviteCard extends React.Component {
                                  />
                                  <DialogButton
                                      text="YES"
-                                     onPress={() => this.acceptInvite(this.props.invite)}
+                                     onPress={() => this.deleteInvite(this.props.invite)}
                                  />
                              </DialogFooter>
                          }
                      >
                          <DialogContent style={{ paddingTop: 30 }}>
-                             <Text> Are you sure you want to accept the invite?</Text>
+                             <Text> Are you sure you want to cancel the invite?</Text>
                          </DialogContent>
                      </Dialog>
                  </Body>
                  <Right>
-                     <Thumbnail source={{ uri: this.state.requesterPhotoUrl }} />
+                     <Thumbnail source={{ uri: this.state.invitedPhotoUrl }} />
                  </Right>
              </ListItem>
          }
-
-        if (this.props.currentlyChecking === "sent") {
-           displayCard = <ListItem avatar>
-                    <Body>
-                    <Text>Yout sent an invite to <Text style={styles.name}>{this.state.invitedName}</Text></Text>
-                    <View>
-                        <Text note>on {this.props.invite.creationDate}</Text>
-                    </View>
-                    <Button
-                        title="Cancel"
-                        color="grey"
-                        onPress={() => {
-                            this.setState({ visible: true });
-                        }}
-                    />
-                    <Dialog
-                        visible={this.state.visible}
-                        footer={
-                            <DialogFooter>
-                                <DialogButton
-                                    text="NO"
-                                    onPress={() => this.setState({ visible: false })}
-                                />
-                                <DialogButton
-                                    text="YES"
-                                    onPress={() => this.deleteInvite(this.props.invite)}
-                                />
-                            </DialogFooter>
-                        }
-                    >
-                        <DialogContent style={{ paddingTop: 30 }}>
-                            <Text> Are you sure you want to cancel the invite?</Text>
-                        </DialogContent>
-                    </Dialog>
-                </Body>
-                <Right>
-                    <Thumbnail source={{ uri: this.state.invitedPhotoUrl }} />
-                </Right>
-            </ListItem>
-        }
 
         
     return (

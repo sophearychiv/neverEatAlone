@@ -24,19 +24,19 @@ class Invites extends React.Component {
         await this.getReceivedInvites();
     }
 
-    getSentInvites = async () => {
-        const IN_USE_HTTP = require("../internet.json").IN_USE_HTTP
-        axios.get(IN_USE_HTTP + "/users/" + this.props.navigation.getParam("fbId") + "/invites/sent")
-            .then(response => {
-                this.setState({
-                    invites: response.data.data,
-                });
+    // getSentInvites = async () => {
+    //     const IN_USE_HTTP = require("../internet.json").IN_USE_HTTP
+    //     axios.get(IN_USE_HTTP + "/users/" + this.props.navigation.getParam("fbId") + "/invites/sent")
+    //         .then(response => {
+    //             this.setState({
+    //                 invites: response.data.data,
+    //             });
 
-            })
-            .catch(error => {
-                console.log("error requesting invites in Invites component");
-            })
-    }
+    //         })
+    //         .catch(error => {
+    //             console.log("error requesting invites in Invites component");
+    //         })
+    // }
 
     getReceivedInvites = async () => {
         const IN_USE_HTTP = require("../internet.json").IN_USE_HTTP
@@ -52,6 +52,20 @@ class Invites extends React.Component {
             })
     }
 
+    getConfirmedInvites = async() => {
+        const IN_USE_HTTP = require("../internet.json").IN_USE_HTTP
+        axios.get(IN_USE_HTTP + "/users/" + this.props.navigation.getParam("fbId") + "/invites/going")
+            .then(response => {
+                this.setState({
+                    invites: response.data.data,
+                });
+
+            })
+            .catch(error => {
+                console.log("error requesting invites in getConfirmedInvites function in Invites component");
+            })
+    }
+
     handleReceivedInvites = () => {
         this.setState({
             currentlyChecking: "received"
@@ -60,17 +74,18 @@ class Invites extends React.Component {
         this.getReceivedInvites();
     }
 
-    handleSentInvites = () => {
-        this.setState({
-            currentlyChecking: "sent"
-        });
-        this.getSentInvites();
-    }
+    // handleSentInvites = () => {
+    //     this.setState({
+    //         currentlyChecking: "sent"
+    //     });
+    //     this.getSentInvites();
+    // }
 
     handleConfirmedInvites = () => {
         this.setState({
             currentlyChecking: "confirmed"
         });
+        this.getConfirmedInvites();
     }
 
     // componentDidUpdate(prevState){
@@ -101,11 +116,32 @@ class Invites extends React.Component {
             })
     }
 
-    acceptInvite = (invite, status) => {
+    declineInvite = (invite) => {
 
-        axios.put(IN_USE_HTTP + "/receipients/ " + invite.receipientFbId + "/requesters/" + invite.requesterFbId + "/invites/" + invite.inviteId + "/status/" + status)
+        axios.put(IN_USE_HTTP + "/receipients/" + invite.receipientFbId + "/requesters/" + invite.requesterFbId + "/invites/" + invite.inviteId + "/status/declined")
+        
             .then(response => {
-                alert("You have accepted the invite!")
+                const invites = this.state.invites.filter(currentInvite => currentInvite !== invite);
+                this.setState({
+                    invites
+                })
+                alert("You have declined the invite!");
+            })
+            .catch(error => {
+                console.log("error making put request: " + error);
+            })
+    }
+
+    acceptInvite = (invite) => {
+
+        axios.put(IN_USE_HTTP + "/receipients/" + invite.receipientFbId + "/requesters/" + invite.requesterFbId + "/invites/" + invite.inviteId + "/status/accepted")
+        
+            .then(response => {
+                const invites = this.state.invites.filter(currentInvite => currentInvite !== invite);
+                this.setState({
+                    invites
+                })
+                alert("The invite has been moved to Confirmed segment!");
             })
             .catch(error => {
                 console.log("error making put request: " + error);
@@ -119,10 +155,12 @@ class Invites extends React.Component {
         const invites = this.state.invites.map((invite, i) => {
             return <InviteCard
                     key={i}
+                    userFbId={this.props.navigation.getParam("fbId")}
                     invite={invite}
                     deleteInviteCallback={(invite) => this.deleteInvite(invite)}
                     currentlyChecking={this.state.currentlyChecking}
-                    acceptInviteCallback={()=> this.acceptInvite(invite)}
+                    acceptInviteCallback={(invite)=> this.acceptInvite(invite)}
+                    declineInviteCallback={()=> this.declineInvite(invite)}
                 />
         });
 
@@ -131,15 +169,15 @@ class Invites extends React.Component {
         if (this.state.currentlyChecking === "received") {
             segment = <Segment>
                 <Button first active onPress={() => this.handleReceivedInvites()}>
-                    <Text>Received</Text>
+                    <Text>Pending</Text>
                 </Button>
 
-                <Button onPress={() => this.handleSentInvites()}>
+                {/* <Button onPress={() => this.handleSentInvites()}>
                     <Text>Sent</Text>
-                </Button>
+                </Button> */}
 
                 <Button last onPress={() => this.handleConfirmedInvites()}>
-                    <Text>Confirmed</Text>
+                    <Text>Going</Text>
                 </Button>
             </Segment>
         }
@@ -147,15 +185,15 @@ class Invites extends React.Component {
         if (this.state.currentlyChecking === "sent") {
             segment = <Segment>
                         <Button first onPress={() => this.handleReceivedInvites()}>
-                            <Text>Received</Text>
+                            <Text>Pending</Text>
                         </Button>
 
-                        <Button active onPress={() => this.handleSentInvites()}>
+                        {/* <Button active onPress={() => this.handleSentInvites()}>
                             <Text>Sent</Text>
-                        </Button>
+                        </Button> */}
 
                         <Button last onPress={() => this.handleConfirmedInvites()}>
-                            <Text>Confirmed</Text>
+                            <Text>Going</Text>
                         </Button>
                     </Segment>
         }
@@ -163,15 +201,15 @@ class Invites extends React.Component {
         if (this.state.currentlyChecking === "confirmed") {
             segment = <Segment>
                         <Button first onPress={() => this.handleReceivedInvites()}>
-                            <Text>Received</Text>
+                            <Text>Pending</Text>
                         </Button>
 
-                        <Button onPress={() => this.handleSentInvites()}>
+                        {/* <Button onPress={() => this.handleSentInvites()}>
                             <Text>Sent</Text>
-                        </Button>
+                        </Button> */}
 
                         <Button last active onPress={() => this.handleConfirmedInvites()}>
-                            <Text>Confirmed</Text>
+                            <Text>Going</Text>
                         </Button>
                     </Segment>
         }
