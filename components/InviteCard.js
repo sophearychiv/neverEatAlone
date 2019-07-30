@@ -26,7 +26,6 @@ class InviteCard extends React.Component {
 
     async componentDidMount() {
         await this.getUsers(this.props.invite);
-        // await this.getRest();
     }
 
     getUsers = async (invite) => {
@@ -191,46 +190,6 @@ class InviteCard extends React.Component {
                 </Right>
             </ListItem>
         }
-
-        // if (this.props.currentlyChecking === "sent") {
-        //    displayCard = <ListItem avatar>
-        //             <Body>
-        //             <Text>You've sent an invite to <Text style={styles.name}>{this.state.invitedName}</Text></Text>
-        //             <View>
-        //                 <Text note>on {this.props.invite.creationDate}</Text>
-        //             </View>
-        //             <Button
-        //                 title="Cancel"
-        //                 color="grey"
-        //                 onPress={() => {
-        //                     this.setState({ visible: true });
-        //                 }}
-        //             />
-        //             <Dialog
-        //                 visible={this.state.visible}
-        //                 footer={
-        //                     <DialogFooter>
-        //                         <DialogButton
-        //                             text="NO"
-        //                             onPress={() => this.setState({ visible: false })}
-        //                         />
-        //                         <DialogButton
-        //                             text="YES"
-        //                             onPress={() => this.deleteInvite(this.props.invite)}
-        //                         />
-        //                     </DialogFooter>
-        //                 }
-        //             >
-        //                 <DialogContent style={{ paddingTop: 30 }}>
-        //                     <Text> Are you sure you want to cancel the invite?</Text>
-        //                 </DialogContent>
-        //             </Dialog>
-        //         </Body>
-        //         <Right>
-        //             <Thumbnail source={{ uri: this.state.invitedPhotoUrl }} />
-        //         </Right>
-        //     </ListItem>
-        // }
 
         if (this.props.currentlyChecking === "confirmed") {
             displayCard = <ListItem avatar>

@@ -19,9 +19,6 @@ export default class Invite extends Component {
       isEndDateTimePickerVisible: false,
       startDate: 'Select Date',
       endDate: 'Select Date',
-      // startDate: new Date().toLocaleString(),
-      // endDate: new Date().toLocaleString(),
-
     };
 
   }
@@ -167,7 +164,7 @@ export default class Invite extends Component {
           </List>
           <Button
             medium
-            success
+            danger
             style={styles.inviteButton}
             onPress={() => this.sendInvite()}
           >
@@ -188,6 +185,5 @@ const styles = StyleSheet.create({
   inviteButton: {
     alignSelf: "center",
     marginTop: 10,
-    backgroundColor: "#00deff"
   }
 })

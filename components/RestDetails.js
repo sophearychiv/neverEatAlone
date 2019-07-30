@@ -70,6 +70,12 @@ class RestDetails extends React.Component {
       })
   }
 
+  // componentDidUpdate(prevState){
+  //   if(this.state.interested !== prevState.interested){
+  //     this.render(<PeopleList/>);
+  //   }
+  // }
+
   render() {
     console.log("rendering RestDetails");
 
@@ -115,7 +121,7 @@ class RestDetails extends React.Component {
                     <Text><Text style={styles.bold}>Reviews from Yelp: </Text>{this.props.navigation.getParam("rest").review_count}</Text>
                     <Text><Text style={styles.bold}>Location: </Text>{this.props.navigation.getParam("rest").location.display_address.join(", ")}</Text>
                     <Text><Text style={styles.bold}>Phone: </Text>{this.props.navigation.getParam("rest").display_phone}</Text>
-                    <Text>{this.props.navigation.getParam("rest").is_close ? "Closed" : "Open"}</Text>
+                    {/* <Text>{this.props.navigation.getParam("rest").is_close ? "Closed" : "Open"}</Text> */}
                     <Text><Text style={styles.bold}>Categories: </Text>{categories}</Text>
                   </View>
                 </Body>
@@ -123,6 +129,7 @@ class RestDetails extends React.Component {
                   restYelpId={this.props.navigation.getParam("rest").id}
                   rest={this.props.navigation.getParam("rest")}
                   userFbId={this.props.navigation.getParam("loggedInUserFbId")}
+                  interestedPeople={this.props.navigation.getParam("interestedPeople")}
                 />
               </CardItem>
             </Card>
@@ -155,7 +162,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   content: {
-    flexDirection: "column"
+    flexDirection: "column",
+    marginBottom: 30
   },
   bold: {
     fontWeight: "bold"

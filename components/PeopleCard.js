@@ -52,11 +52,11 @@ class PeopleCard extends React.Component {
             checkBox = null;
             if(this.props.fbIdsOnInviteList.includes(this.props.userFbId))
              {
-                removeButton = <TouchableOpacity onPress={() => this.remove(this.props.user)}>
-                                    <Button 
-                                    danger 
+                removeButton = <TouchableOpacity style={{color: "grey"}} onPress={() => this.remove(this.props.user)}>
+                                    <Button
                                     small
-                                    // onPress={this.remove}
+                                    bordered
+                                    dark
                                     > 
                                         <Text>Remove</Text> 
                                     </Button>
