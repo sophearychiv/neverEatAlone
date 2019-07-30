@@ -92,7 +92,7 @@ class RestList extends React.Component {
                         loggedInUserFbId: this.state.loggedInUserFbId,
                         rest: this.state.selectedRest,
                         interestedPeople: [],
-                        // me: this.props.navigation.getParam("me")
+                        me: this.props.navigation.getParam("me")
                         });
                     });
       }

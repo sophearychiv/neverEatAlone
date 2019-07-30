@@ -40,6 +40,7 @@ export default class Invite extends Component {
     return axios.post(IN_USE_HTTP + "/invites", config)
       .then(response => {
         this.props.navigation.navigate("InviteConfirmation", {
+          me: this.props.navigation.getParam("me"),
           invitedPeople: this.state.peopleOnInviteList,
           rest: this.props.navigation.getParam("rest"),
           restYelpId: this.state.restYelpId,
@@ -114,6 +115,7 @@ export default class Invite extends Component {
       return (
         <PeopleCard
           key={i}
+          me={this.props.navigation.getParam("me")}
           user={user}
           userFbId={user.data.data.fbId}
           name={user.data.data.firstName}

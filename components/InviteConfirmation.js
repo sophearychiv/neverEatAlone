@@ -22,6 +22,7 @@ class InviteConfirmation extends React.Component {
                 <PeopleCard
                     key={i}
                     user={user}
+                    me={this.props.navigation.getParam("me")}
                     name={user.data.data.firstName}
                     photoUrl={user.data.data.photoUrl}
                     confirmedInviteList={this.props.navigation.getParam("invitedPeople")}
@@ -32,7 +33,7 @@ class InviteConfirmation extends React.Component {
         return (
 
             <Container>
-{/* 
+                {/* 
                 <Header >
                     <View style={{ width: 100, height: 80, backgroundColor: "red" }}>
 
@@ -67,9 +68,16 @@ class InviteConfirmation extends React.Component {
 
                     </List>
                     <List>
+                        <PeopleCard
+                            me={this.props.navigation.getParam("me")}
+                            name={this.props.navigation.getParam("me").name}
+                            photoUrl={this.props.navigation.getParam("me").photoUrl}
+                            confirmedInviteList={this.props.navigation.getParam("invitedPeople")}
+                        />
                         {invitedPeople}
                     </List>
                 </Content>
+                <FooterTabs/>
             </Container>
         );
     }

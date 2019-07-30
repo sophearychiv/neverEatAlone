@@ -56,7 +56,8 @@ class PeopleList extends React.Component {
       fbIdsOnInviteList: this.state.receipientFbIds,
       requesterFbId: this.props.userFbId,
       restYelpId: this.props.restYelpId,
-      rest: this.props.rest
+      rest: this.props.rest,
+      me: this.props.me
     });
   }
 
@@ -73,6 +74,7 @@ class PeopleList extends React.Component {
             photoUrl={user.data.data.photoUrl}
             selectPeopleCallBack={()=> this.selectPeople(user)}
             removePeopleCallBack={()=> this.removePeople(user)}
+            me={this.props.me}
           />
           )
       });

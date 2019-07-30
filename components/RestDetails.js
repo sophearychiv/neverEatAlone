@@ -127,6 +127,7 @@ class RestDetails extends React.Component {
                   rest={this.props.navigation.getParam("rest")}
                   userFbId={this.props.navigation.getParam("loggedInUserFbId")}
                   interestedPeople={this.props.navigation.getParam("interestedPeople")}
+                  me={this.props.navigation.getParam("me")}
                 />
               </CardItem>
             </Card>
