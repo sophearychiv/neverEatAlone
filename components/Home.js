@@ -1,6 +1,10 @@
 import React from 'react';
 import { StyleSheet, AsyncStorage, View, ImageBackground } from 'react-native';
 import { Drawer } from 'native-base';
+import { Footer, FooterTab } from 'native-base';
+import IconBadge from 'react-native-icon-badge';
+
+
 import SideBar from './SideBar';
 import { AppLoading } from "expo";
 import * as Font from 'expo-font'
@@ -26,6 +30,7 @@ class Home extends React.Component {
 
     constructor(props) {
         super(props);
+
         this.state = {
             fbId: null,
             name: null,
@@ -39,6 +44,9 @@ class Home extends React.Component {
         
     }
 
+    // componentDidMount(){
+    //     this.getToken();
+    // }
 
     async getToken() {
 
@@ -92,30 +100,112 @@ class Home extends React.Component {
                     pendingInvites: response.data.data,
                 });
             })
-            // .then(response => {
-            //     this.getReadPendingInvites();
-            // })
+            .then(response => {
+                this.getReadPendingInvites(this.state.fbId);
+            })
 
             .catch(error => {
                 console.log("error requesting invites in Invites component");
             })
     }
 
-    // getReadPendingInvites = async (userInfo) => {
-    //     const IN_USE_HTTP = require("../internet.json").IN_USE_HTTP
-    //     axios.get(IN_USE_HTTP + "/users/" + userInfo.id + "/invites/read")
-    //         .then(response => {
-    //             this.setState({
-    //                 readPendingInvites: response.data.data,
-    //             });
-    //         })
+    getReadPendingInvites = async (fbId) => {
+        const IN_USE_HTTP = require("../internet.json").IN_USE_HTTP
+        axios.get(IN_USE_HTTP + "/users/" + fbId + "/invites/read")
+            .then(response => {
+                this.setState({
+                    readPendingInvites: response.data.data,
+                });
+            })
             
-    //         .catch(error => {
-    //             console.log("error requesting invites in Invites component");
-    //         })
-    // }
+            .catch(error => {
+                console.log("error requesting invites in Invites component");
+            })
+    }
+
+    clickOnHome = () => {
+
+        this.setState({
+            currentTab: "home"
+        });
+        this.props.navigation.navigate("Home", {
+            badgeCount: this.state.badgeCount,
+        });
+    }
+
+    clickOnSearch = () => {
+        this.setState({
+            currentTab: "search"
+        });
+        this.props.navigation.navigate("SearchRestaurants", {
+            fbId: this.props.fbId,
+            badgeCount: this.state.badgeCount,
+        });
+    }
+
+    clickOnInvites = () => {
+        this.setState({
+            currentTab: "invites",
+        }, () => {
+            this.props.navigation.navigate("Invites", {
+                fbId: this.props.fbId,
+                pendingInvites: this.props.pendingInvites,
+                readPendingInvites: this.state.readInvites,
+                // readPendingInvites: this.props.readPendingInvites,
+                badgeCount: this.state.badgeCount,
+            });
+        });
+    }
+
+    clickOnFav = () => {
+        this.props.navigation.navigate("Interests", {
+            fbId: this.props.fbId,
+            badgeCount: this.state.badgeCount,
+        });
+
+        this.setState({
+            currentTab: "fav"
+        });
+
+    }
 
     render() {
+        const home = <Button vertical onPress={() => this.clickOnHome()}>
+                        <Icon name="home" />
+                        <Text>Home</Text>
+                    </Button>
+
+        const search = <Button vertical onPress={() => this.clickOnSearch()}>
+                            <Icon name="search" />
+                            <Text>Search</Text>
+                        </Button>
+        const invites = <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', }}>
+                            <IconBadge
+                                MainElement={
+                                    <Button vertical onPress={() => this.clickOnInvites()}>
+                                        <Icon name="mail-open" />
+                                        <Text>Invites</Text>
+                                    </Button>
+                                }
+                                BadgeElement={
+                                    <Text style={{ color: '#FFFFFF' }}>{this.state.badgeCount}</Text>
+                                }
+                                IconBadgeStyle={
+                                    {
+                                        width: 15,
+                                        height: 20,
+                                        backgroundColor: 'red',
+                                        marginRight: 20,
+                                    }
+                                }
+                                Hidden={this.state.badgeCount === 0}
+                            />
+                        </View>
+
+        const fav = <Button vertical onPress={() => this.clickOnFav()}>
+                        <Icon name="heart" />
+                        <Text>Fav</Text>
+                    </Button>
         console.log(this.state);
         const { navigate } = this.props.navigation;
 
@@ -134,6 +224,7 @@ class Home extends React.Component {
                 />}
                 onClose={() => this.closeDrawer()}
             >
+            {/* <View> */}
 
                 <Container>
 
@@ -180,14 +271,25 @@ class Home extends React.Component {
                         </Button>
                     </Content>
                 </Container>
-                <FooterTabs 
-                    fbId={this.state.fbId} 
+                <Footer>
+                    <FooterTab>
+                        {home}
+                        {search}
+                        {invites}
+                        {fav}
+                    </FooterTab>
+                </Footer>
+                {/* <FooterTabs 
+                    fbId={this.state.fbId}
                     pendingInvites={this.state.pendingInvites}
+                    badgeCount={this.props.navigation.getParam("badgeCount")}
+
                     // readPendingInvites={this.state.readPendingInvites}
                     // badgeCount={this.props.navigation.getParam("badgeCount")}
                     // badgeCount={this.state.pendingInvites.length - this.state.readPendingInvites.length}
                     // pendingInvitesCallback={}
-                />
+                /> */}
+            {/* </View> */}
 
             </Drawer>
         );

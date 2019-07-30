@@ -35,7 +35,7 @@ class InviteDetails extends React.Component {
 
     render() {
 
-        
+        console.log("pending invites in InviteDetails: " + this.state.pendingInvites);
         return (
             <Container>
                 <Header><Text>Invite Details: </Text></Header>
@@ -60,7 +60,7 @@ class InviteDetails extends React.Component {
                 </Content>
                 <FooterTabs
                     pendingInvites={this.state.pendingInvites}
-                    // badgeCount={this.props.navigation.getParam("badgeCount")}
+                    badgeCount={this.props.navigation.getParam("badgeCount")}
                 />
             </Container>
                 );
