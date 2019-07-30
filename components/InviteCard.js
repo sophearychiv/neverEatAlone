@@ -17,7 +17,9 @@ class InviteCard extends React.Component {
             invitedName: null,
             invitedPhotoUrl: null,
             requesterName: null,
-            requesterPhotoUrl: null
+            requesterPhotoUrl: null,
+            visible: false,
+            readPendingInvites: []
         }
         this.getUsers(this.props.invite);
         console.log("executed in constructor in InviteCard");
@@ -75,7 +77,6 @@ class InviteCard extends React.Component {
                 })
         }
 
-
     }
 
     deleteInvite = (invite) => {
@@ -116,12 +117,36 @@ class InviteCard extends React.Component {
                     .then(response => {
                         this.props.navigation.navigate("InviteDetails", {
                             invite: this.props.invite,
-                            rest: response.data
+                            rest: response.data,
+                            pendingInvites: this.props.pendingInvites,
+                            badgeCount: this.props.pendingInvites - this.state.readPendingInvites,
+                            // readPendingInvites: this.state.readPendingInvites
                         })
                     })
                     .catch(error => {
                         console.log("nested request in getting restaurant for invite details: " + error);
                     })
+    }
+
+    handleReadingInvite = () => {
+        axios.put(IN_USE_HTTP + "/receipients/" + this.props.invite.receipientFbId + "/requesters/" + this.props.invite.requesterFbId + "/invites/" + this.props.invite.inviteId + "/read_status/read")
+            .then(response => {
+                const readPendingInvites = this.state.readPendingInvites;
+                readPendingInvites.push(this.props.invite);
+                    this.setState({
+                        readPendingInvites
+                    }, () => {
+                        this.getRest();
+                    });
+            })
+            // .then(response => {
+            //     this.getRest();
+            // })
+            .catch(error => {
+                console.log("error making put request to read invite");
+            })
+        // this.props.readPendingInvitesCallback();
+        
     }
 
     render() {
@@ -131,7 +156,8 @@ class InviteCard extends React.Component {
         let displayCard;
 
         if (this.props.currentlyChecking === "received") {
-            displayCard = <ListItem avatar>
+            const backgroundColor = this.props.readPendingInvites.includes(this.props.invite) ? {} : {backgroundColor: "#e1f0f2"}
+            displayCard = <ListItem avatar style={backgroundColor}>
                 <Body>
                     <Text>From <Text style={styles.name}>{this.state.requesterName}</Text></Text>
                     <View style={{ marginTop: 5 }}>
@@ -141,7 +167,7 @@ class InviteCard extends React.Component {
                         <Button
                             title="View"
                             color="blue"
-                            onPress={() => this.getRest()}
+                            onPress={() => this.handleReadingInvite()}
                         />
                         <Button
                             title="Accept"
@@ -190,46 +216,6 @@ class InviteCard extends React.Component {
                 </Right>
             </ListItem>
         }
-
-        // if (this.props.currentlyChecking === "sent") {
-        //    displayCard = <ListItem avatar>
-        //             <Body>
-        //             <Text>You've sent an invite to <Text style={styles.name}>{this.state.invitedName}</Text></Text>
-        //             <View>
-        //                 <Text note>on {this.props.invite.creationDate}</Text>
-        //             </View>
-        //             <Button
-        //                 title="Cancel"
-        //                 color="grey"
-        //                 onPress={() => {
-        //                     this.setState({ visible: true });
-        //                 }}
-        //             />
-        //             <Dialog
-        //                 visible={this.state.visible}
-        //                 footer={
-        //                     <DialogFooter>
-        //                         <DialogButton
-        //                             text="NO"
-        //                             onPress={() => this.setState({ visible: false })}
-        //                         />
-        //                         <DialogButton
-        //                             text="YES"
-        //                             onPress={() => this.deleteInvite(this.props.invite)}
-        //                         />
-        //                     </DialogFooter>
-        //                 }
-        //             >
-        //                 <DialogContent style={{ paddingTop: 30 }}>
-        //                     <Text> Are you sure you want to cancel the invite?</Text>
-        //                 </DialogContent>
-        //             </Dialog>
-        //         </Body>
-        //         <Right>
-        //             <Thumbnail source={{ uri: this.state.invitedPhotoUrl }} />
-        //         </Right>
-        //     </ListItem>
-        // }
 
         if (this.props.currentlyChecking === "confirmed") {
             displayCard = <ListItem avatar>
@@ -295,6 +281,9 @@ const styles = StyleSheet.create({
     },
     name: {
         fontWeight: "bold"
+    },
+    backgroundColor: {
+        backgroundColor: "#e1f0f2"
     }
 })
 

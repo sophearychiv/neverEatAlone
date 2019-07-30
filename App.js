@@ -113,11 +113,27 @@ const AppStack = createStackNavigator({
   }),
 });
 
+// class AppContainer extends React.Component {
+//   constructor() {
+//     super();
+//     this.state = {
+//       invitesBadgeCount: 1,
+//     };
+//   }
+
+//   render() {
+//     return (<AppStack
+//       screenProps={{invitesBadgeCount: this.state.invitesBadgeCount}}
+//     />);
+//   }
+// }
+
 const AuthStack = createStackNavigator({Login: Login})
 
 const App = createSwitchNavigator(
   {
     AuthLoading: AuthLoadingScreen,
+    // App: AppContainer,
     App: AppStack,
     Auth: AuthStack,
   },

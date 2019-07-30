@@ -1,5 +1,4 @@
 import React from 'react';
-// import { View } from 'react-native';
 import FooterTabs from './FooterTabs';
 import axios from 'axios';
 import InviteCard from './InviteCard';
@@ -14,36 +13,25 @@ class Invites extends React.Component {
         super(props);
         this.state = {
             invites: [],
+            pendingInvites: [],
+            readPendingInvites: [],
+            // badgeCount = 0,
             currentlyChecking: "received"
         }
-        this.getReceivedInvites();
+        // this.getReceivedInvites();
     }
 
     async componentDidMount() {
-        // await this.getConfirmedInvites();
         await this.getReceivedInvites();
     }
-
-    // getSentInvites = async () => {
-    //     const IN_USE_HTTP = require("../internet.json").IN_USE_HTTP
-    //     axios.get(IN_USE_HTTP + "/users/" + this.props.navigation.getParam("fbId") + "/invites/sent")
-    //         .then(response => {
-    //             this.setState({
-    //                 invites: response.data.data,
-    //             });
-
-    //         })
-    //         .catch(error => {
-    //             console.log("error requesting invites in Invites component");
-    //         })
-    // }
 
     getReceivedInvites = async () => {
         const IN_USE_HTTP = require("../internet.json").IN_USE_HTTP
         axios.get(IN_USE_HTTP + "/users/" + this.props.navigation.getParam("fbId") + "/invites/received")
             .then(response => {
                 this.setState({
-                    invites: response.data.data,
+                    //invites: response.data.data,
+                    pendingInvites: response.data.data
                 });
 
             })
@@ -70,8 +58,6 @@ class Invites extends React.Component {
         this.setState({
             currentlyChecking: "received"
         });
-
-        this.getReceivedInvites();
     }
 
     handleConfirmedInvites = () => {
@@ -135,11 +121,33 @@ class Invites extends React.Component {
             })
     }
 
+    // handleReadPendingInvites = (invite) => {
+    //     axios.put(IN_USE_HTTP + "/receipients/" + invite.receipientFbId + "/requesters/" + invite.requesterFbId + "/invites/" + invite.inviteId + "/read_status/read")
+    //         .then(response => {
+    //             const readPendingInvites = this.state.readPendingInvites;
+    //             readPendingInvites.push(invite);
+    //                 this.setState({
+    //                     readPendingInvites
+    //                 })
+    //         })
+    //         .catch(error => {
+    //             console.log("error making put request to read invite");
+    //         })
+
+        
+    // }
+
+    // getBadgeCount() {
+    //     return this.state.pendingInvites.length - this.state.readPendingInvites.length;
+    // }
+
+    // getBadgeCount() {
+    //     return this.props.navigation.getParam("pendingInvites").length - this.props.navigation.getParam("readPendingInvites").length;
+    // }
+
     render() {
 
-        console.log(this.state);
-
-        const invites = this.state.invites.map((invite, i) => {
+        const pendingInvites = this.props.navigation.getParam("pendingInvites").map((invite, i) => {
             return <InviteCard
                     key={i}
                     userFbId={this.props.navigation.getParam("fbId")}
@@ -148,10 +156,16 @@ class Invites extends React.Component {
                     currentlyChecking={this.state.currentlyChecking}
                     acceptInviteCallback={(invite)=> this.acceptInvite(invite)}
                     declineInviteCallback={()=> this.declineInvite(invite)}
+                    // readPendingInvitesCallback={() => this.handleReadPendingInvites(invite)}
+                    pendingInvites={this.state.invites}
+                    readPendingInvites={this.props.navigation.getParam("readPendingInvites")}
+                    badgeCount={this.props.navigation.getParam("badgeCount")}
+                    // badgeCount={this.state.pendingInvites.length - this.props.navigation.getParam("readPendingInvites").length}
                 />
         });
 
         let segment;
+        let invites;
 
         if (this.state.currentlyChecking === "received") {
             segment = <Segment>
@@ -163,6 +177,8 @@ class Invites extends React.Component {
                     <Text>Confirmed</Text>
                 </Button>
             </Segment>
+
+            invites = pendingInvites;
         }
 
         if (this.state.currentlyChecking === "confirmed") {
@@ -177,8 +193,6 @@ class Invites extends React.Component {
                     </Segment>
         }
 
-
-
         return (
             <Container>
                 {segment}
@@ -188,7 +202,14 @@ class Invites extends React.Component {
                     </List>
 
                 </Content>
-                <FooterTabs />
+                <FooterTabs
+                    readPendingInvites={this.props.navigation.getParam("readPendingInvites")}
+                    pendingInvites={this.state.invites}
+
+                    // readPendingInvites passed from FooterTabs
+                    // badgeCount={this.state.invites.length - this.props.navigation.getParam("readPendingInvites").length}
+                    badgeCount={this.props.navigation.getParam("badgeCount")}
+                />
             </Container>
         );
     }

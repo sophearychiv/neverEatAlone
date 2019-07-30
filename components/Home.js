@@ -32,8 +32,11 @@ class Home extends React.Component {
             photoUrl: null,
             loading: true,
             isLoggedIn: false,
+            pendingInvites: [],
+            readPendingInvites: []
         }
         this.getToken();
+        
     }
 
 
@@ -49,6 +52,10 @@ class Home extends React.Component {
                     photoUrl: userInfo.picture.data.url
                 });
                 return userInfo;
+            })
+            .then(userInfo => {
+                this.getPendingInvites(userInfo);
+                // this.getReadPendingInvites(userInfo);
             })
             .catch(error => {
                 console.log(error);
@@ -76,6 +83,37 @@ class Home extends React.Component {
         await AsyncStorage.clear();
         this.props.navigation.navigate('Auth');
     }
+
+    getPendingInvites = async (userInfo) => {
+        const IN_USE_HTTP = require("../internet.json").IN_USE_HTTP
+        axios.get(IN_USE_HTTP + "/users/" + userInfo.id + "/invites/received")
+            .then(response => {
+                this.setState({
+                    pendingInvites: response.data.data,
+                });
+            })
+            // .then(response => {
+            //     this.getReadPendingInvites();
+            // })
+
+            .catch(error => {
+                console.log("error requesting invites in Invites component");
+            })
+    }
+
+    // getReadPendingInvites = async (userInfo) => {
+    //     const IN_USE_HTTP = require("../internet.json").IN_USE_HTTP
+    //     axios.get(IN_USE_HTTP + "/users/" + userInfo.id + "/invites/read")
+    //         .then(response => {
+    //             this.setState({
+    //                 readPendingInvites: response.data.data,
+    //             });
+    //         })
+            
+    //         .catch(error => {
+    //             console.log("error requesting invites in Invites component");
+    //         })
+    // }
 
     render() {
         console.log(this.state);
@@ -142,7 +180,14 @@ class Home extends React.Component {
                         </Button>
                     </Content>
                 </Container>
-                <FooterTabs fbId={this.state.fbId} />
+                <FooterTabs 
+                    fbId={this.state.fbId} 
+                    pendingInvites={this.state.pendingInvites}
+                    // readPendingInvites={this.state.readPendingInvites}
+                    // badgeCount={this.props.navigation.getParam("badgeCount")}
+                    // badgeCount={this.state.pendingInvites.length - this.state.readPendingInvites.length}
+                    // pendingInvitesCallback={}
+                />
 
             </Drawer>
         );

@@ -14,6 +14,24 @@ class InviteDetails extends React.Component {
         }
         // this.getRest();
     }
+    async componentDidMount() {
+        await this.getReceivedInvites();
+    }
+
+    getReceivedInvites = async () => {
+        const IN_USE_HTTP = require("../internet.json").IN_USE_HTTP
+        axios.get(IN_USE_HTTP + "/users/" + this.props.navigation.getParam("invite").receipientFbId + "/invites/received")
+            .then(response => {
+                this.setState({
+                    //invites: response.data.data,
+                    pendingInvites: response.data.data
+                });
+
+            })
+            .catch(error => {
+                console.log("error requesting invites in Invites component");
+            })
+    }
 
     render() {
 
@@ -40,7 +58,10 @@ class InviteDetails extends React.Component {
                         </CardItem>
                     </Card>
                 </Content>
-                <FooterTabs />
+                <FooterTabs
+                    pendingInvites={this.state.pendingInvites}
+                    // badgeCount={this.props.navigation.getParam("badgeCount")}
+                />
             </Container>
                 );
             }

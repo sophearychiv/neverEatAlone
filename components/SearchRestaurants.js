@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, ScrollView} from 'react-native';
 import axios from 'axios';
 import Restaurant from './Restaurant';
 import SearchBar from './SearchBar';
@@ -123,6 +123,10 @@ class SearchRestaurants extends React.Component {
                             />
                         </Item>
                         <Item fixedLabel>
+                            <Label>Location</Label>
+                            
+                        </Item>
+                        <Item fixedLabel>
                             <Label>Categories</Label>
                             <Input 
                                 value={this.state.category}
@@ -138,7 +142,8 @@ class SearchRestaurants extends React.Component {
                         </Button>
                     </Form>
                 </Content>
-                <FooterTabs/>
+                <FooterTabs
+                    badgeCount={this.props.navigation.getParam("badgeCount")} />
             </Container>
         );
           
