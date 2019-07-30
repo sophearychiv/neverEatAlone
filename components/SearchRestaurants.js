@@ -7,6 +7,7 @@ import { Container, Header, Content, Form, Item, Input, Label, Button } from 'na
 import FooterTabs from './FooterTabs';
 import RestDetails from './RestDetails';
 import SearchableDropdown from 'react-native-searchable-dropdown';
+import {withNavigation} from 'react-navigation';
 
 class SearchRestaurants extends React.Component {
 
@@ -67,10 +68,12 @@ class SearchRestaurants extends React.Component {
                             rests: restList,
                             message: 'success'
                         });
-                        console.log("loggedInUser in SearchRestaurants is " + this.props.navigation.getParam("loggedInUser", "default user"));
+                        console.log("loggedInUser in SearchRestaurants is " + this.props.loggedInUserId);
+                        // console.log("loggedInUser in SearchRestaurants is " + this.props.navigation.getParam("loggedInUser", "default user"));
                         this.props.navigation.navigate("RestList", {
                             rests: restList,
-                            loggedInUserId: this.props.navigation.getParam("loggedInUserId"),
+                            loggedInUserId: this.props.loggedInUserId,
+                            // loggedInUserId: this.props.navigation.getParam("loggedInUserId"),
                         });
                     })
                     .catch(error => {
@@ -113,20 +116,14 @@ class SearchRestaurants extends React.Component {
             {id: 1,
             name: 'Current Location'}
         ];
-        console.log("loggedInUser in SearchRestaurants is " + this.props.navigation.getParam("loggedInUserId"));
-        console.log("restsOfInterest in SearchRestaurants is " + this.props.navigation.getParam("restsOfInterest"));
+        console.log("loggedInUser in SearchRestaurants is " + this.props.loggedInUserId);
+        // console.log("loggedInUser in SearchRestaurants is " + this.props.navigation.getParam("loggedInUserId"));
+        // console.log("restsOfInterest in SearchRestaurants is " + this.props.navigation.getParam("restsOfInterest"));
         const {navigate} = this.props.navigation;
         return(
             <Container>
                 <Content>
                     <Form>
-                        {/* <Item fixedLabel>
-                            <Label>Location</Label>
-                            <Input 
-                                value={this.state.location}
-                                onChangeText={val => this.updateLocationState(val)}
-                            />
-                        </Item> */}
                         <Item fixedLabel>
                             <Label>Location:</Label>
                             <Fragment>
@@ -190,7 +187,7 @@ class SearchRestaurants extends React.Component {
                         </Button>
                     </Form>
                 </Content>
-                <FooterTabs/>
+                {/* <FooterTabs/> */}
             </Container>
         );
           
@@ -219,4 +216,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default SearchRestaurants;
+export default withNavigation(SearchRestaurants);

@@ -21,6 +21,7 @@ import {
 } from 'native-base';
 import FooterTabs from './FooterTabs';
 import axios from 'axios';
+import SearchRestaurants from './SearchRestaurants';
 
 class Home extends React.Component {
 
@@ -114,7 +115,11 @@ class Home extends React.Component {
                         </Right>
 
                     </Header>
-                    <Content padder>
+                    
+                    <SearchRestaurants
+                        loggedInUserId={this.state.fbId}
+                    />
+                    {/* <Content padder>
                             <ImageBackground
                                 source={require("../assets/Logo_512.png")}
                                 style={{ width: 150, height: 150, marginBottom: 50, marginTop: 20, alignSelf: "center" }}
@@ -131,16 +136,7 @@ class Home extends React.Component {
                         >
                             <Text style={{ color: "black" }}>Search Restaurants</Text>
                         </Button>
-                        <Button
-                            full
-                            rounded
-                            success
-                            style={{ marginTop: 20, backgroundColor: "#00deff" }}
-                            onPress={() => navigate("SearchPeople")}
-                        >
-                            <Text style={{ color: "black" }}>Search People</Text>
-                        </Button>
-                    </Content>
+                    </Content> */}
                 </Container>
                 <FooterTabs fbId={this.state.fbId} />
 

@@ -23,14 +23,14 @@ class FooterTabs extends Component {
         this.props.navigation.navigate("Home");
     }
 
-    clickOnSearch = () => {
-        this.setState({
-            currentTab: "search"
-        });
-        this.props.navigation.navigate("SearchRestaurants", {
-            fbId: this.props.fbId
-        });
-    }
+    // clickOnSearch = () => {
+    //     this.setState({
+    //         currentTab: "search"
+    //     });
+    //     this.props.navigation.navigate("SearchRestaurants", {
+    //         fbId: this.props.fbId
+    //     });
+    // }
 
     clickOnInvites = () => {
         this.props.navigation.navigate("Invites", {
@@ -117,16 +117,16 @@ class FooterTabs extends Component {
                 <Text>Home</Text>
             </Button>
 
-        const search = this.state.currentTab === "search" ?
-            <Button vertical onPress={() => this.clickOnSearch()}>
-            {/* <Button vertical active onPress={() => this.clickOnSearch()}> */}
-                <Icon name="search" />
-                <Text>Search</Text>
-            </Button>
-            : <Button vertical onPress={() => this.clickOnSearch()}>
-                <Icon name="search" />
-                <Text>Search</Text>
-            </Button>
+        // const search = this.state.currentTab === "search" ?
+        //     <Button vertical onPress={() => this.clickOnSearch()}>
+        //     {/* <Button vertical active onPress={() => this.clickOnSearch()}> */}
+        //         <Icon name="search" />
+        //         <Text>Search</Text>
+        //     </Button>
+        //     : <Button vertical onPress={() => this.clickOnSearch()}>
+        //         <Icon name="search" />
+        //         <Text>Search</Text>
+        //     </Button>
         const invites = this.state.currentTab === "invites" ?
             <Button vertical onPress={() => this.clickOnInvites()}>
             {/* <Button vertical active onPress={() => this.clickOnInvites()}> */}
@@ -154,7 +154,7 @@ class FooterTabs extends Component {
                 {/* {displayTabs} */}
                 <FooterTab>
                     {home}
-                    {search}
+                    {/* {search} */}
                     {invites}
                     {fav}
                 </FooterTab>
