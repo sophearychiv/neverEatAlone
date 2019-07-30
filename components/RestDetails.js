@@ -44,8 +44,6 @@ class RestDetails extends React.Component {
     }
 
     const IN_USE_HTTP = require('../internet.json').IN_USE_HTTP;
-    // return axios.post("http://localhost:4567/interests", config)
-    // return axios.post("http://172.24.26.244:4567/interests", config) // Ada
     return axios.post(IN_USE_HTTP + "/interests", config) //home
       .then(response => {
         this.setState({
@@ -61,9 +59,7 @@ class RestDetails extends React.Component {
 
   removeInterest = async (userFbId, restYelpId) => {
     const IN_USE_HTTP = require('../internet.json').IN_USE_HTTP;
-    // return axios.delete("http://172.24.26.244:4567/users/" + userFbId + "/interests/" + restYelpId) // Ada
     return axios.delete(IN_USE_HTTP + "/users/" + userFbId + "/interests/" + restYelpId)
-      // return axios.delete("http://localhost:4567/users/" + userFbId + "/interests/" + restYelpId)
       .then(response => {
         this.setState({
           interested: false
@@ -105,9 +101,9 @@ class RestDetails extends React.Component {
               {interestButton}
 
             </Body>
-            <Right>
+            {/* <Right>
 
-            </Right>
+            </Right> */}
           </ListItem>
           <Content>
             <Card style={styles.card}>
@@ -167,7 +163,7 @@ const styles = StyleSheet.create({
   heartIcon: {
     fontSize: 30,
     color: "red",
-    marginLeft: 100
+    marginLeft: 130
   },
   list: {
     flexDirection: "column"
