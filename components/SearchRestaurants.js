@@ -1,11 +1,12 @@
-import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, ScrollView} from 'react-native';
+import React, {Fragment} from 'react';
+import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import axios from 'axios';
 import Restaurant from './Restaurant';
 import SearchBar from './SearchBar';
 import { Container, Header, Content, Form, Item, Input, Label, Button } from 'native-base';
 import FooterTabs from './FooterTabs';
 import RestDetails from './RestDetails';
+import SearchableDropdown from 'react-native-searchable-dropdown';
 
 class SearchRestaurants extends React.Component {
 
@@ -108,6 +109,10 @@ class SearchRestaurants extends React.Component {
     }
 
     render() {
+        this.items = [
+            {id: 1,
+            name: 'Current Location'}
+        ];
         console.log("loggedInUser in SearchRestaurants is " + this.props.navigation.getParam("loggedInUserId"));
         console.log("restsOfInterest in SearchRestaurants is " + this.props.navigation.getParam("restsOfInterest"));
         const {navigate} = this.props.navigation;
@@ -115,12 +120,59 @@ class SearchRestaurants extends React.Component {
             <Container>
                 <Content>
                     <Form>
-                        <Item fixedLabel>
+                        {/* <Item fixedLabel>
                             <Label>Location</Label>
                             <Input 
                                 value={this.state.location}
                                 onChangeText={val => this.updateLocationState(val)}
                             />
+                        </Item> */}
+                        <Item fixedLabel>
+                            <Label>Location:</Label>
+                            <Fragment>
+                            <SearchableDropdown
+                                onItemSelect={(item) => {
+                                }}
+                                containerStyle={{ padding: 5 }}
+                                onRemoveItem={(item, index) => {
+                                }}
+                                itemStyle={{
+                                padding: 5,
+                                marginTop: 1,
+                                backgroundColor: '#fff',
+                                borderColor: '#bbb',
+                                borderWidth: 1,
+                                borderRadius: 5,
+                                width: 250
+                                }}
+                                itemTextStyle={{ color: '#222' }}
+                                itemsContainerStyle={{ maxHeight: 140 }}
+                                items={this.items}
+                                defaultIndex={2}
+                                resetValue={false}
+                                textInputProps={
+                                {
+                                    placeholder: "placeholder",
+                                    underlineColorAndroid: "transparent",
+                                    style: {
+                                        padding: 5,
+                                        borderWidth: 1,
+                                        borderColor: '#ccc',
+                                        borderRadius: 5,
+                                        width: 250
+                                    },
+                                    onTextChange: text => {
+                                        this.updateLocationState(text);
+                                    }
+                                }
+                                }
+                                listProps={
+                                {
+                                    nestedScrollEnabled: true,
+                                }
+                                }
+                            />
+                            </Fragment>
                         </Item>
                         <Item fixedLabel>
                             <Label>Location</Label>
