@@ -130,7 +130,7 @@ export default class Invite extends Component {
 
         <Content>
           <Form>
-            <Item fixedLabel>
+            <Item fixedLabel style={styles.item}>
               <Label>Start Date</Label>
               <TouchableOpacity onPress={this.showStartDateTimePicker}><Text>{this.state.startDate.toLocaleString()}</Text></TouchableOpacity>
               <DateTimePicker
@@ -144,7 +144,7 @@ export default class Invite extends Component {
               />
 
             </Item>
-            <Item fixedLabel last>
+            <Item fixedLabel style={styles.item}>
               <Label>End Date</Label>
               <TouchableOpacity onPress={this.showEndDateTimePicker}><Text>{this.state.endDate.toLocaleString()}</Text></TouchableOpacity>
               <DateTimePicker
@@ -180,10 +180,15 @@ export default class Invite extends Component {
 const styles = StyleSheet.create({
   listHeader: {
     alignSelf: "center",
-    fontWeight: "bold"
+    fontWeight: "bold",
+    fontSize: 30,
+    marginTop: 10
   },
   inviteButton: {
     alignSelf: "center",
     marginTop: 10,
+  },
+  item: {
+    padding: 20
   }
 })
