@@ -123,89 +123,10 @@ class Home extends React.Component {
             })
     }
 
-    clickOnHome = () => {
-
-        this.setState({
-            currentTab: "home"
-        });
-        this.props.navigation.navigate("Home", {
-            badgeCount: this.state.badgeCount,
-        });
-    }
-
-    clickOnSearch = () => {
-        this.setState({
-            currentTab: "search"
-        });
-        this.props.navigation.navigate("SearchRestaurants", {
-            fbId: this.props.fbId,
-            badgeCount: this.state.badgeCount,
-        });
-    }
-
-    clickOnInvites = () => {
-        this.setState({
-            currentTab: "invites",
-        }, () => {
-            this.props.navigation.navigate("Invites", {
-                fbId: this.props.fbId,
-                pendingInvites: this.props.pendingInvites,
-                readPendingInvites: this.state.readInvites,
-                // readPendingInvites: this.props.readPendingInvites,
-                badgeCount: this.state.badgeCount,
-            });
-        });
-    }
-
-    clickOnFav = () => {
-        this.props.navigation.navigate("Interests", {
-            fbId: this.props.fbId,
-            badgeCount: this.state.badgeCount,
-        });
-
-        this.setState({
-            currentTab: "fav"
-        });
-
-    }
+    
 
     render() {
-        const home = <Button vertical onPress={() => this.clickOnHome()}>
-                        <Icon name="home" />
-                        <Text>Home</Text>
-                    </Button>
-
-        const search = <Button vertical onPress={() => this.clickOnSearch()}>
-                            <Icon name="search" />
-                            <Text>Search</Text>
-                        </Button>
-        const invites = <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', }}>
-                            <IconBadge
-                                MainElement={
-                                    <Button vertical onPress={() => this.clickOnInvites()}>
-                                        <Icon name="mail-open" />
-                                        <Text>Invites</Text>
-                                    </Button>
-                                }
-                                BadgeElement={
-                                    <Text style={{ color: '#FFFFFF' }}>{this.state.badgeCount}</Text>
-                                }
-                                IconBadgeStyle={
-                                    {
-                                        width: 15,
-                                        height: 20,
-                                        backgroundColor: 'red',
-                                        marginRight: 20,
-                                    }
-                                }
-                                Hidden={this.state.badgeCount === 0}
-                            />
-                        </View>
-
-        const fav = <Button vertical onPress={() => this.clickOnFav()}>
-                        <Icon name="heart" />
-                        <Text>Fav</Text>
-                    </Button>
+        
         console.log(this.state);
         const { navigate } = this.props.navigation;
 
@@ -271,15 +192,8 @@ class Home extends React.Component {
                         </Button>
                     </Content>
                 </Container>
-                <Footer>
-                    <FooterTab>
-                        {home}
-                        {search}
-                        {invites}
-                        {fav}
-                    </FooterTab>
-                </Footer>
-                {/* <FooterTabs 
+               
+                <FooterTabs 
                     fbId={this.state.fbId}
                     pendingInvites={this.state.pendingInvites}
                     badgeCount={this.props.navigation.getParam("badgeCount")}
@@ -288,7 +202,7 @@ class Home extends React.Component {
                     // badgeCount={this.props.navigation.getParam("badgeCount")}
                     // badgeCount={this.state.pendingInvites.length - this.state.readPendingInvites.length}
                     // pendingInvitesCallback={}
-                /> */}
+                />
             {/* </View> */}
 
             </Drawer>

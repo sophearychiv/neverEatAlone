@@ -19,7 +19,7 @@ class FooterTabs extends Component {
             // currentTab: "home",
             badgeCount: props.badgeCount || 0,
             readInvites: [],
-            // pendingInvites: this.props.pendingInvites
+            pendingInvites: this.props.pendingInvites
             // badgeCount: 0
         }
         // this.getReadInvites();
@@ -98,24 +98,24 @@ class FooterTabs extends Component {
             })
     }
 
-    // getReadInvites = async() => {
-    //     console.log("fbId in FooterTabs: " + this.props.fbId);
-    //     axios.get(IN_USE_HTTP + "/users/" + this.props.fbId + "/invites/read")
-    //         .then(response => {
-    //             console.log("read invites in FooterTabs: " + JSON.stringify(response.data.data));
-    //             console.log("pending invites in FooterTabs: " + JSON.stringify(this.props.pendingInvites));
-    //             if(response.data.data.length < this.props.pendingInvites.length){
-    //                 this.setState({
-    //                     //pendingInvites is from Home
-    //                     badgeCount: this.props.pendingInvites.length - response.data.data.length,
-    //                     readInvites: response.data.data
-    //                 })
-    //             }
-    //         })
-    //         .catch(error => {
-    //             console.log("error getting read invites in FooterTabs: " + error);
-    //         })
-    // }
+    getReadInvites = async() => {
+        console.log("fbId in FooterTabs: " + this.props.fbId);
+        axios.get(IN_USE_HTTP + "/users/" + this.props.fbId + "/invites/read")
+            .then(response => {
+                console.log("read invites in FooterTabs: " + JSON.stringify(response.data.data));
+                console.log("pending invites in FooterTabs: " + JSON.stringify(this.props.pendingInvites));
+                if(response.data.data.length < this.props.pendingInvites.length){
+                    this.setState({
+                        //pendingInvites is from Home
+                        badgeCount: this.props.pendingInvites.length - response.data.data.length,
+                        readInvites: response.data.data
+                    })
+                }
+            })
+            .catch(error => {
+                console.log("error getting read invites in FooterTabs: " + error);
+            })
+    }
 
     // getReadInvites = () => {
     //     this.setState({
