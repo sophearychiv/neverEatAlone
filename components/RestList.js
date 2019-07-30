@@ -1,5 +1,6 @@
 import React from 'react';
 import { ScrollView, View, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import {Container} from 'native-base';
 import Restaurant from './Restaurant';
 import axios from 'axios';
 import FooterTabs from './FooterTabs';
@@ -56,14 +57,14 @@ class RestList extends React.Component {
             )
         });
         return (
-            <View>
+            // <View>
+            <Container>
                 <ScrollView>
                     {restCards}
 
                 </ScrollView>
                 <FooterTabs />
-
-            </View>
+            </Container>
         );
     }
 }

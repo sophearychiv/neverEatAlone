@@ -127,7 +127,7 @@ class Login extends React.Component {
 
                 <View style={styles.container}>
                     <ImageBackground 
-                        source={require("../assets/Logo_96.png")} 
+                        source={require("../assets/Logo_512.png")} 
                         style={{ width: 150, height: 150, marginBottom: 50 }}
                         >
                     </ImageBackground>

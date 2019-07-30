@@ -115,7 +115,13 @@ class Home extends React.Component {
                         </Right>
 
                     </Header>
-                    
+
+                    <ImageBackground
+                        source={require("../assets/Logo_512.png")}
+                        style={{ width: 150, height: 150, marginBottom: 50, marginTop: 20, alignSelf: "center" }}
+                    >
+                    </ImageBackground>
+
                     <SearchRestaurants
                         loggedInUserId={this.state.fbId}
                     />
