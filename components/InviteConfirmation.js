@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Container, Header, Text, List, ListItem, Content, Card, CardItem, Body, Button } from 'native-base';
+// import { Container, Header, Text, List, ListItem, Content, Card, CardItem, Body, Button } from 'native-base';
+import { Container, Header, Content, List, ListItem, Thumbnail, Text, Left, Body, Right, Button, Icon } from 'native-base';
 import PeopleCard from './PeopleCard';
 import FooterTabs from './FooterTabs';
 import { withNavigation } from 'react-navigation';
@@ -21,7 +22,7 @@ class InviteConfirmation extends React.Component {
                 <PeopleCard
                     key={i}
                     user={user}
-                    name={user.data.data.name}
+                    name={user.data.data.firstName}
                     photoUrl={user.data.data.photoUrl}
                     confirmedInviteList={this.props.navigation.getParam("invitedPeople")}
                 />
@@ -29,41 +30,46 @@ class InviteConfirmation extends React.Component {
         })
 
         return (
-            <Container>
-                <Header>
-                    <Text>Hooray! You have sent the invitation. Happy eating!</Text>
-                </Header>
-                <Content>
-                    <Card>
-                        <CardItem>
-                            <Body>
-                                <Text><Text style={styles.bold}>Restaurant Name: </Text> {this.props.navigation.getParam("rest").name}</Text>
-                                <Text><Text style={styles.bold}>Address: </Text> {this.props.navigation.getParam("rest").location.display_address}</Text>
-                                <Text><Text style={styles.bold}>Start Date and Time: </Text>{this.props.navigation.getParam("mealStartDateTime")}</Text>
-                                <Text><Text style={styles.bold}>End Date and Time: </Text>{this.props.navigation.getParam("mealEndDateTime")}</Text>
-                                <Text><Text style={styles.bold}>Invitation Sent On: </Text>{this.props.navigation.getParam("creationDateTime")}</Text>
-                            </Body>
 
-                        </CardItem>
-                        <CardItem>
-                            <Text style={styles.companions}>Invited Companions: </Text>
-                        </CardItem>
-                        <CardItem>
-                            <List>
-                                {invitedPeople}
-                            </List>
-                        </CardItem>
-                        {/* <Button
-                            success
-                            medium
-                            style={styles.seeInviteButton}
-                            onPress={() => this.props.navigation.navigate("Invites")}
-                        >
-                            <Text style={styles.textInvite}>See Invitations</Text>
-                        </Button> */}
-                    </Card>
+            <Container>
+{/* 
+                <Header >
+                    <View style={{ width: 100, height: 80, backgroundColor: "red" }}>
+
+                    </View>
+                    <Body>
+                        <Text>{this.props.navigation.getParam("rest").name}</Text>
+                    </Body>
+                </Header> */}
+                <Content>
+                    <List>
+                        <ListItem style={{ backgroundColor: "#00deff", paddingLeft: 20, marginRight: 15 }}>
+                            <Body>
+                                <Text style={styles.name}>{this.props.navigation.getParam("rest").name}</Text>
+                            </Body>
+                        </ListItem>
+                        <ListItem thumbnail>
+                            <Left>
+                                <Icon name='time' />
+                            </Left>
+                            <Body>
+                                <Text>{this.props.navigation.getParam("mealStartDateTime")} - {this.props.navigation.getParam("mealEndDateTime")} </Text>
+                            </Body>
+                        </ListItem>
+                        <ListItem thumbnail>
+                            <Left>
+                                <Icon name='pin' />
+                            </Left>
+                            <Body>
+                                <Text> {this.props.navigation.getParam("rest").location.display_address}</Text>
+                            </Body>
+                        </ListItem>
+
+                    </List>
+                    <List>
+                        {invitedPeople}
+                    </List>
                 </Content>
-                <FooterTabs />
             </Container>
         );
     }
@@ -83,7 +89,13 @@ const styles = StyleSheet.create({
     },
     textInvite: {
         textAlign: "center"
-    }
+    },
+    name: {
+        fontWeight: "bold",
+        fontSize: 20,
+        // alignSelf: "center",
+        textAlign: "center"
+    },
 })
 
 export default withNavigation(InviteConfirmation);

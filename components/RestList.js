@@ -31,25 +31,21 @@ class RestList extends React.Component {
                     beenMarkedInterested: true,
                     loggedInUserFbId: userFbId,
                     selectedRest: selectedRest
+                }, ()=> {
+                    this.getInterestedPeople(selectedRest);
                 })
             })
-            .then(response => {
-                this.getInterestedPeople(selectedRest);
-            })
+            // .then(response => {
+            //     this.getInterestedPeople(selectedRest);
+            // })
             .catch(error => {
                 this.setState({
                     beenMarkedInterested: false,
                     loggedInUserFbId: userFbId,
                     selectedRest: selectedRest
+                }, () => {
+                    this.getInterestedPeople(selectedRest);
                 })
-                this.getInterestedPeople(selectedRest);
-                // this.props.navigation.navigate("RestDetails", {
-                //     beenMarkedInterested: false,
-                //     loggedInUserFbId: userFbId,
-                //     rest: selectedRest,
-                // });
-
-
             })
     }
 
@@ -62,7 +58,7 @@ class RestList extends React.Component {
         const IN_USE_HTTP = require('../internet.json').IN_USE_HTTP;
         return axios.get(IN_USE_HTTP + "/interests/" + rest.id + "/userFbIds") //home
                     .then(response => {
-                      console.log(response.data.data);
+                      console.log("interested people: " + response.data.data);
     
                       return response.data.data
                     })
@@ -80,7 +76,8 @@ class RestList extends React.Component {
                                 beenMarkedInterested: this.state.beenMarkedInterested,
                                 loggedInUserFbId: this.state.loggedInUserFbId,
                                 rest: this.state.selectedRest,
-                                interestedPeople: this.state.interestedPeople
+                                interestedPeople: this.state.interestedPeople,
+                                me: this.props.navigation.getParam("me")
                             });
                           })
                           .catch(error => {
@@ -90,6 +87,13 @@ class RestList extends React.Component {
                     })
                     .catch(error => {
                       console.log("in second nested request in PeopleList: " + error);
+                      this.props.navigation.navigate("RestDetails", {
+                        beenMarkedInterested: this.state.beenMarkedInterested,
+                        loggedInUserFbId: this.state.loggedInUserFbId,
+                        rest: this.state.selectedRest,
+                        interestedPeople: [],
+                        // me: this.props.navigation.getParam("me")
+                        });
                     });
       }
 

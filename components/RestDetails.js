@@ -107,9 +107,6 @@ class RestDetails extends React.Component {
               {interestButton}
 
             </Body>
-            {/* <Right>
-
-            </Right> */}
           </ListItem>
           <Content>
             <Card style={styles.card}>

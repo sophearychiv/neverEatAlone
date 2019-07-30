@@ -28,6 +28,7 @@ class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            me: null,
             fbId: null,
             name: null,
             photoUrl: null,
@@ -47,7 +48,12 @@ class Home extends React.Component {
                     fbId: userInfo.id,
                     isLoggedIn: true,
                     name: userInfo.name,
-                    photoUrl: userInfo.picture.data.url
+                    photoUrl: userInfo.picture.data.url,
+                    me: {
+                        fbId: userInfo.id,
+                        name: userInfo.name,
+                        photoUrl: userInfo.picture.data.url,
+                    }
                 });
                 return userInfo;
             })
@@ -124,25 +130,9 @@ class Home extends React.Component {
 
                     <SearchRestaurants
                         loggedInUserId={this.state.fbId}
+                        me={this.state.me}
                     />
-                    {/* <Content padder>
-                            <ImageBackground
-                                source={require("../assets/Logo_512.png")}
-                                style={{ width: 150, height: 150, marginBottom: 50, marginTop: 20, alignSelf: "center" }}
-                            >
-                            </ImageBackground>
-
-                        <Button
-                            full
-                            rounded
-                            style={{ marginTop: 20, backgroundColor: "#00deff" }}
-                            onPress={() => navigate("SearchRestaurants", {
-                                loggedInUserId: this.state.fbId,
-                            })}
-                        >
-                            <Text style={{ color: "black" }}>Search Restaurants</Text>
-                        </Button>
-                    </Content> */}
+                   
                 </Container>
                 <FooterTabs fbId={this.state.fbId} />
 

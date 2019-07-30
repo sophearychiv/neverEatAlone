@@ -73,6 +73,7 @@ class SearchRestaurants extends React.Component {
                         this.props.navigation.navigate("RestList", {
                             rests: restList,
                             loggedInUserId: this.props.loggedInUserId,
+                            me: this.props.me
                             // loggedInUserId: this.props.navigation.getParam("loggedInUserId"),
                         });
                     })
@@ -117,8 +118,6 @@ class SearchRestaurants extends React.Component {
             name: 'Current Location'}
         ];
         console.log("loggedInUser in SearchRestaurants is " + this.props.loggedInUserId);
-        // console.log("loggedInUser in SearchRestaurants is " + this.props.navigation.getParam("loggedInUserId"));
-        // console.log("restsOfInterest in SearchRestaurants is " + this.props.navigation.getParam("restsOfInterest"));
         const {navigate} = this.props.navigation;
         return(
             <Container>
@@ -187,7 +186,6 @@ class SearchRestaurants extends React.Component {
                         </Button>
                     </Form>
                 </Content>
-                {/* <FooterTabs/> */}
             </Container>
         );
           
