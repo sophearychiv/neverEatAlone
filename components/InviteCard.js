@@ -17,7 +17,8 @@ class InviteCard extends React.Component {
             invitedName: null,
             invitedPhotoUrl: null,
             requesterName: null,
-            requesterPhotoUrl: null
+            requesterPhotoUrl: null,
+            visible: false
         }
         this.getUsers(this.props.invite);
         console.log("executed in constructor in InviteCard");
