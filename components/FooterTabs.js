@@ -26,10 +26,6 @@ class FooterTabs extends Component {
         this.getToken();
     }
 
-    
-      
-
-    
 
     // componentDidUpdate(){
     //     if(this.state.readInvites !== prevState.readInvites){
@@ -131,6 +127,8 @@ class FooterTabs extends Component {
         this.props.navigation.navigate("Home", {
             badgeCount: this.state.badgeCount,
         });
+
+        console.log(this.props);
     }
 
     clickOnSearch = () => {

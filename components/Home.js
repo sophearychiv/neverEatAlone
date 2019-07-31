@@ -122,7 +122,6 @@ class Home extends React.Component {
                 console.log("error requesting invites in Invites component");
             })
     }
-
     
 
     render() {
