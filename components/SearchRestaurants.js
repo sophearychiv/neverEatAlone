@@ -73,7 +73,8 @@ class SearchRestaurants extends React.Component {
                         this.props.navigation.navigate("RestList", {
                             rests: restList,
                             loggedInUserId: this.props.loggedInUserId,
-                            me: this.props.me
+                            me: this.props.me,
+                            badgeCount: this.props.badgeCount
                             // loggedInUserId: this.props.navigation.getParam("loggedInUserId"),
                         });
                     })

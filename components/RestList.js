@@ -80,13 +80,6 @@ class RestList extends React.Component {
 
                 console.log("current people: " + JSON.stringify(this.state.interestedPeople));
                 return currentPeople
-                // this.props.navigation.navigate("RestDetails", {
-                //     beenMarkedInterested: this.state.beenMarkedInterested,
-                //     loggedInUserFbId: this.state.loggedInUserFbId,
-                //     rest: this.state.selectedRest,
-                //     interestedPeople: this.state.interestedPeople,
-                //     me: this.props.navigation.getParam("me")
-                // });
             })
             .then(interestedPeople => {
                 console.log("interested people in RestList: " + interestedPeople);
@@ -130,7 +123,9 @@ class RestList extends React.Component {
                     {restCards}
 
                 </ScrollView>
-                <FooterTabs />
+                <FooterTabs 
+                    badgeCount={this.props.navigation.getParam("badgeCount")}
+                />
             </Container>
         );
     }

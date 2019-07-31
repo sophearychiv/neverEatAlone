@@ -180,6 +180,7 @@ class Home extends React.Component {
                     <SearchRestaurants
                         loggedInUserId={this.state.fbId}
                         me={this.state.me}
+                        badgeCount={badgeCount}
                     />
                    
                 </Container>
