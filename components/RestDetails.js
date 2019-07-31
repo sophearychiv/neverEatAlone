@@ -19,9 +19,6 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import PeopleList from './PeopleList';
 import FooterTabs from './FooterTabs';
 
-
-
-
 class RestDetails extends React.Component {
 
   constructor(props) {
@@ -69,12 +66,6 @@ class RestDetails extends React.Component {
         console.log(error)
       })
   }
-
-  // componentDidUpdate(prevState){
-  //   if(this.state.interested !== prevState.interested){
-  //     this.render(<PeopleList/>);
-  //   }
-  // }
 
   render() {
     console.log("rendering RestDetails");
@@ -128,6 +119,7 @@ class RestDetails extends React.Component {
                   userFbId={this.props.navigation.getParam("loggedInUserFbId")}
                   interestedPeople={this.props.navigation.getParam("interestedPeople")}
                   me={this.props.navigation.getParam("me")}
+                  badgeCount={this.props.navigation.getParam("badgeCount")}
                 />
               </CardItem>
             </Card>

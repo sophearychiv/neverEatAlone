@@ -25,7 +25,8 @@ export default class Invite extends Component {
 
   sendInvite = async () => {
     const config = {
-      requesterFbId: this.props.navigation.getParam("requesterFbId"),
+      // requesterFbId: this.props.navigation.getParam("requesterFbId"),
+      requesterFbId: this.props.navigation.getParam("me").fbId,
       restYelpId: this.props.navigation.getParam("restYelpId"),
       creationDateTime: new Date().toLocaleString(),
       mealStartDateTime: this.state.startDate.toLocaleString(),
@@ -47,6 +48,7 @@ export default class Invite extends Component {
           creationDateTime: config.creationDateTime,
           mealStartDateTime: this.state.startDate.toLocaleString(),
           mealEndDateTime: this.state.endDate.toLocaleString(),
+          badgeCount: this.props.navigation.getParam("badgeCount")
         });
       })
       .catch(error => {
@@ -173,7 +175,9 @@ export default class Invite extends Component {
             <Text> Send Invite </Text>
           </Button>
         </Content>
-        <FooterTabs/>
+        <FooterTabs
+          badgeCount={this.props.navigation.getParam("badgeCount")}
+        />
       </Container>
     );
   }

@@ -57,7 +57,8 @@ class PeopleList extends React.Component {
       requesterFbId: this.props.userFbId,
       restYelpId: this.props.restYelpId,
       rest: this.props.rest,
-      me: this.props.me
+      me: this.props.me,
+      badgeCount: this.props.badgeCount
     });
   }
 

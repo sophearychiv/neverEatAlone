@@ -22,11 +22,6 @@ class RestList extends React.Component {
             .then(response => {
                 console.log("rest id in checkIsInterested in RestList: " + JSON.stringify(response.data));
                 console.log("rest id in checkIsInterested in RestList: " + response.data.data.restId);
-                // this.props.navigation.navigate("RestDetails", {
-                //     beenMarkedInterested: true,
-                //     loggedInUserFbId: userFbId,
-                //     rest: selectedRest,
-                // });
                 this.setState({
                     beenMarkedInterested: true,
                     loggedInUserFbId: userFbId,
@@ -35,9 +30,6 @@ class RestList extends React.Component {
                     this.getInterestedPeople(selectedRest);
                 })
             })
-            // .then(response => {
-            //     this.getInterestedPeople(selectedRest);
-            // })
             .catch(error => {
                 this.setState({
                     beenMarkedInterested: false,
@@ -88,7 +80,8 @@ class RestList extends React.Component {
                     loggedInUserFbId: this.props.loggedInUserFbId,
                     rest: this.state.selectedRest,
                     interestedPeople: interestedPeople,
-                    me: this.props.navigation.getParam("me")
+                    me: this.props.navigation.getParam("me"),
+                    badgeCount: this.props.navigation.getParam("badgeCount")
                 });
             })
             .catch(error => {

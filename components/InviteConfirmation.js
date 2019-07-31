@@ -77,7 +77,9 @@ class InviteConfirmation extends React.Component {
                         {invitedPeople}
                     </List>
                 </Content>
-                <FooterTabs/>
+                <FooterTabs
+                    badgeCount={this.props.navigation.getParam("badgeCount")}
+                />
             </Container>
         );
     }
