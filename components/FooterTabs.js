@@ -136,15 +136,30 @@ class FooterTabs extends Component {
                 <Text>Home</Text>
             </Button>
 
-        const invites = this.state.currentTab === "invites" ?
-            <Button vertical onPress={() => this.clickOnInvites()}>
-                <Icon name="mail-open" />
-                <Text>Invites</Text>
-            </Button>
-            : <Button vertical onPress={() => this.clickOnInvites()}>
-                <Icon name="mail-open" />
-                <Text>Invites</Text>
-            </Button>
+        const invites = <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', }}>
+            <IconBadge
+                MainElement={
+                    <Button vertical onPress={() => this.clickOnInvites()}>
+                        <Icon name="mail-open" />
+                        <Text>Invites</Text>
+                    </Button>
+                }
+                BadgeElement={
+                    // <Text style={{ color: '#FFFFFF' }}>{this.state.badgeCount}</Text>
+                    <Text style={{ color: '#FFFFFF' }}>{this.props.badgeCount}</Text>
+                }
+                IconBadgeStyle={
+                    {
+                        width: 15,
+                        height: 20,
+                        backgroundColor: 'red',
+                        marginRight: 20,
+                    }
+                }
+                Hidden={this.props.badgeCount === 0}
+            // Hidden={this.state.badgeCount === 0}
+            />
+        </View>
 
         const fav = this.state.currentTab === "fav" ?
             <Button vertical onPress={() => this.clickOnFav()}>
