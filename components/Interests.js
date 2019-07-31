@@ -68,7 +68,9 @@ class Interests extends React.Component {
 
                     </List>
                 </Content>
-                <FooterTabs />
+                <FooterTabs 
+                    badgeCount={this.props.navigation.getParam("badgeCount")}
+                />
 
             </Container>
         );

@@ -52,7 +52,8 @@ class FooterTabs extends Component {
         console.log(" fbId in footertabs: " + this.props.fbId);
         this.props.navigation.navigate("Interests", {
             fbId: this.props.fbId,
-            me: this.props.me
+            me: this.props.me,
+            badgeCount: this.props.badgeCount
         });
 
         this.setState({
