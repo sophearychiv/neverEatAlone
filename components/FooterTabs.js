@@ -17,7 +17,7 @@ class FooterTabs extends Component {
             name: null,
             photoUrl: null,
             badgeCount: props.badgeCount || 0,
-            readPendingInvites: props.readPendingInvites || [],
+            seenPendingInvites: props.seenPendingInvites || [],
             pendingInvites: props.pendingInvites || []
         }
     }
@@ -29,16 +29,17 @@ class FooterTabs extends Component {
             currentTab: "home"
         });
         this.props.navigation.navigate("Home", {
-            badgeCount: 0,
+            badgeCount: this.state.badgeCount,
             pendingInvites: this.state.pendingInvites,
-            readPendingInvites: this.state.readPendingInvites
+            seenPendingInvites: this.state.seenPendingInvites
         });
     }
 
     clickOnInvites = () => {
         this.props.navigation.navigate("Invites", {
             fbId: this.props.fbId,
-            me: this.props.me
+            me: this.props.me,
+            pendingInvites: this.state.pendingInvites
         });
 
         this.setState({

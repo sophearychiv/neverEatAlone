@@ -35,7 +35,7 @@ class Home extends React.Component {
             loading: true,
             isLoggedIn: false,
             pendingInvites: this.props.navigation.getParam("pendingInvites") || [],
-            readPendingInvites: this.props.navigation.getParam("readPendingInvites") || []
+            seenPendingInvites: this.props.navigation.getParam("seenPendingInvites") || []
         }
         this.getToken();
     }
@@ -70,16 +70,16 @@ class Home extends React.Component {
 
     getPendingInvites = async (fbId) => {
         const IN_USE_HTTP = require("../internet.json").IN_USE_HTTP
-        axios.get(IN_USE_HTTP + "/users/" + fbId + "/invites/received")
+        await axios.get(IN_USE_HTTP + "/users/" + fbId + "/invites/received")
             .then(response => {
-            console.log("getting pending invites in Home");
+            console.log("getting pending invites in Home", response.data.data);
 
                 this.setState({
                     pendingInvites: response.data.data,
                 });
             })
             .then(response => {
-                this.getReadPendingInvites(this.state.fbId);
+                this.getSeenPendingInvites(this.state.fbId);
             })
 
             .catch(error => {
@@ -87,12 +87,14 @@ class Home extends React.Component {
             })
     }
 
-    getReadPendingInvites = async (fbId) => {
+    getSeenPendingInvites = async (fbId) => {
         const IN_USE_HTTP = require("../internet.json").IN_USE_HTTP
-        await axios.get(IN_USE_HTTP + "/users/" + fbId + "/invites/read")
+        await axios.get(IN_USE_HTTP + "/users/" + fbId + "/pendingInvites/seen")
             .then(response => {
+                console.log("getting seen invites in Home", response.data.data);
+
                 this.setState({
-                    readPendingInvites: response.data.data,
+                    seenPendingInvites: response.data.data,
                 });
             })
             
@@ -135,17 +137,11 @@ class Home extends React.Component {
         }
 
         let badgeCount;
-        if(this.props.navigation.getParam("pendingInvites")){
-            badgeCount = this.props.navigation.getParam("pendingInvites").length - this.props.navigation.getParam("readPendingInvites").length
+        if(this.props.navigation.getParam("pendingInvites") && this.props.navigation.getParam("seenPendingInvites")){
+            badgeCount = this.props.navigation.getParam("pendingInvites").length - this.props.navigation.getParam("seenPendingInvites").length
         }else{
-            badgeCount = this.state.pendingInvites.length - this.state.readPendingInvites.length
+            badgeCount = this.state.pendingInvites.length - this.state.seenPendingInvites.length
         }
-
-        // if(this.props.navigation.getParam("badgeCount")){
-        //     badgeCount = this.props.navigation.getParam("badgeCount")
-        // }else{
-        //     badgeCount = this.state.pendingInvites.length - this.state.readPendingInvites.length
-        // }
         return (
             <Drawer
                 ref={(ref) => { this.drawer = ref; }}

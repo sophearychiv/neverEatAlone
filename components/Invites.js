@@ -14,29 +14,31 @@ class Invites extends React.Component {
         super(props);
         this.state = {
             invites: [],
+            seenPendingInvites: [],
             currentlyChecking: "received"
         }
         this.getReceivedInvites();
+        this.markPendingInvitesSeen();
     }
 
     async componentDidMount() {
         // await this.getConfirmedInvites();
         await this.getReceivedInvites();
+        await this.markPendingInvitesSeen();
     }
 
-    // getSentInvites = async () => {
-    //     const IN_USE_HTTP = require("../internet.json").IN_USE_HTTP
-    //     axios.get(IN_USE_HTTP + "/users/" + this.props.navigation.getParam("fbId") + "/invites/sent")
-    //         .then(response => {
-    //             this.setState({
-    //                 invites: response.data.data,
-    //             });
-
-    //         })
-    //         .catch(error => {
-    //             console.log("error requesting invites in Invites component");
-    //         })
-    // }
+    markPendingInvitesSeen = async () => {
+        axios.put(IN_USE_HTTP + "/receipients/" + this.props.navigation.getParam("me").fbId + "/pendingInvites/seen")
+        
+            .then(response => {
+                this.setState({
+                    seenPendingInvites: this.props.navigation.getParam("pendingInvites")
+                })
+            })
+            .catch(error => {
+                console.log("error making put request: " + error);
+            })
+    }
 
     getReceivedInvites = async () => {
         const IN_USE_HTTP = require("../internet.json").IN_USE_HTTP
@@ -136,7 +138,6 @@ class Invites extends React.Component {
     }
 
     render() {
-
         console.log(this.state);
 
         const invites = this.state.invites.map((invite, i) => {
@@ -190,8 +191,8 @@ class Invites extends React.Component {
                 </Content>
                 <FooterTabs 
                     badgeCount={0}
-                    pendingInvites={0}
-                    readPendingInvites={0}
+                    // pendingInvites={}
+                    seenPendingInvites={this.state.seenPendingInvites}
                 />
             </Container>
         );
