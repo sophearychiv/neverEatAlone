@@ -132,7 +132,9 @@ class RestDetails extends React.Component {
               </CardItem>
             </Card>
           </Content>
-          <FooterTabs/>
+          <FooterTabs
+            badgeCount={this.props.navigation.getParam("badgeCount")}
+          />
         </Container>
 
 

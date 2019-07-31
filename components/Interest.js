@@ -55,7 +55,8 @@ class Interest extends React.Component {
                     loggedInUserFbId: this.props.loggedInUserFbId,
                     rest: this.props.rest,
                     interestedPeople: currentPeople,
-                    me: this.props.navigation.getParam("me")
+                    me: this.props.navigation.getParam("me"),
+                    badgeCount: this.props.badgeCount
                 });
             })
             .catch(error => {
