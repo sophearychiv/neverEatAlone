@@ -76,7 +76,7 @@ class RestList extends React.Component {
             .then(interestedPeople => {
                 console.log("interested people in RestList: " + interestedPeople);
                 this.props.navigation.navigate("RestDetails", {
-                    beenMarkedInterested: true,
+                    beenMarkedInterested: this.state.beenMarkedInterested,
                     loggedInUserFbId: this.props.loggedInUserFbId,
                     rest: this.state.selectedRest,
                     interestedPeople: interestedPeople,
@@ -91,7 +91,8 @@ class RestList extends React.Component {
                     loggedInUserFbId: this.state.loggedInUserFbId,
                     rest: this.state.selectedRest,
                     interestedPeople: [],
-                    me: this.props.navigation.getParam("me")
+                    me: this.props.navigation.getParam("me"),
+                    badgeCount: this.props.navigation.getParam("badgeCount")
                 });
             });
     }
@@ -106,6 +107,7 @@ class RestList extends React.Component {
                     rest={rest}
                     loggedInUserFbId={this.props.navigation.getParam("loggedInUserId")}
                     onItemPressed={() => this.onItemSelected(rest)}
+                    me={this.props.navigation.getParam("me")}
                 />
             )
         });

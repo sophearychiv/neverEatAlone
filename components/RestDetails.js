@@ -25,18 +25,19 @@ class RestDetails extends React.Component {
     super(props);
     this.state = {
       interested: this.props.navigation.getParam("beenMarkedInterested"),
-      userFbId: this.props.navigation.getParam("loggedInUserFbId"),
+      // userFbId: this.props.navigation.getParam("loggedInUserFbId"),
       isModalVisible: false
     }
 
     console.log("rest param: " + JSON.stringify(this.props.navigation.getParam("rest").id));
-    console.log("intersted state :" + this.state.interested);
+    console.log("state in rest details :", JSON.stringify(this.state));
 
   }
 
   markInterested = async () => {
     const config = {
-      userFbId: this.state.userFbId,
+      userFbId: this.props.navigation.getParam("me").fbId,
+      // userFbId: this.state.userFbId,
       restYelpId: this.props.navigation.getParam("rest").id
     }
 
@@ -48,9 +49,7 @@ class RestDetails extends React.Component {
         })
       })
       .catch(error => {
-        this.setState({
-          message: error
-        })
+        console.log("error marking interested in RestDetails: " + error);
       });
   }
 
@@ -78,7 +77,7 @@ class RestDetails extends React.Component {
 
     let interestButton;
     if (this.state.interested) {
-      interestButton = <TouchableOpacity onPress={() => this.removeInterest(this.props.navigation.getParam("loggedInUserFbId"), this.props.navigation.getParam("rest").id)}>
+      interestButton = <TouchableOpacity onPress={() => this.removeInterest(this.props.navigation.getParam("me").fbId, this.props.navigation.getParam("rest").id)}>
         <Icon name='heart' style={styles.heartIcon} />
       </TouchableOpacity>
     } else {
