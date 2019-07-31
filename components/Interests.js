@@ -55,6 +55,7 @@ class Interests extends React.Component {
             return [<Interest
                 key={i}
                 rest={rest}
+                loggedInUserFbId={this.props.navigation.getParam("fbId")}
             />]
         })
 
