@@ -11,50 +11,10 @@ class PeopleList extends React.Component {
     super(props);
     this.state = {
       interestedFbIds: [],
-      interestedPeople: [],
       receipientFbIds: [],
       invitedPeople: []
     }
 
-    this.getInterestedPeople();
-  }
-
-  async componentDidMount(){
-    await this.getInterestedPeople();
-  }
-
-  getInterestedPeople = async() => {
-    const IN_USE_HTTP = require('../internet.json').IN_USE_HTTP;
-    return axios.get(IN_USE_HTTP + "/interests/" + this.props.restYelpId + "/userFbIds") //home
-    // return axios.get("http://localhost:4567/interests/" + this.props.restYelpId + "/userFbIds") 
-    // return axios.get("http://172.24.26.244:4567/interests/" + this.props.restYelpId + "/userFbIds") //Ada
-                .then(response => {
-                  console.log(response.data.data);
-
-                  return response.data.data
-                })
-                .then(fbIds => {
-                  let currentPeople = []
-                  fbIds.forEach ( async fbId => {
-                    const IN_USE_HTTP = require('../internet.json').IN_USE_HTTP;
-                    // axios.get("http://172.24.26.244:4567/users/" + fbId) //Ada
-                    return axios.get(IN_USE_HTTP + "/users/" + fbId)  // home
-                    // return axios.get("http://localhost:4567/users/" + fbId) 
-
-                      .then(user => {
-                        currentPeople.push(user);
-                        this.setState({
-                          interestedPeople: currentPeople
-                        })
-                      })
-                      .catch(error => {
-                        console.log("in forEach loop in PeopleList: " + error);
-                      });
-                  });
-                })
-                .catch(error => {
-                  console.log("in second nested request in PeopleList: " + error);
-                });
   }
 
   selectPeople = (user) => {
@@ -96,34 +56,31 @@ class PeopleList extends React.Component {
       fbIdsOnInviteList: this.state.receipientFbIds,
       requesterFbId: this.props.userFbId,
       restYelpId: this.props.restYelpId,
-      rest: this.props.rest
+      rest: this.props.rest,
+      me: this.props.me
     });
   }
-
- 
-
 
     render(){
       console.log("invited people: " + JSON.stringify(this.state.receipientFbIds));
 
-      const interestedPeople = this.state.interestedPeople.map( (user, i) => {
+      const interestedPeople = this.props.interestedPeople.map( (user, i) => {
         console.log("id in map: " + user.data.data.id);
         return (
           <PeopleCard
             key={i}
-            // user = {user}
             userFbId={user.data.data.fbId}
             name={user.data.data.firstName}
             photoUrl={user.data.data.photoUrl}
             selectPeopleCallBack={()=> this.selectPeople(user)}
             removePeopleCallBack={()=> this.removePeople(user)}
+            me={this.props.me}
           />
           )
       });
 
         return(
               <Container>
-                {/* <Header /> */}
                   <Text style={styles.listHeader}> Interested People</Text>
                   <Content>
                     <List>

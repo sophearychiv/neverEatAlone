@@ -19,9 +19,6 @@ export default class Invite extends Component {
       isEndDateTimePickerVisible: false,
       startDate: 'Select Date',
       endDate: 'Select Date',
-      // startDate: new Date().toLocaleString(),
-      // endDate: new Date().toLocaleString(),
-
     };
 
   }
@@ -43,6 +40,7 @@ export default class Invite extends Component {
     return axios.post(IN_USE_HTTP + "/invites", config)
       .then(response => {
         this.props.navigation.navigate("InviteConfirmation", {
+          me: this.props.navigation.getParam("me"),
           invitedPeople: this.state.peopleOnInviteList,
           rest: this.props.navigation.getParam("rest"),
           restYelpId: this.state.restYelpId,
@@ -117,6 +115,7 @@ export default class Invite extends Component {
       return (
         <PeopleCard
           key={i}
+          me={this.props.navigation.getParam("me")}
           user={user}
           userFbId={user.data.data.fbId}
           name={user.data.data.firstName}
@@ -133,7 +132,7 @@ export default class Invite extends Component {
 
         <Content>
           <Form>
-            <Item fixedLabel>
+            <Item fixedLabel style={styles.item}>
               <Label>Start Date</Label>
               <TouchableOpacity onPress={this.showStartDateTimePicker}><Text>{this.state.startDate.toLocaleString()}</Text></TouchableOpacity>
               <DateTimePicker
@@ -147,7 +146,7 @@ export default class Invite extends Component {
               />
 
             </Item>
-            <Item fixedLabel last>
+            <Item fixedLabel style={styles.item}>
               <Label>End Date</Label>
               <TouchableOpacity onPress={this.showEndDateTimePicker}><Text>{this.state.endDate.toLocaleString()}</Text></TouchableOpacity>
               <DateTimePicker
@@ -167,7 +166,7 @@ export default class Invite extends Component {
           </List>
           <Button
             medium
-            success
+            danger
             style={styles.inviteButton}
             onPress={() => this.sendInvite()}
           >
@@ -183,11 +182,15 @@ export default class Invite extends Component {
 const styles = StyleSheet.create({
   listHeader: {
     alignSelf: "center",
-    fontWeight: "bold"
+    fontWeight: "bold",
+    fontSize: 30,
+    marginTop: 10
   },
   inviteButton: {
     alignSelf: "center",
     marginTop: 10,
-    backgroundColor: "#00deff"
+  },
+  item: {
+    padding: 20
   }
 })

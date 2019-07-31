@@ -142,6 +142,7 @@ class FooterTabs extends Component {
         this.props.navigation.navigate("SearchRestaurants", {
             fbId: this.props.fbId,
             badgeCount: this.state.badgeCount,
+            me: this.props.me
         });
     }
 
@@ -162,6 +163,7 @@ class FooterTabs extends Component {
         this.props.navigation.navigate("Interests", {
             fbId: this.props.fbId,
             badgeCount: this.state.badgeCount,
+            me: this.props.me
         });
 
         this.setState({
@@ -178,10 +180,7 @@ class FooterTabs extends Component {
                         <Text>Home</Text>
                     </Button>
 
-        const search = <Button vertical onPress={() => this.clickOnSearch()}>
-                            <Icon name="search" />
-                            <Text>Search</Text>
-                        </Button>
+        
         const invites = <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', }}>
                             <IconBadge
                                 MainElement={
@@ -216,7 +215,7 @@ class FooterTabs extends Component {
             <Footer>
                 <FooterTab>
                     {home}
-                    {search}
+                    {/* {search} */}
                     {invites}
                     {fav}
                 </FooterTab>

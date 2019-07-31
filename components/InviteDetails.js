@@ -12,7 +12,6 @@ class InviteDetails extends React.Component {
             restName: null,
             restLocation: null
         }
-        // this.getRest();
     }
     async componentDidMount() {
         await this.getReceivedInvites();

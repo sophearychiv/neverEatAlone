@@ -44,8 +44,6 @@ class RestDetails extends React.Component {
     }
 
     const IN_USE_HTTP = require('../internet.json').IN_USE_HTTP;
-    // return axios.post("http://localhost:4567/interests", config)
-    // return axios.post("http://172.24.26.244:4567/interests", config) // Ada
     return axios.post(IN_USE_HTTP + "/interests", config) //home
       .then(response => {
         this.setState({
@@ -61,9 +59,7 @@ class RestDetails extends React.Component {
 
   removeInterest = async (userFbId, restYelpId) => {
     const IN_USE_HTTP = require('../internet.json').IN_USE_HTTP;
-    // return axios.delete("http://172.24.26.244:4567/users/" + userFbId + "/interests/" + restYelpId) // Ada
     return axios.delete(IN_USE_HTTP + "/users/" + userFbId + "/interests/" + restYelpId)
-      // return axios.delete("http://localhost:4567/users/" + userFbId + "/interests/" + restYelpId)
       .then(response => {
         this.setState({
           interested: false
@@ -73,6 +69,12 @@ class RestDetails extends React.Component {
         console.log(error)
       })
   }
+
+  // componentDidUpdate(prevState){
+  //   if(this.state.interested !== prevState.interested){
+  //     this.render(<PeopleList/>);
+  //   }
+  // }
 
   render() {
     console.log("rendering RestDetails");
@@ -105,9 +107,6 @@ class RestDetails extends React.Component {
               {interestButton}
 
             </Body>
-            <Right>
-
-            </Right>
           </ListItem>
           <Content>
             <Card style={styles.card}>
@@ -119,7 +118,7 @@ class RestDetails extends React.Component {
                     <Text><Text style={styles.bold}>Reviews from Yelp: </Text>{this.props.navigation.getParam("rest").review_count}</Text>
                     <Text><Text style={styles.bold}>Location: </Text>{this.props.navigation.getParam("rest").location.display_address.join(", ")}</Text>
                     <Text><Text style={styles.bold}>Phone: </Text>{this.props.navigation.getParam("rest").display_phone}</Text>
-                    <Text>{this.props.navigation.getParam("rest").is_close ? "Closed" : "Open"}</Text>
+                    {/* <Text>{this.props.navigation.getParam("rest").is_close ? "Closed" : "Open"}</Text> */}
                     <Text><Text style={styles.bold}>Categories: </Text>{categories}</Text>
                   </View>
                 </Body>
@@ -127,6 +126,8 @@ class RestDetails extends React.Component {
                   restYelpId={this.props.navigation.getParam("rest").id}
                   rest={this.props.navigation.getParam("rest")}
                   userFbId={this.props.navigation.getParam("loggedInUserFbId")}
+                  interestedPeople={this.props.navigation.getParam("interestedPeople")}
+                  me={this.props.navigation.getParam("me")}
                 />
               </CardItem>
             </Card>
@@ -159,7 +160,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   content: {
-    flexDirection: "column"
+    flexDirection: "column",
+    marginBottom: 30
   },
   bold: {
     fontWeight: "bold"
@@ -167,7 +169,7 @@ const styles = StyleSheet.create({
   heartIcon: {
     fontSize: 30,
     color: "red",
-    marginLeft: 100
+    marginLeft: 130
   },
   list: {
     flexDirection: "column"

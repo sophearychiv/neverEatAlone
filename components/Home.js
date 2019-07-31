@@ -25,6 +25,7 @@ import {
 } from 'native-base';
 import FooterTabs from './FooterTabs';
 import axios from 'axios';
+import SearchRestaurants from './SearchRestaurants';
 
 class Home extends React.Component {
 
@@ -32,6 +33,7 @@ class Home extends React.Component {
         super(props);
 
         this.state = {
+            me: null,
             fbId: null,
             name: null,
             photoUrl: null,
@@ -55,7 +57,12 @@ class Home extends React.Component {
                     fbId: userInfo.id,
                     isLoggedIn: true,
                     name: userInfo.name,
-                    photoUrl: userInfo.picture.data.url
+                    photoUrl: userInfo.picture.data.url,
+                    me: {
+                        fbId: userInfo.id,
+                        name: userInfo.name,
+                        photoUrl: userInfo.picture.data.url,
+                    }
                 });
                 return userInfo;
             })
@@ -177,39 +184,25 @@ class Home extends React.Component {
                         </Right>
 
                     </Header>
-                    <Content padder>
-                            <ImageBackground
-                                source={require("../assets/Logo_512.png")}
-                                style={{ width: 150, height: 150, marginBottom: 50, marginTop: 20, alignSelf: "center" }}
-                            >
-                            </ImageBackground>
 
-                        <Button
-                            full
-                            rounded
-                            style={{ marginTop: 20, backgroundColor: "#00deff" }}
-                            onPress={() => navigate("SearchRestaurants", {
-                                loggedInUserId: this.state.fbId,
-                            })}
-                        >
-                            <Text style={{ color: "black" }}>Search Restaurants</Text>
-                        </Button>
-                        <Button
-                            full
-                            rounded
-                            success
-                            style={{ marginTop: 20, backgroundColor: "#00deff" }}
-                            onPress={() => navigate("SearchPeople")}
-                        >
-                            <Text style={{ color: "black" }}>Search People</Text>
-                        </Button>
-                    </Content>
+                    <ImageBackground
+                        source={require("../assets/Logo_512.png")}
+                        style={{ width: 150, height: 150, marginBottom: 50, marginTop: 20, alignSelf: "center" }}
+                    >
+                    </ImageBackground>
+
+                    <SearchRestaurants
+                        loggedInUserId={this.state.fbId}
+                        me={this.state.me}
+                    />
+                   
                 </Container>
                
                 <FooterTabs 
                     fbId={this.state.fbId}
                     pendingInvites={this.state.pendingInvites}
                     badgeCount={badgeCount}
+                    me={this.state.me}
 
                     // readPendingInvites={this.state.readPendingInvites}
                     // badgeCount={this.props.navigation.getParam("badgeCount")}

@@ -38,7 +38,6 @@ class AuthLoadingScreen extends React.Component {
 }
 
 const AppStack = createStackNavigator({
-  // Page: { screen: Page },
   Home: {
     screen: Home
   },
@@ -74,7 +73,10 @@ const AppStack = createStackNavigator({
   },
 
   InviteConfirmation: {
-    screen: InviteConfirmation
+    screen: InviteConfirmation,
+    navigationOptions: {
+      title: "Invite Confirmation"
+    }
   },
 
   FooterTabs: {

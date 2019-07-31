@@ -27,7 +27,6 @@ class InviteCard extends React.Component {
 
     async componentDidMount() {
         await this.getUsers(this.props.invite);
-        // await this.getRest();
     }
 
     getUsers = async (invite) => {
