@@ -16,88 +16,12 @@ class FooterTabs extends Component {
             isLoggedIn: null,
             name: null,
             photoUrl: null,
-            // badgeCount: props.badgeCount || 0
             badgeCount: props.badgeCount || 0,
-            readInvites: props.readPendingInvites || [],
+            readPendingInvites: props.readPendingInvites || [],
             pendingInvites: props.pendingInvites || []
         }
-        // this.getToken();
     }
 
-    async getToken() {
-
-        await AsyncStorage.getItem('access_token')
-            .then(response => {
-                const userInfo = JSON.parse(response);
-                this.setState({
-                    fbId: userInfo.id,
-                    isLoggedIn: true,
-                    name: userInfo.name,
-                    photoUrl: userInfo.picture.data.url
-                });
-                return userInfo;
-            })
-            .then(userInfo => {
-                this.getPendingInvites(userInfo);
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    }
-
-    getPendingInvites = async (userInfo) => {
-        const IN_USE_HTTP = require("../internet.json").IN_USE_HTTP
-        axios.get(IN_USE_HTTP + "/users/" + userInfo.id + "/invites/received")
-            .then(response => {
-                this.setState({
-                    pendingInvites: response.data.data,
-                });
-                console.log("pending invites in FooterTabs: " + JSON.stringify(response.data.data));
-
-                return response.data.data
-            })
-            .then(pendingInvites => {
-                console.log("fbId in FooterTab: " + userInfo.fbId);
-                console.log("fbId in state in FooterTab: " + this.state.fbId);
-
-                axios.get(IN_USE_HTTP + "/users/" + this.state.fbId + "/invites/read")
-                    .then(response => {
-                        console.log("read invites in FooterTabs: " + JSON.stringify(response));
-                        if (response.data.data.length < pendingInvites.length) {
-                            this.setState({
-                                badgeCount: pendingInvites.length - response.data.data.length,
-                                readInvites: response.data.data
-                            })
-                        }
-                    })
-                    .catch(error => {
-                        console.log("error getting read invites in FooterTabs: " + error);
-                    })
-            })
-
-            .catch(error => {
-                console.log("error requesting invites in FooterTabs component: " + error);
-            })
-    }
-
-    getReadInvites = async () => {
-        console.log("fbId in FooterTabs: " + this.props.fbId);
-        axios.get(IN_USE_HTTP + "/users/" + this.props.fbId + "/invites/read")
-            .then(response => {
-                console.log("read invites in FooterTabs: " + JSON.stringify(response.data.data));
-                console.log("pending invites in FooterTabs: " + JSON.stringify(this.props.pendingInvites));
-                if (response.data.data.length < this.props.pendingInvites.length) {
-                    this.setState({
-                        //pendingInvites is from Home
-                        badgeCount: this.props.pendingInvites.length - response.data.data.length,
-                        readInvites: response.data.data
-                    })
-                }
-            })
-            .catch(error => {
-                console.log("error getting read invites in FooterTabs: " + error);
-            })
-    }
 
     clickOnHome = () => {
 
@@ -106,8 +30,8 @@ class FooterTabs extends Component {
         });
         this.props.navigation.navigate("Home", {
             badgeCount: 0,
-            pendingInvites: this.props.pendingInvites,
-            readPendingInvites: this.props.readPendingInvites
+            pendingInvites: this.state.pendingInvites,
+            readPendingInvites: this.state.readPendingInvites
         });
     }
 
