@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withNavigation } from 'react-navigation';
 import { Container, Header, Content, Footer, FooterTab, Button, Icon, Text } from 'native-base';
+import {View} from 'react-native';
 class FooterTabs extends Component {
 
     constructor(props) {
