@@ -10,11 +10,6 @@ class Interest extends React.Component {
         // this.getInterestedPeople(this.props.rest);
     }
 
-    // navigateToRestDetails = () => {
-    //     this.props.navigation.navigate("RestDetails", {
-    //         rest: this.props.rest
-    //     })
-    // }
 
     handleClickOnView = async (rest) => {
         const IN_USE_HTTP = require('../internet.json').IN_USE_HTTP;
@@ -35,13 +30,6 @@ class Interest extends React.Component {
                             this.setState({
                                 interestedPeople: currentPeople
                             });
-                            // this.props.navigation.navigate("RestDetails", {
-                            //     beenMarkedInterested: true,
-                            //     loggedInUserFbId: this.props.loggedInUserFbId,
-                            //     rest: this.props.rest,
-                            //     interestedPeople: currentPeople,
-                            //     me: this.props.navigation.getParam("me")
-                            // });
                         })
                         .catch(error => {
                             console.log("in forEach loop in PeopleList: " + error);

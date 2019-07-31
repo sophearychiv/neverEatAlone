@@ -33,15 +33,6 @@ class InviteConfirmation extends React.Component {
         return (
 
             <Container>
-                {/* 
-                <Header >
-                    <View style={{ width: 100, height: 80, backgroundColor: "red" }}>
-
-                    </View>
-                    <Body>
-                        <Text>{this.props.navigation.getParam("rest").name}</Text>
-                    </Body>
-                </Header> */}
                 <Content>
                     <List>
                         <ListItem style={{ backgroundColor: "#00deff", paddingLeft: 20, marginRight: 15 }}>

@@ -129,6 +129,7 @@ class InviteCard extends React.Component {
     render() {
         console.log("rendering InviteCard");
         console.log(this.state);
+        console.log("invite in InviteCard: " + JSON.stringify(this.props.invite));
 
         let displayCard;
 
