@@ -66,6 +66,40 @@ class Home extends React.Component {
             });
     }
 
+    getPendingInvites = async (fbId) => {
+        const IN_USE_HTTP = require("../internet.json").IN_USE_HTTP
+        axios.get(IN_USE_HTTP + "/users/" + fbId + "/invites/received")
+            .then(response => {
+            console.log("getting pending invites in Home");
+
+                this.setState({
+                    pendingInvites: response.data.data,
+                });
+            })
+            .then(response => {
+                this.getReadPendingInvites(this.state.fbId);
+            })
+
+            .catch(error => {
+                console.log("error requesting invites in Invites component");
+            })
+    }
+
+    getReadPendingInvites = async (fbId) => {
+        const IN_USE_HTTP = require("../internet.json").IN_USE_HTTP
+        await axios.get(IN_USE_HTTP + "/users/" + fbId + "/invites/read")
+            .then(response => {
+                this.setState({
+                    readPendingInvites: response.data.data,
+                });
+            })
+            
+            .catch(error => {
+                console.log("error requesting invites in Invites component");
+            })
+    }
+
+
     async UNSAFE_componentWillMount() {
         await Font.loadAsync({
             Roboto: require("../node_modules/native-base/Fonts/Roboto.ttf"),
