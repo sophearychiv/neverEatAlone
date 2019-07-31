@@ -188,7 +188,9 @@ class Invites extends React.Component {
                     </List>
 
                 </Content>
-                <FooterTabs />
+                <FooterTabs 
+                    badgeCount={0}
+                />
             </Container>
         );
     }

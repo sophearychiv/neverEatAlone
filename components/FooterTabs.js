@@ -15,7 +15,8 @@ class FooterTabs extends Component {
             fbId: null,
             isLoggedIn: null,
             name: null,
-            photoUrl: null
+            photoUrl: null,
+            // badgeCount: props.badgeCount || 0
         }
         this.getToken();
     }
@@ -100,7 +101,9 @@ class FooterTabs extends Component {
         this.setState({
             currentTab: "home"
         });
-        this.props.navigation.navigate("Home");
+        this.props.navigation.navigate("Home", {
+            badgeCount: this.state.badgeCount
+        });
     }
 
     clickOnInvites = () => {

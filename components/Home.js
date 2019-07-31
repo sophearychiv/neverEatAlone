@@ -135,8 +135,14 @@ class Home extends React.Component {
         }
 
         let badgeCount;
-        if(this.props.navigation.getParam("pendingInvites")){
-            badgeCount = this.props.navigation.getParam("pendingInvites").length - this.props.navigation.getParam("readPendingInvites").length
+        // if(this.props.navigation.getParam("pendingInvites")){
+        //     badgeCount = this.props.navigation.getParam("pendingInvites").length - this.props.navigation.getParam("readPendingInvites").length
+        // }else{
+        //     badgeCount = this.state.pendingInvites.length - this.state.readPendingInvites.length
+        // }
+
+        if(this.props.navigation.getParam("badgeCount")){
+            badgeCount = this.props.navigation.getParam("badgeCount")
         }else{
             badgeCount = this.state.pendingInvites.length - this.state.readPendingInvites.length
         }
