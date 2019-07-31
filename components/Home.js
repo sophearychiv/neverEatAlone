@@ -57,6 +57,10 @@ class Home extends React.Component {
                 });
                 return userInfo;
             })
+            .then(userInfo => {
+                this.getPendingInvites(userInfo.id);
+                // this.getReadPendingInvites(userInfo);
+            })
             .catch(error => {
                 console.log(error);
             });
