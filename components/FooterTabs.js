@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import { withNavigation } from 'react-navigation';
 import { Container, Header, Content, Footer, FooterTab, Button, Icon, Text } from 'native-base';
-import {View} from 'react-native';
+import IconBadge from 'react-native-icon-badge';
+import { View, AsyncStorage } from 'react-native';
+import axios from 'axios';
+
+const IN_USE_HTTP = require("../internet.json").IN_USE_HTTP
 class FooterTabs extends Component {
 
     constructor(props) {
