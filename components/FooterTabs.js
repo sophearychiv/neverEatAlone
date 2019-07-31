@@ -125,52 +125,42 @@ class FooterTabs extends Component {
     render() {
 
 
-        const home = this.state.currentTab === "home" ?
-            <Button vertical onPress={() => this.clickOnHome()}>
-                {/* <Button vertical active onPress={() => this.clickOnHome()}> */}
-                <Icon name="home" />
-                <Text>Home</Text>
-            </Button>
-            : <Button vertical onPress={() => this.clickOnHome()}>
-                <Icon name="home" />
-                <Text>Home</Text>
-            </Button>
-
-        const invites = <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', }}>
-            <IconBadge
-                MainElement={
-                    <Button vertical onPress={() => this.clickOnInvites()}>
-                        <Icon name="mail-open" />
-                        <Text>Invites</Text>
+        const home = <Button vertical onPress={() => this.clickOnHome()}>
+                        <Icon name="home" />
+                        <Text>Home</Text>
                     </Button>
-                }
-                BadgeElement={
-                    // <Text style={{ color: '#FFFFFF' }}>{this.state.badgeCount}</Text>
-                    <Text style={{ color: '#FFFFFF' }}>{this.props.badgeCount}</Text>
-                }
-                IconBadgeStyle={
-                    {
-                        width: 15,
-                        height: 20,
-                        backgroundColor: 'red',
-                        marginRight: 20,
-                    }
-                }
-                Hidden={this.props.badgeCount === 0}
-            // Hidden={this.state.badgeCount === 0}
-            />
-        </View>
 
-        const fav = this.state.currentTab === "fav" ?
-            <Button vertical onPress={() => this.clickOnFav()}>
-                {/* <Button vertical active onPress={() => this.clickOnFav()}> */}
-                <Icon name="heart" />
-                <Text>Fav</Text>
-            </Button>
-            : <Button vertical onPress={() => this.clickOnFav()}>
-                <Icon name="heart" />
-                <Text>Fav</Text>
-            </Button>
+        
+        const invites = <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', }}>
+                            <IconBadge
+                                MainElement={
+                                    <Button vertical onPress={() => this.clickOnInvites()}>
+                                        <Icon name="mail-open" />
+                                        <Text>Invites</Text>
+                                    </Button>
+                                }
+                                BadgeElement={
+                                    // <Text style={{ color: '#FFFFFF' }}>{this.state.badgeCount}</Text>
+                                    <Text style={{ color: '#FFFFFF' }}>{this.props.badgeCount}</Text>
+                                }
+                                IconBadgeStyle={
+                                    {
+                                        width: 15,
+                                        height: 20,
+                                        backgroundColor: 'red',
+                                        marginRight: 20,
+                                    }
+                                }
+                                Hidden={this.props.badgeCount === 0}
+                                // Hidden={this.state.badgeCount === 0}
+                            />
+                        </View>
+
+        const fav = <Button vertical onPress={() => this.clickOnFav()}>
+                        <Icon name="heart" />
+                        <Text>Fav</Text>
+                    </Button>
+
 
         return (
             <Footer>
