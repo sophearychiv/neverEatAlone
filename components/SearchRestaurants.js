@@ -190,8 +190,8 @@ class SearchRestaurants extends React.Component {
                         </Button>
                     </Form>
                 </Content>
-                <FooterTabs
-                    badgeCount={this.props.navigation.getParam("badgeCount")} />
+                {/* <FooterTabs
+                    badgeCount={this.props.navigation.getParam("badgeCount")} /> */}
             </Container>
         );
           
