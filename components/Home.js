@@ -34,8 +34,8 @@ class Home extends React.Component {
             photoUrl: null,
             loading: true,
             isLoggedIn: false,
-            pendingInvites: [],
-            readPendingInvites: []
+            pendingInvites: this.props.navigation.getParam("pendingInvites") || [],
+            readPendingInvites: this.props.navigation.getParam("readPendingInvites") || []
         }
         this.getToken();
     }
@@ -135,17 +135,17 @@ class Home extends React.Component {
         }
 
         let badgeCount;
-        // if(this.props.navigation.getParam("pendingInvites")){
-        //     badgeCount = this.props.navigation.getParam("pendingInvites").length - this.props.navigation.getParam("readPendingInvites").length
-        // }else{
-        //     badgeCount = this.state.pendingInvites.length - this.state.readPendingInvites.length
-        // }
-
-        if(this.props.navigation.getParam("badgeCount")){
-            badgeCount = this.props.navigation.getParam("badgeCount")
+        if(this.props.navigation.getParam("pendingInvites")){
+            badgeCount = this.props.navigation.getParam("pendingInvites").length - this.props.navigation.getParam("readPendingInvites").length
         }else{
             badgeCount = this.state.pendingInvites.length - this.state.readPendingInvites.length
         }
+
+        // if(this.props.navigation.getParam("badgeCount")){
+        //     badgeCount = this.props.navigation.getParam("badgeCount")
+        // }else{
+        //     badgeCount = this.state.pendingInvites.length - this.state.readPendingInvites.length
+        // }
         return (
             <Drawer
                 ref={(ref) => { this.drawer = ref; }}

@@ -102,7 +102,8 @@ class FooterTabs extends Component {
             currentTab: "home"
         });
         this.props.navigation.navigate("Home", {
-            badgeCount: this.state.badgeCount
+            pendingInvites: this.props.pendingInvites,
+            readPendingInvites: this.props.readPendingInvites
         });
     }
 

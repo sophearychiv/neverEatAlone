@@ -190,6 +190,8 @@ class Invites extends React.Component {
                 </Content>
                 <FooterTabs 
                     badgeCount={0}
+                    pendingInvites={0}
+                    readPendingInvites={0}
                 />
             </Container>
         );
