@@ -134,7 +134,10 @@ class Home extends React.Component {
                     />
                    
                 </Container>
-                <FooterTabs fbId={this.state.fbId} />
+                <FooterTabs 
+                    fbId={this.state.fbId}
+                    me={this.state.me}
+                 />
 
             </Drawer>
         );

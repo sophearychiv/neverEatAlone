@@ -34,7 +34,8 @@ class FooterTabs extends Component {
 
     clickOnInvites = () => {
         this.props.navigation.navigate("Invites", {
-            fbId: this.props.fbId
+            fbId: this.props.fbId,
+            me: this.props.me
         });
 
         this.setState({
@@ -47,6 +48,7 @@ class FooterTabs extends Component {
         console.log(" fbId in footertabs: " + this.props.fbId);
         this.props.navigation.navigate("Interests", {
             fbId: this.props.fbId,
+            me: this.props.me
         });
 
         this.setState({

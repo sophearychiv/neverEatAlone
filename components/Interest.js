@@ -1,21 +1,22 @@
 import React from 'react';
 import { ListItem, Thumbnail, Text, Left, Body, Right, Button } from 'native-base';
 import { withNavigation } from 'react-navigation';
+import axios from 'axios';
 
 class Interest extends React.Component {
 
     constructor(props) {
         super(props);
-        this.getInterestedPeople(this.props.rest);
+        // this.getInterestedPeople(this.props.rest);
     }
 
-    navigateToRestDetails = () => {
-        this.props.navigation.navigate("RestDetails", {
-            rest: this.props.rest
-        })
-    }
+    // navigateToRestDetails = () => {
+    //     this.props.navigation.navigate("RestDetails", {
+    //         rest: this.props.rest
+    //     })
+    // }
 
-    getInterestedPeople = async (rest) => {
+    handleClickOnView = async (rest) => {
         const IN_USE_HTTP = require('../internet.json').IN_USE_HTTP;
         return axios.get(IN_USE_HTTP + "/interests/" + rest.id + "/userFbIds") //home
             .then(response => {
@@ -23,11 +24,12 @@ class Interest extends React.Component {
 
                 return response.data.data
             })
-            .then(fbIds => {
+            .then( async fbIds => {
                 let currentPeople = []
-                fbIds.forEach(async fbId => {
+                await Promise.all(fbIds.map(async (fbId) => {
+                // fbIds.forEach(async fbId => {
                     const IN_USE_HTTP = require('../internet.json').IN_USE_HTTP;
-                    axios.get(IN_USE_HTTP + "/users/" + fbId)  // home
+                    await axios.get(IN_USE_HTTP + "/users/" + fbId)  // home
                         .then(user => {
                             currentPeople.push(user);
                             this.setState({
@@ -44,12 +46,15 @@ class Interest extends React.Component {
                         .catch(error => {
                             console.log("in forEach loop in PeopleList: " + error);
                         });
-                });
+                }));
+                return currentPeople;
+            })
+            .then(currentPeople => {
                 this.props.navigation.navigate("RestDetails", {
                     beenMarkedInterested: true,
                     loggedInUserFbId: this.props.loggedInUserFbId,
                     rest: this.props.rest,
-                    interestedPeople: this.state.interestedPeople,
+                    interestedPeople: currentPeople,
                     me: this.props.navigation.getParam("me")
                 });
             })
@@ -60,7 +65,7 @@ class Interest extends React.Component {
                     loggedInUserFbId: this.state.loggedInUserFbId,
                     rest: this.state.selectedRest,
                     interestedPeople: [],
-                    me: this.props.navigation.getParam("me")
+                    me: this.props.me
                 });
             });
     }
@@ -83,7 +88,7 @@ class Interest extends React.Component {
                 <Right>
                     <Button
                         transparent
-                        onPress={() => this.navigateToRestDetails()}
+                        onPress={() => this.handleClickOnView(this.props.rest)}
                     >
                         <Text>View</Text>
                     </Button>

@@ -74,12 +74,7 @@ class RestList extends React.Component {
                                 interestedPeople: currentPeople
                             });
 
-                            console.log("interested user: " + JSON.stringify(user));
-                            console.log(currentPeople);
                         })
-                        // .catch(error => {
-                        //     console.log("in forEach loop in PeopleList: " + error);
-                        // });
                 }));
                 console.log("current people array: " + JSON.stringify(currentPeople));
 
