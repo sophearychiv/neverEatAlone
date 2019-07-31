@@ -119,6 +119,7 @@ class InviteCard extends React.Component {
                             invite: this.props.invite,
                             rest: response.data,
                             pendingInvites: this.props.pendingInvites,
+                            readPendingInvites: this.state.readPendingInvites,
                             badgeCount: this.props.pendingInvites - this.state.readPendingInvites,
                             // readPendingInvites: this.state.readPendingInvites
                         })

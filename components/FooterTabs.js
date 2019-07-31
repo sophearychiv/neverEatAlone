@@ -18,12 +18,14 @@ class FooterTabs extends Component {
         this.state = {
             // currentTab: "home",
             badgeCount: props.badgeCount || 0,
-            readInvites: [],
-            pendingInvites: this.props.pendingInvites
+            readInvites: props.readPendingInvites || [],
+            pendingInvites: props.pendingInvites || []
             // badgeCount: 0
         }
+
+        console.log("footertabs initiated");
         // this.getReadInvites();
-        this.getToken();
+        // this.getToken();
     }
 
 
@@ -125,10 +127,12 @@ class FooterTabs extends Component {
             currentTab: "home"
         });
         this.props.navigation.navigate("Home", {
-            badgeCount: this.state.badgeCount,
+            badgeCount: 0,
+            // badgeCount: this.state.badgeCount,
+            readPendingInvites: this.state.readInvites,
+            pendingInvites: this.state.readInvites
         });
 
-        console.log(this.props);
     }
 
     clickOnSearch = () => {
@@ -149,7 +153,6 @@ class FooterTabs extends Component {
                 fbId: this.props.fbId,
                 pendingInvites: this.props.pendingInvites,
                 readPendingInvites: this.state.readInvites,
-                // readPendingInvites: this.props.readPendingInvites,
                 badgeCount: this.state.badgeCount,
             });
         });
@@ -167,6 +170,8 @@ class FooterTabs extends Component {
 
     }
     render() {
+        console.log("badeCount in FooterTabs: " + this.props.badgeCount);
+
 
         const home = <Button vertical onPress={() => this.clickOnHome()}>
                         <Icon name="home" />
@@ -186,7 +191,8 @@ class FooterTabs extends Component {
                                     </Button>
                                 }
                                 BadgeElement={
-                                    <Text style={{ color: '#FFFFFF' }}>{this.state.badgeCount}</Text>
+                                    // <Text style={{ color: '#FFFFFF' }}>{this.state.badgeCount}</Text>
+                                    <Text style={{ color: '#FFFFFF' }}>{this.props.badgeCount}</Text>
                                 }
                                 IconBadgeStyle={
                                     {
@@ -196,7 +202,8 @@ class FooterTabs extends Component {
                                         marginRight: 20,
                                     }
                                 }
-                                Hidden={this.state.badgeCount === 0}
+                                Hidden={this.props.badgeCount === 0}
+                                // Hidden={this.state.badgeCount === 0}
                             />
                         </View>
 

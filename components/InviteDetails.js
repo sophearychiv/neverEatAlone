@@ -59,7 +59,10 @@ class InviteDetails extends React.Component {
                     </Card>
                 </Content>
                 <FooterTabs
-                    pendingInvites={this.state.pendingInvites}
+                    pendingInvites={[]}
+                    // pendingInvites={this.state.pendingInvites}
+                    readPendingInvites={[]}
+                    // readPendingInvites={this.props.navigation.getParam("readPendingInvites")}
                     badgeCount={this.props.navigation.getParam("badgeCount")}
                 />
             </Container>

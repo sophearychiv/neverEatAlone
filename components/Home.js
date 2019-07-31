@@ -37,16 +37,14 @@ class Home extends React.Component {
             photoUrl: null,
             loading: true,
             isLoggedIn: false,
-            pendingInvites: [],
-            readPendingInvites: []
+            pendingInvites: props.navigation.getParam("pendingInvites") || [],
+            readPendingInvites: props.navigation.getParam("readPendingInvites") || [],
+            // badgeCount: null
         }
+        console.log("executing in constructor");
         this.getToken();
         
     }
-
-    // componentDidMount(){
-    //     this.getToken();
-    // }
 
     async getToken() {
 
@@ -62,7 +60,7 @@ class Home extends React.Component {
                 return userInfo;
             })
             .then(userInfo => {
-                this.getPendingInvites(userInfo);
+                this.getPendingInvites(userInfo.id);
                 // this.getReadPendingInvites(userInfo);
             })
             .catch(error => {
@@ -92,10 +90,12 @@ class Home extends React.Component {
         this.props.navigation.navigate('Auth');
     }
 
-    getPendingInvites = async (userInfo) => {
+    getPendingInvites = async (fbId) => {
         const IN_USE_HTTP = require("../internet.json").IN_USE_HTTP
-        axios.get(IN_USE_HTTP + "/users/" + userInfo.id + "/invites/received")
+        axios.get(IN_USE_HTTP + "/users/" + fbId + "/invites/received")
             .then(response => {
+            console.log("getting pending invites in Home");
+
                 this.setState({
                     pendingInvites: response.data.data,
                 });
@@ -111,7 +111,7 @@ class Home extends React.Component {
 
     getReadPendingInvites = async (fbId) => {
         const IN_USE_HTTP = require("../internet.json").IN_USE_HTTP
-        axios.get(IN_USE_HTTP + "/users/" + fbId + "/invites/read")
+        await axios.get(IN_USE_HTTP + "/users/" + fbId + "/invites/read")
             .then(response => {
                 this.setState({
                     readPendingInvites: response.data.data,
@@ -125,6 +125,11 @@ class Home extends React.Component {
     
 
     render() {
+
+        // this.getToken();
+
+        // this.getPendingInvites(this.state.fbId);
+        
         
         console.log(this.state);
         const { navigate } = this.props.navigation;
@@ -134,6 +139,15 @@ class Home extends React.Component {
                 <View><AppLoading /></View>
             );
         }
+
+        let badgeCount;
+
+        if(this.props.navigation.getParam("pendingInvites")){
+            badgeCount = this.props.navigation.getParam("pendingInvites").length - this.props.navigation.getParam("readPendingInvites").length
+        }else{
+            badgeCount = this.state.pendingInvites.length - this.state.readPendingInvites.length
+        }
+
         return (
             <Drawer
                 ref={(ref) => { this.drawer = ref; }}
@@ -195,7 +209,7 @@ class Home extends React.Component {
                 <FooterTabs 
                     fbId={this.state.fbId}
                     pendingInvites={this.state.pendingInvites}
-                    badgeCount={this.props.navigation.getParam("badgeCount")}
+                    badgeCount={badgeCount}
 
                     // readPendingInvites={this.state.readPendingInvites}
                     // badgeCount={this.props.navigation.getParam("badgeCount")}

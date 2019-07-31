@@ -203,12 +203,15 @@ class Invites extends React.Component {
 
                 </Content>
                 <FooterTabs
-                    readPendingInvites={this.props.navigation.getParam("readPendingInvites")}
-                    pendingInvites={this.state.invites}
+                    // readPendingInvites={this.props.navigation.getParam("readPendingInvites")}
+                    // pendingInvites={this.state.invites}
 
                     // readPendingInvites passed from FooterTabs
                     // badgeCount={this.state.invites.length - this.props.navigation.getParam("readPendingInvites").length}
-                    badgeCount={this.props.navigation.getParam("badgeCount")}
+                    // badgeCount={this.props.navigation.getParam("badgeCount")}
+                    badgeCount={0}
+                    pendingInvites={0}
+                    readPendingInvites={0}
                 />
             </Container>
         );
