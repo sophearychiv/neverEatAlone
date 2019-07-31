@@ -116,7 +116,9 @@ class InviteCard extends React.Component {
                     .then(response => {
                         this.props.navigation.navigate("InviteDetails", {
                             invite: this.props.invite,
-                            rest: response.data
+                            rest: response.data,
+                            me: this.props.me,
+                            badgeCount: this.props.badgeCount
                         })
                     })
                     .catch(error => {

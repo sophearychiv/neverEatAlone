@@ -79,6 +79,7 @@ class InviteConfirmation extends React.Component {
                 </Content>
                 <FooterTabs
                     badgeCount={this.props.navigation.getParam("badgeCount")}
+                    me={this.props.navigation.getParam("me")}
                 />
             </Container>
         );

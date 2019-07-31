@@ -32,7 +32,8 @@ class Invites extends React.Component {
         
             .then(response => {
                 this.setState({
-                    seenPendingInvites: this.props.navigation.getParam("pendingInvites")
+                    seenPendingInvites: this.props.navigation.getParam("pendingInvites"),
+                    badgeCount: 0
                 })
             })
             .catch(error => {
@@ -42,7 +43,8 @@ class Invites extends React.Component {
 
     getReceivedInvites = async () => {
         const IN_USE_HTTP = require("../internet.json").IN_USE_HTTP
-        axios.get(IN_USE_HTTP + "/users/" + this.props.navigation.getParam("fbId") + "/invites/received")
+        axios.get(IN_USE_HTTP + "/users/" + this.props.navigation.getParam("me").fbId + "/invites/received")
+        // axios.get(IN_USE_HTTP + "/users/" + this.props.navigation.getParam("fbId") + "/invites/received")
             .then(response => {
                 this.setState({
                     invites: response.data.data,
@@ -56,7 +58,8 @@ class Invites extends React.Component {
 
     getConfirmedInvites = async() => {
         const IN_USE_HTTP = require("../internet.json").IN_USE_HTTP
-        axios.get(IN_USE_HTTP + "/users/" + this.props.navigation.getParam("fbId") + "/invites/going")
+        axios.get(IN_USE_HTTP + "/users/" + this.props.navigation.getParam("me").fbId + "/invites/going")
+        // axios.get(IN_USE_HTTP + "/users/" + this.props.navigation.getParam("fbId") + "/invites/going")
             .then(response => {
                 this.setState({
                     invites: response.data.data,
@@ -143,12 +146,15 @@ class Invites extends React.Component {
         const invites = this.state.invites.map((invite, i) => {
             return <InviteCard
                     key={i}
-                    userFbId={this.props.navigation.getParam("fbId")}
+                    userFbId={this.props.navigation.getParam("me").fbId}
+                    // userFbId={this.props.navigation.getParam("fbId")}
                     invite={invite}
                     deleteInviteCallback={(invite) => this.deleteInvite(invite)}
                     currentlyChecking={this.state.currentlyChecking}
                     acceptInviteCallback={(invite)=> this.acceptInvite(invite)}
                     declineInviteCallback={()=> this.declineInvite(invite)}
+                    badgeCount={0}
+                    me={this.props.navigation.getParam("me")}
                 />
         });
 
@@ -193,6 +199,7 @@ class Invites extends React.Component {
                     badgeCount={0}
                     // pendingInvites={}
                     seenPendingInvites={this.state.seenPendingInvites}
+                    me={this.props.navigation.getParam("me")}
                 />
             </Container>
         );

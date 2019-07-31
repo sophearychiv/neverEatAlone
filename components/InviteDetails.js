@@ -39,7 +39,10 @@ class InviteDetails extends React.Component {
                         </CardItem>
                     </Card>
                 </Content>
-                <FooterTabs />
+                <FooterTabs
+                    me={this.props.navigation.getParam("me")}
+                    badgeCount={this.props.navigation.getParam("badgeCount")}
+                 />
             </Container>
                 );
             }
