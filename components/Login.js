@@ -40,20 +40,15 @@ class Login extends React.Component {
         }
     }
 
-    getUserFromDatabase(user) {
+   async getUserFromDatabase(user) {
         console.log("user is " + JSON.stringify(user));
         console.log("user.id is " + user.id);
         console.log("type of user is " + typeof user);
         const IN_USE_HTTP = require('../internet.json').IN_USE_HTTP;
-        // return axios.get("http://localhost:4567/users/" + user.id) // phone
-        // return axios.get("http://172.24.26.244:4567/users/" + user.id) // Ada
         return axios.get(IN_USE_HTTP + "/users/" + user.id)
             .then(response => {
                 console.log('response is', JSON.stringify(response));
                 console.log(typeof user);
-                if (response.data.data.fbId) {
-                    console.log("fbId is true");
-                }
             })
             .catch(error => {
                 console.log(error);
