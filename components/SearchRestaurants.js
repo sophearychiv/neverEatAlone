@@ -118,6 +118,10 @@ class SearchRestaurants extends React.Component {
             {id: 1,
             name: 'Current Location'}
         ];
+
+        this.categories = [
+            
+        ];
         console.log("loggedInUser in SearchRestaurants is " + this.props.loggedInUserId);
         const {navigate} = this.props.navigation;
         return(
@@ -149,7 +153,7 @@ class SearchRestaurants extends React.Component {
                                 resetValue={false}
                                 textInputProps={
                                 {
-                                    placeholder: "placeholder",
+                                    placeholder: "eg. 1215 4th Ave #1050, Seattle, WA 98161",
                                     underlineColorAndroid: "transparent",
                                     style: {
                                         padding: 5,
@@ -173,10 +177,57 @@ class SearchRestaurants extends React.Component {
                         </Item>
                         <Item fixedLabel>
                             <Label>Categories</Label>
-                            <Input 
+                            <SearchableDropdown
+                                onItemSelect={(item) => {
+                                }}
+                                containerStyle={{ padding: 5 }}
+                                onRemoveItem={(item, index) => {
+                                }}
+                                itemStyle={{
+                                padding: 5,
+                                marginTop: 1,
+                                backgroundColor: '#fff',
+                                borderColor: '#bbb',
+                                borderWidth: 1,
+                                borderRadius: 5,
+                                width: 250
+                                }}
+                                itemTextStyle={{ color: '#222' }}
+                                itemsContainerStyle={{ maxHeight: 140 }}
+                                items={this.categories}
+                                defaultIndex={2}
+                                resetValue={false}
+                                textInputProps={
+                                {
+                                    placeholder: "eg. italian, thai",
+                                    underlineColorAndroid: "transparent",
+                                    style: {
+                                        padding: 5,
+                                        borderWidth: 1,
+                                        borderColor: '#ccc',
+                                        borderRadius: 5,
+                                        width: 250
+                                    },
+                                    onTextChange: text => {
+                                        this.updateCategoryState(this.state.category);
+                                    }
+                                }
+                                }
+                                listProps={
+                                {
+                                    nestedScrollEnabled: true,
+                                }
+                                }
+                            />
+                            {/* <Input 
                                 value={this.state.category}
                                 onChangeText={val => this.updateCategoryState(val)}
-                            />
+                                style={{
+                                    borderWidth: 1,
+                                    borderColor: '#ccc',
+                                    borderRadius: 5,
+                                    width: 200}}
+                            /> */}
                         </Item>
                         <Button
                             primary
