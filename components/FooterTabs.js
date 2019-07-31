@@ -17,8 +17,11 @@ class FooterTabs extends Component {
             name: null,
             photoUrl: null,
             // badgeCount: props.badgeCount || 0
+            badgeCount: props.badgeCount || 0,
+            readInvites: props.readPendingInvites || [],
+            pendingInvites: props.pendingInvites || []
         }
-        this.getToken();
+        // this.getToken();
     }
 
     async getToken() {
@@ -102,6 +105,7 @@ class FooterTabs extends Component {
             currentTab: "home"
         });
         this.props.navigation.navigate("Home", {
+            badgeCount: 0,
             pendingInvites: this.props.pendingInvites,
             readPendingInvites: this.props.readPendingInvites
         });
