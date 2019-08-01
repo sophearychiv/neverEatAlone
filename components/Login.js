@@ -26,14 +26,15 @@ class Login extends React.Component {
     cacheLocalLogin = async (obj) => {
         try {
             await AsyncStorage.setItem('access_token', JSON.stringify(obj));
+            // await AsyncStorage.getItem('access_token')
             const user = await AsyncStorage.getItem('access_token');
-            console.log("loggedInUser in cacheLocalLogin " + user);
-
-            this.getUserFromDatabase(JSON.parse(user));
-
-            this.props.navigation.navigate('App', {
-                loggedInUser: JSON.parse(user)
-            });
+            // console.log("loggedInUser in cacheLocalLogin " + user);
+                // .then(user => {
+                // })
+                this.props.navigation.navigate('App', {
+                    loggedInUser: JSON.parse(user)
+                });
+                this.getUserFromDatabase(JSON.parse(user));
             // this.props.navigation.navigate('App');
         } catch (error) {
             console.log(error);
@@ -49,6 +50,7 @@ class Login extends React.Component {
             .then(response => {
                 console.log('response is', JSON.stringify(response));
                 console.log(typeof user);
+                
             })
             .catch(error => {
                 console.log(error);
@@ -103,8 +105,6 @@ class Login extends React.Component {
         }
 
         const IN_USE_HTTP = require('../internet.json').IN_USE_HTTP;
-        // return axios.post("http://localhost:4567/users", newUser)
-        // return axios.post("http://172.24.26.244:4567/users", newUser) //Ada
         return axios.post(IN_USE_HTTP + "/users", newUser) //home
             .then(response => {
                 if (response === "SUCCESS") {
