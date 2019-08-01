@@ -120,7 +120,7 @@ class SearchRestaurants extends React.Component {
         ];
 
         this.categories = [
-            
+
         ];
         console.log("loggedInUser in SearchRestaurants is " + this.props.loggedInUserId);
         const {navigate} = this.props.navigation;
@@ -160,7 +160,8 @@ class SearchRestaurants extends React.Component {
                                         borderWidth: 1,
                                         borderColor: '#ccc',
                                         borderRadius: 5,
-                                        width: 250
+                                        width: 250,
+                                        marginRight: 10
                                     },
                                     onTextChange: text => {
                                         this.updateLocationState(text);
@@ -206,7 +207,8 @@ class SearchRestaurants extends React.Component {
                                         borderWidth: 1,
                                         borderColor: '#ccc',
                                         borderRadius: 5,
-                                        width: 250
+                                        width: 250,
+                                        marginRight: 10
                                     },
                                     onTextChange: text => {
                                         this.updateCategoryState(this.state.category);
@@ -234,7 +236,7 @@ class SearchRestaurants extends React.Component {
                             style={styles.submitButton}
                             onPress={() => this.search(this.state.location, this.state.category)}
                         >
-                            <Text style={styles.submitText}> Submit </Text>
+                            <Text style={styles.submitText}> Search </Text>
                         </Button>
                     </Form>
                 </Content>

@@ -22,20 +22,15 @@ class Login extends React.Component {
         };
     }
 
-
     cacheLocalLogin = async (obj) => {
         try {
-            await AsyncStorage.setItem('access_token', JSON.stringify(obj));
-            // await AsyncStorage.getItem('access_token')
-            const user = await AsyncStorage.getItem('access_token');
-            // console.log("loggedInUser in cacheLocalLogin " + user);
-                // .then(user => {
-                // })
+            await AsyncStorage.setItem('access_token', JSON.stringify(obj))
+            // await AsyncStorage.setItem('access_token', JSON.stringify(obj));
+                const user = await AsyncStorage.getItem('access_token');
                 this.props.navigation.navigate('App', {
                     loggedInUser: JSON.parse(user)
                 });
                 this.getUserFromDatabase(JSON.parse(user));
-            // this.props.navigation.navigate('App');
         } catch (error) {
             console.log(error);
         }
@@ -105,7 +100,7 @@ class Login extends React.Component {
         }
 
         const IN_USE_HTTP = require('../internet.json').IN_USE_HTTP;
-        return axios.post(IN_USE_HTTP + "/users", newUser) //home
+        return axios.post(IN_USE_HTTP + "/users", newUser)
             .then(response => {
                 if (response === "SUCCESS") {
                     console.log("new user added");
