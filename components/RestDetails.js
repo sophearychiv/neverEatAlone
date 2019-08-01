@@ -95,7 +95,6 @@ class RestDetails extends React.Component {
             </Left>
             <Body>
               {interestButton}
-
             </Body>
           </ListItem>
           <Content>

@@ -151,7 +151,7 @@ class Invites extends React.Component {
                     invite={invite}
                     deleteInviteCallback={(invite) => this.deleteInvite(invite)}
                     currentlyChecking={this.state.currentlyChecking}
-                    acceptInviteCallback={(invite)=> this.acceptInvite(invite)}
+                    acceptInviteCallback={()=> this.acceptInvite(invite)}
                     declineInviteCallback={()=> this.declineInvite(invite)}
                     badgeCount={0}
                     me={this.props.navigation.getParam("me")}

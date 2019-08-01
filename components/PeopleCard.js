@@ -80,7 +80,7 @@ class PeopleCard extends React.Component {
 
         return(
 
-                <ListItem avatar style={{margin: 10, borderBottomColor: "grey"}}>
+                <ListItem avatar style={{margin: 6, borderBottomColor: "grey"}}>
                     <TouchableOpacity>
                         <Left>
                             <Thumbnail source={{ uri: this.props.photoUrl }} />

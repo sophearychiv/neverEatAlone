@@ -178,7 +178,7 @@ class InviteCard extends React.Component {
                                 />
                                 <DialogButton
                                     text="YES"
-                                    onPress={() => this.respondToReceivedInvite(this.props.invite, this.state.status)}
+                                    onPress={() => this.respondToReceivedInvite(this.props.invite)}
                                 />
                             </DialogFooter>
                         }

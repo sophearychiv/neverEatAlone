@@ -35,7 +35,7 @@ class InviteConfirmation extends React.Component {
             <Container>
                 <Content>
                     <List>
-                        <ListItem style={{ backgroundColor: "#00deff", paddingLeft: 20, marginRight: 15 }}>
+                        <ListItem style={{ backgroundColor: "#00deff", paddingLeft: 20, marginRight: 15, marginTop: 10 }}>
                             <Body>
                                 <Text style={styles.name}>{this.props.navigation.getParam("rest").name}</Text>
                             </Body>
