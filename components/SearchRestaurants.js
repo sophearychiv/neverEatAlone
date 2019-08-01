@@ -128,7 +128,7 @@ class SearchRestaurants extends React.Component {
             <Container>
                 <Content>
                     <Form>
-                        <Item fixedLabel>
+                        <Item fixedLabel style={{borderColor: 'transparent'}}>
                             <Label>Location:</Label>
                             <Fragment>
                             <SearchableDropdown
@@ -158,9 +158,10 @@ class SearchRestaurants extends React.Component {
                                     style: {
                                         padding: 5,
                                         borderWidth: 1,
-                                        borderColor: '#ccc',
+                                        borderColor: "#ccc",
                                         borderRadius: 5,
                                         width: 250,
+                                        height: 40,
                                         marginRight: 10
                                     },
                                     onTextChange: text => {
@@ -176,7 +177,7 @@ class SearchRestaurants extends React.Component {
                             />
                             </Fragment>
                         </Item>
-                        <Item fixedLabel>
+                        <Item fixedLabel style={{borderColor: 'transparent'}}>
                             <Label>Categories</Label>
                             <SearchableDropdown
                                 onItemSelect={(item) => {
@@ -187,10 +188,10 @@ class SearchRestaurants extends React.Component {
                                 itemStyle={{
                                 padding: 5,
                                 marginTop: 1,
-                                backgroundColor: '#fff',
-                                borderColor: '#bbb',
-                                borderWidth: 1,
-                                borderRadius: 5,
+                                // backgroundColor: '#fff',
+                                // borderColor: '#bbb',
+                                // borderWidth: 1,
+                                // borderRadius: 5,
                                 width: 250
                                 }}
                                 itemTextStyle={{ color: '#222' }}
@@ -205,9 +206,10 @@ class SearchRestaurants extends React.Component {
                                     style: {
                                         padding: 5,
                                         borderWidth: 1,
-                                        borderColor: '#ccc',
+                                        borderColor: "#ccc",
                                         borderRadius: 5,
                                         width: 250,
+                                        height: 40,
                                         marginRight: 10
                                     },
                                     onTextChange: text => {

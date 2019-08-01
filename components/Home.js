@@ -177,6 +177,8 @@ class Home extends React.Component {
                     >
                     </ImageBackground>
 
+                    <Text style={{textAlign: "center", fontSize: 20, marginBottom: 20}}> Let's find a great restaurant!</Text>
+
                     <SearchRestaurants
                         loggedInUserId={this.state.fbId}
                         me={this.state.me}

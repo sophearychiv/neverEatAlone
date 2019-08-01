@@ -118,9 +118,19 @@ class Login extends React.Component {
                 <View style={styles.container}>
                     <ImageBackground 
                         source={require("../assets/Logo_512.png")} 
-                        style={{ width: 150, height: 150, marginBottom: 50 }}
+                        style={{ width: 150, height: 150, marginBottom: 100 }}
                         >
                     </ImageBackground>
+
+                    <Text style={{
+                        textAlign: "center", 
+                        fontSize: 20, 
+                        marginBottom: 20,
+                        // color: "#00deff",
+                        // fontWeight: "bold"
+                        }}>
+                        A great meal needs great companions
+                    </Text>
 
                     <View style={styles.nav}>
                         <SocialIcon
