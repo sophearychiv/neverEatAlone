@@ -223,15 +223,6 @@ class SearchRestaurants extends React.Component {
                                 }
                                 }
                             />
-                            {/* <Input 
-                                value={this.state.category}
-                                onChangeText={val => this.updateCategoryState(val)}
-                                style={{
-                                    borderWidth: 1,
-                                    borderColor: '#ccc',
-                                    borderRadius: 5,
-                                    width: 200}}
-                            /> */}
                         </Item>
                         <Button
                             primary

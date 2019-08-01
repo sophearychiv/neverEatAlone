@@ -155,7 +155,7 @@ class Home extends React.Component {
 
                 <Container>
 
-                    <Header>
+                    <Header style={{backgroundColor: "#00deff", marginBottom: 20}}>
                         <Button
                             transparent
                             onPress={() => this.openDrawer()}
