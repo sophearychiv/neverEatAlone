@@ -12,7 +12,8 @@ class Login extends React.Component {
         this.state = {
             loggedInUser: null,
             isLoggedIn: false,
-            error: null
+            error: null,
+            opacity: 1
         }
     }
 
@@ -60,7 +61,7 @@ class Login extends React.Component {
     async logIn() {
         try {
             const CONFIG = require('../secrets.json');
-
+            this.setState({opacity: 0});
             const {
                 type,
                 token,
@@ -115,7 +116,13 @@ class Login extends React.Component {
         const { navigate } = this.props.navigation;
         return (
 
-                <View style={styles.container}>
+                <View style={{
+                    backgroundColor: '#fff',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flex: 1,
+                    opacity: this.state.opacity
+                }}>
                     <ImageBackground 
                         source={require("../assets/Logo_512.png")} 
                         style={{ width: 150, height: 150, marginBottom: 100 }}
@@ -148,8 +155,6 @@ class Login extends React.Component {
                             onPress={this.loginLinkedIn}>
                         </SocialIcon>
                     </View>
-
-
                 </View>
             
             
