@@ -1,4 +1,3 @@
-# neverEatAlone
 
 # Capstone Concept - Sopheary Chiv
 
