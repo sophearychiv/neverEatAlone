@@ -36,5 +36,3 @@ There are times when people would like to eat out but do not want to eat alone. 
 - SQL Database
 - Redux or Android SDK
 
-## Additional content, diagrams, wireframes, user flows, etc.
-Link, attach, or insert any additional content here.
